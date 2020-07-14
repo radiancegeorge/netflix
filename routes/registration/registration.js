@@ -18,14 +18,14 @@ reg.post('/register', (req, res)=>{
             email: req.body.email,
             phone_number: Number(req.body.phone_number),
             username: req.body.username,
-            reffered: req.body.reffered,
+            referred: req.body.referred,
             password: hashed,
             gen_id: uuid.v4()
         };
             try {
-                db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, reffered) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.reffered}')`,(err, result) => {
+                db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, referred) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.reffered}')`,(err, result) => {
                     if(err){
-                        // console.log(err)
+                        console.log(err)
                         if (err.code === 'ER_DUP_ENTRY'){
                             res.send('please confirm your E-mail')
                         }
@@ -37,7 +37,10 @@ reg.post('/register', (req, res)=>{
                 <h3> Please ignore this message if you did not innitialize it </h3>
             `
                         sendMail(data.email, 'Confirm your E-mail address', `Please confirm your email address http://localhost:3000/mail/auth/${data.gen_id}`, html);
-                        res.send('please check your email for confirmation')
+                        setInterval(() => {
+                            res.send('please check your email for confirmation')
+                        }, 3000);
+                        
 
                     }
             })
