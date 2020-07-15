@@ -29,6 +29,7 @@
     "mysql": "^2.18.1",
     "nodemailer": "^6.4.10",
     "paystack": "^2.0.1",
+    "paystack-node": "^0.2.4",
     "uuid": "^8.2.0"
   }
 }

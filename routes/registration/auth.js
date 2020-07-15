@@ -18,7 +18,9 @@ auth.get('/auth/:id', (req, res)=>{
                     db.query(sql, id, (err, result)=>{
                         if(err)throw err;
                         // console.log(result);
-                        res.send('registered');
+                        req.app.locals.email = data[3];
+                        req.app.locals.msg = 'Your account has been created successfully!!'
+                        res.redirect('/bank');
                     });
                 });
             }else if(result.length < 1){

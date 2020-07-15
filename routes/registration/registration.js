@@ -5,12 +5,15 @@ const sendMail = require('../mailer');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const auth = require('./auth');
-const validate = require('./frontEnd verification/validation')
+const validate = require('./frontEnd verification/validation');
+const bankReg = require('./bank_registration');
+reg.use(express.urlencoded({ extended: false }));
 
 reg.get('/register', (req, res)=>{
     res.render('register')
 })
 reg.post('/register', (req, res)=>{
+    console.log(req.body)
     bcrypt.hash(req.body.password, 10).then( hashed =>{
         const data = {
             name: req.body.name,
@@ -37,7 +40,10 @@ reg.post('/register', (req, res)=>{
             `
                         sendMail(data.email, 'Confirm your E-mail address', `Please confirm your email address http://localhost:3000/mail/auth/${data.gen_id}`, html);
                         setTimeout(() => {
-                            res.send('please check your email for confirmation')
+                            res.send('please check your email for confirmation');
+                            // should render a check email for verification page
+
+                            req.app.locals.email = data.email
                         }, 3000); 
                     }
             })
@@ -50,6 +56,7 @@ reg.post('/register', (req, res)=>{
     });
     
 });
+reg.use('/bank',bankReg);
 reg.use('/mail', auth);
 reg.use(validate)
 
@@ -58,6 +65,5 @@ reg.use(validate)
 
 
 
-reg.use(express.urlencoded({ extended: false }));
-reg.use(express.json());
+// reg.use(express.json());
 module.exports = reg;
