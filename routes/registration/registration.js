@@ -1,12 +1,11 @@
 const express = require('express');
 const reg = express.Router();
-reg.use(express.urlencoded({extended: false}));
 const db = require('../db');
 const sendMail = require('../mailer');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const auth = require('./auth');
-
+const validate = require('./frontEnd verification/validation')
 
 reg.get('/register', (req, res)=>{
     res.render('register')
@@ -27,8 +26,8 @@ reg.post('/register', (req, res)=>{
                     if(err){
                         console.log(err)
                         if (err.code === 'ER_DUP_ENTRY'){
-                            res.send('please confirm your E-mail')
-                        }
+                            res.send('please confirm your E-mail')// create a confirm email page proper
+                        }// render the registration form again with an error message, pls remember
                     }else{
                         let html = `
                 <p> Please confirm your E-mail by clicking on the link below </p>
@@ -37,11 +36,9 @@ reg.post('/register', (req, res)=>{
                 <h3> Please ignore this message if you did not innitialize it </h3>
             `
                         sendMail(data.email, 'Confirm your E-mail address', `Please confirm your email address http://localhost:3000/mail/auth/${data.gen_id}`, html);
-                        setInterval(() => {
+                        setTimeout(() => {
                             res.send('please check your email for confirmation')
-                        }, 3000);
-                        
-
+                        }, 3000); 
                     }
             })
                 
@@ -54,5 +51,13 @@ reg.post('/register', (req, res)=>{
     
 });
 reg.use('/mail', auth);
+reg.use(validate)
 
+
+
+
+
+
+reg.use(express.urlencoded({ extended: false }));
+reg.use(express.json());
 module.exports = reg;
