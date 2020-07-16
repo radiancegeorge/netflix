@@ -1,0 +1,56 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: black;
+    color: white;
+    font-family: "segoe ui";
+}
+.formhead{
+    text-align: center;
+    margin: 10px 0px;
+}
+.formhead span{
+    color: orange;
+}
+.signup{
+    display: block;
+    padding: 10px 10px;
+}
+.signup a{
+    color: orange;
+}
+.input{
+    overflow-x: hidden;
+    margin-bottom: 15px;
+}
+.input p{
+    margin: 8px 0px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+.input input{
+    display: flex;
+    min-width: 100%;
+    height: 30px;
+    font-size: larger;
+    padding-left: 10px;;
+}
+.input button{
+    display: block;
+    min-width: 100%;
+    height: 45px;
+    font-size: larger;
+    text-align: center;
+    color: white;
+    background: green;
+    border: none;
+    border-radius: 5px;
+}
+.input select{
+    display: flex;
+    min-width: 100%;
+    height: 30px;
+    font-size: larger;
+    padding-left: 10px;;
+}
