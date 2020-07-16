@@ -27,6 +27,7 @@
     "express-session": "^1.17.1",
     "messagebird": "^3.5.0",
     "mysql": "^2.18.1",
+    "mysql-events": "0.0.11",
     "nodemailer": "^6.4.10",
     "paystack": "^2.0.1",
     "paystack-node": "^0.2.4",
