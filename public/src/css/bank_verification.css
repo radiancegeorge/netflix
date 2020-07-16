@@ -101,6 +101,7 @@ form .account_name div {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  opacity: 0;
 }
 
 form .account_name div iframe {

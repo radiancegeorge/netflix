@@ -6,7 +6,12 @@ animation = document.querySelector('.animation');
 
 
 
-     
+const writeToField = (p, name)=>{
+    name === undefined && (name = '');
+    document.querySelector('.account_name p').textContent = p;
+    document.querySelector('.account_name h2').textContent = name;
+    name === '' ? document.querySelector('.account_name p').style.color = 'red' : document.querySelector('.account_name p').style.color = ''
+}  
 
 
 
@@ -21,12 +26,16 @@ const check = (property, value)=>{
         console.log(xml.status)
         if(xml.readyState === 4 && xml.status === 200){
            
-            bankNameInput.addEventListener('change', (e) => {
+            bankNameInput.addEventListener('focusout', (e) => {
                 const revealName = new XMLHttpRequest();
                 revealName.onreadystatechange = () => {
-                    console.log(revealName.status)
+                    // console.log(revealName.status)
                     if (revealName.readyState === 4 && revealName.status === 201) {
-                        btn.style.backgroundColor = 'green'
+                        // console.log(revealName.response)
+                        btn.style.backgroundColor = 'green';
+                        writeToField('Welcome', revealName.response )
+                        animation.style.opacity = 0;
+
                         btn.addEventListener('click', (e) => {
                             document.location.replace('/bank/update_bank_details')
                         })
@@ -34,10 +43,11 @@ const check = (property, value)=>{
                 }
                 console.log(accNumInput.value, e.target.value)
                 revealName.open('get', `/bank/user/${accNumInput.value}/${e.target.value}`, true);
+                revealName.responseType = 'text'
                 revealName.send()
             })
 
-        }else{
+        }else if(xml.status === 409){
             // console.log('found duplicate')
             // get the user to know that the account number is already in use;
             btn.removeEventListener('click', ()=>{
@@ -49,7 +59,9 @@ const check = (property, value)=>{
             accNumInput.removeEventListener('focusout', ()=>{
                 alert('yeah')
             })
-            btn.style.backgroundColor = ''
+            btn.style.backgroundColor = '';
+            animation.style.opacity = 0
+            writeToField('Account number already in use');
         }
     }
     xml.open('get', `/validate/${property}/${value}`, true);
@@ -61,6 +73,7 @@ const check = (property, value)=>{
 
 accNumInput.addEventListener('focusout', (e)=>{
     if(e.target.value.length > 5){
+        animation.style.opacity = 1
         check('account_number', e.target.value)
     }
 })
