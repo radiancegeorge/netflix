@@ -33,11 +33,11 @@ reg.post('/register', (req, res)=>{
                         }// render the registration form again with an error message, pls remember
                     }else{
                         let html = `
-                <p> Please confirm your E-mail by clicking on the link below </p>
-                <a href =' http://localhost:3000/mail/auth/${data.gen_id}'> Click here </a>
+                        <p> Please confirm your E-mail by clicking on the link below </p>
+                        <a href =' http://localhost:3000/mail/auth/${data.gen_id}'> Click here </a>
 
-                <h3> Please ignore this message if you did not innitialize it </h3>
-            `
+                        <h3> Please ignore this message if you did not innitialize it </h3>
+                        `
                         sendMail(data.email, 'Confirm your E-mail address', `Please confirm your email address http://localhost/mail/auth/${data.gen_id}`, html);
                         setTimeout(() => {
                             res.send('please check your email for confirmation');
@@ -46,10 +46,10 @@ reg.post('/register', (req, res)=>{
                             req.app.locals.email = data.email
                         }, 3000); 
                     }
-            })
+                })
                 
-            } catch (error) {
-                console.log(error)
+            }catch (error) {
+               console.log(error)
             }
 
     });
