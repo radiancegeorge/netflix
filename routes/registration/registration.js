@@ -38,7 +38,7 @@ reg.post('/register', (req, res)=>{
 
                 <h3> Please ignore this message if you did not innitialize it </h3>
             `
-                        sendMail(data.email, 'Confirm your E-mail address', `Please confirm your email address http://localhost:3000/mail/auth/${data.gen_id}`, html);
+                        sendMail(data.email, 'Confirm your E-mail address', `Please confirm your email address http://localhost/mail/auth/${data.gen_id}`, html);
                         setTimeout(() => {
                             res.send('please check your email for confirmation');
                             // should render a check email for verification page
@@ -51,8 +51,7 @@ reg.post('/register', (req, res)=>{
             } catch (error) {
                 console.log(error)
             }
-           
-       
+
     });
     
 });
