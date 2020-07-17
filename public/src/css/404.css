@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "segoe ui";
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height:400px;
+}
+div{
+    border: 5px solid black;
+    padding: 20px;
+}
+h1{
+    font-size: 100px;
+}
+span{
+    color: orange;
+}
+p{
+    font-weight: bolder;
+}
+a:link{
+    color: orange;
+}
+a:visited{
+    color: green;
+}
