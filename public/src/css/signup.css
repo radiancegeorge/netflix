@@ -59,9 +59,11 @@ body{
         background: white!important;
     }
     .signup{
-        background: black;
+        background: rgba(0, 0, 0, 0.9);
         max-width: 400px;
         margin: auto;
+        padding: 20px 30px;
+
     }
 }
 @media (min-width: 768px){

@@ -9,9 +9,10 @@ const validate = require('./frontEnd verification/validation');
 const bankReg = require('./bank_registration');
 reg.use(express.urlencoded({ extended: false }));
 
-reg.get('/register', (req, res)=>{
-    res.render('register')
-})
+reg.get('/register', (req, res) => {
+    res.render('signup')
+});
+
 reg.post('/register', (req, res)=>{
     console.log(req.body)
     bcrypt.hash(req.body.password, 10).then( hashed =>{
