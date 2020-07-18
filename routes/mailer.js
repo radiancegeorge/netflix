@@ -14,20 +14,16 @@ let transporter = nodemailer.createTransport({
 });
 
 // send mail with defined transport object
-const sendMail = async (to, subject, text, html)=>{
-    transporter.sendMail({
-        from: '"Netflix Networking" <verify@netflixnetworking.com>', // sender address
-        to: to, // list of receivers
-        subject: subject, // Subject line
-        text: text, // plain text body
-        html:html === undefined? '' : html , // html body
-    }, (err, info) => {
-        if (err) throw err;
-        console.log(info)
-        console.log("Message sent: %s", info.messageId);
-    })
-}
-module.exports = sendMail;
 
+module.exports = transporter;
+// const something = new Promise((resolve, reject)=>{
+
+//   const hello = 'greetings'
+//     resolve(hello);
+//     reject('something')
+// });
+// something.then(ans =>{
+//     console.log(ans)
+// })
 
 // messagebird**** might be needed

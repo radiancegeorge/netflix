@@ -26,7 +26,7 @@ const check = (property, value)=>{
         console.log(xml.status)
         if(xml.readyState === 4 && xml.status === 200){
            
-            bankNameInput.addEventListener('focusout', (e) => {
+            bankNameInput.addEventListener('change', (e) => {
                 const revealName = new XMLHttpRequest();
                 revealName.onreadystatechange = () => {
                     // console.log(revealName.status)
@@ -51,13 +51,13 @@ const check = (property, value)=>{
             // console.log('found duplicate')
             // get the user to know that the account number is already in use;
             btn.removeEventListener('click', ()=>{
-                console.log('removed')
+                // console.log('removed')
             });
             bankNameInput.removeEventListener('change',()=>{
-                console.log('removed')
+                // console.log('removed')
             });
             accNumInput.removeEventListener('focusout', ()=>{
-                alert('yeah')
+                // alert('yeah')
             })
             btn.style.backgroundColor = '';
             animation.style.opacity = 0
