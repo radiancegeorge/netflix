@@ -1,13 +1,15 @@
 const express = require('express');
 const reg = express.Router();
 const db = require('../db');
-const sendMail = require('../mailer');
+const verifyMailTransporter = require('../mailer');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const auth = require('./auth');
 const validate = require('./frontEnd verification/validation');
 const bankReg = require('./bank_registration');
 reg.use(express.urlencoded({ extended: false }));
+const domainName = `http://localhost:3000`;
+
 
 reg.get('/register', (req, res) => {
     res.render('signup')
@@ -25,27 +27,46 @@ reg.post('/register', (req, res)=>{
             password: hashed,
             gen_id: uuid.v4()
         };
+        req.app.locals.data = data;
             try {
                 db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, referred) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.reffered}')`,(err, result) => {
+                    const mailing = ()=>{
+                        let html = `
+                        <p> Please confirm your E-mail by clicking on the link below </p>
+                        <a href =' ${domainName}/mail/auth/${data.gen_id}'> Click here </a>
+
+                        <h3> Please ignore this message if you did not initialize it </h3>
+                        `;
+                        // const render = 'checkmail';
+
+
+                        verifyMailTransporter.sendMail({
+                            from: '"Netflix Networking" <verify@netflixnetworking.com>', // sender address
+                            to: data.email, // list of receivers
+                            subject: 'Please Verify Your E-mail', // Subject line
+                            text: '', // plain text body
+                            html: html, // html body
+                        }, (err, info) => {
+                            if (err) throw err;
+                            console.log(info)
+                            console.log("Message sent: %s", info.messageId);
+                            res.render('checkmail');
+                            req.app.locals.email = data.email;
+
+                        });
+                    }
+
                     if(err){
                         console.log(err)
                         if (err.code === 'ER_DUP_ENTRY'){
-                            res.send('please confirm your E-mail')// create a confirm email page proper
+
+                            res.render('checkmail.ejs')// create a confirm email page proper
+                            
                         }// render the registration form again with an error message, pls remember
                     }else{
-                        let html = `
-                        <p> Please confirm your E-mail by clicking on the link below </p>
-                        <a href =' http://localhost:3000/mail/auth/${data.gen_id}'> Click here </a>
-
-                        <h3> Please ignore this message if you did not innitialize it </h3>
-                        `
-                        sendMail(data.email, 'Confirm your E-mail address', `Please confirm your email address http://localhost/mail/auth/${data.gen_id}`, html);
-                        setTimeout(() => {
-                            res.send('please check your email for confirmation');
-                            // should render a check email for verification page
-
-                            req.app.locals.email = data.email
-                        }, 3000); 
+                        
+                        mailing()
+                         
                     }
                 })
                 
@@ -54,7 +75,30 @@ reg.post('/register', (req, res)=>{
             }
 
     });
-    
+    reg.get('/remail', (req, res)=>{
+        const data = req.app.locals.data;
+        let html = `
+                        <p> Please confirm your E-mail by clicking on the link below </p>
+                        <a href =' ${domainName}/mail/auth/${data.gen_id}'> Click here </a>
+
+                        <h3> Please ignore this message if you did not initialize it </h3>
+                        `;
+        verifyMailTransporter.sendMail({
+            from: '"Netflix Networking" <verify@netflixnetworking.com>', // sender address
+            to: data.email, // list of receivers
+            subject: 'Please Verify Your E-mail', // Subject line
+            text: '', // plain text body
+            html: html, // html body
+        }, (err, info) => {
+            if (err) throw err;
+            console.log(info)
+            console.log("Message sent: %s", info.messageId);
+            res.render('checkmail');
+            
+
+        });
+        
+    })
 });
 reg.use('/bank',bankReg);
 reg.use('/mail', auth);

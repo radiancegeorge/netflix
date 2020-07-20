@@ -20,4 +20,5 @@ const ls = (sql)=>{
 }
 // ls('truncate table ongoing_registration')
 // ls('truncate table registered_users')
+// ls('select * from registered_users')
 module.exports = db
