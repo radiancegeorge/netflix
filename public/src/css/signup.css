@@ -5,6 +5,7 @@ body{
     background: black;
     color: white;
     font-family: "segoe ui";
+    height: 100vh;
 }
 .formhead{
     text-align: center;
@@ -16,6 +17,9 @@ body{
 .signup{
     display: block;
     padding: 10px 10px;
+}
+.signuppng{
+    display: none;
 }
 .signup a{
     color: orange;
@@ -31,10 +35,23 @@ body{
 }
 .input input{
     display: flex;
-    min-width: 100%;
+    min-width: 95%;
+    background: none;
     height: 30px;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    border-bottom: 1.5px solid orange;
+    /*  */
     font-size: larger;
+    transition: border .5s;
     padding-left: 10px;;
+}
+.input input:focus{
+    /* border-right: 2px dotted orange;
+    border-top: 2px dotted orange; */
+    border-bottom: 2.5px solid orange; 
 }
 .input button{
     display: block;
@@ -60,21 +77,55 @@ body{
     }
     .signup{
         background: rgba(0, 0, 0, 0.9);
-        max-width: 400px;
+        max-width: 100%;
         margin: auto;
         padding: 20px 30px;
-
     }
+
+
+    
+
 }
-@media (min-width: 768px){
+@media (min-width: 800px){
+    body{
+        display: flex;
+        flex-flow: row nowrap;
+    }
     .signup{
         display: flex;
         flex-flow: row wrap;
-        max-width: 550px;
+        flex-basis: 70%;
+        max-width: 600px;
         justify-content: space-between;
     }
+    
     .formhead{
         display: block;
         min-width: 100%;
+    }.referral{
+        display: flex;
+        flex-flow: row wrap;
+        flex-basis: 100%;
+    }
+    .referral input{
+        min-width: 50%;
+        margin: auto;
+    }
+    .referral p{
+        flex-basis: 70%;
+        text-align: center;
+    }
+}
+
+@media (min-width: 1100px){
+    .signuppng{
+        display: flex;
+        flex-basis: 30%;
+        justify-content: center;
+        align-items: center;
+    }
+    .signuppng img{
+        max-width: 500px;
+        max-height: 500px;
     }
 }
