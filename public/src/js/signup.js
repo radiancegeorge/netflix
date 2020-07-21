@@ -1,9 +1,11 @@
 const inputs = document.querySelectorAll('form input');
 const submitBtn = document.querySelector('form button');
-const form = document.querySelector('form')
-console.log(form)
+const formD = document.querySelector('form')
+// console.log(form)
 // console.log(inputs[0].name)
-
+const submit = () => {
+        formD.submit()  
+}
 const errorMessage = (input)=>{
     const p = document.createElement('p');
     p.innerText = `There is an error in ${input} field,
@@ -29,22 +31,26 @@ const errorMessage = (input)=>{
 }
 
 submitBtn.addEventListener('click', (e)=>{
-    // e.preventDefault();
+    e.preventDefault();
 
     // alert('clicked')
-    // let determinant = {
-    //     value: 0
-    // }
+    let determinant = {
+        value: 0
+    }
 
-    const check = (property, value)=>{
+    const check = (property, value, optional)=>{
         const verify = new XMLHttpRequest();
         verify.onreadystatechange = ()=>{
             if(verify.status === 200 && verify.readyState === 4){
-                // determinant.value++;
-                // console.log(determinant.value)
+                determinant.value++;
+                console.log('async ' + determinant.value)
+                if (determinant.value === 7) {
+                    submit()
+                }
             }else if(verify.status === 409){
                 console.log(value);
-                e.preventDefault()
+                optional.preventDefault()
+                determinant.value--
                 errorMessage(property)
             }
         }
@@ -57,9 +63,9 @@ submitBtn.addEventListener('click', (e)=>{
             if(input.name === 'email' || input.name === 'username' || input.name === 'phone_number'){
                 if(input.name === 'phone_number'){
                     const newValue = input.value.substr(1);
-                    check(input.name, newValue);
+                    check(input.name, newValue, e);
                 }else{
-                    check(input.name, input.value);
+                    check(input.name, input.value, e);
                 }
                 
                 
@@ -68,22 +74,25 @@ submitBtn.addEventListener('click', (e)=>{
                     if(element.name === 'password'){
                         if(element.value === input.value){
                             console.log('same');
-                            // determinant.value++
+                            determinant.value++;
+                            
                         }else{
                             //pass a message of passwords not being the same
                         }
                     }
                 });
             }else{
-                // determinant.value++;
+                determinant.value++;
             }
         }else if(input.name === 'referred'){
-            // input.value = null;
+            determinant.value++;
+            console.log(determinant.value)
+
         }else{
             //pass a message of an empty string
-            // e.preventDefault();
 
         }
     })
 
 })
+

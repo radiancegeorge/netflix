@@ -60,12 +60,19 @@ reg.post('/register', (req, res)=>{
                         console.log(err)
                         if (err.code === 'ER_DUP_ENTRY'){
 
-                            res.render('checkmail.ejs')// create a confirm email page proper
+                            res.render('404')// create a confirm email page proper
                             
                         }// render the registration form again with an error message, pls remember
                     }else{
                         
-                        mailing()
+                        mailing();
+                        const deleteQ = `delete from ongoing_registration where gen_id = ?`;
+                        setTimeout(() => {
+                            db.query(deleteQ, data.gen_id, (err, result) => {
+                                if (err) throw err;
+                                console.log(result)
+                            })
+                        }, 21600000);
                          
                     }
                 })
