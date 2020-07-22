@@ -70,7 +70,7 @@ reg.post('/register', (req, res)=>{
                         setTimeout(() => {
                             db.query(deleteQ, data.gen_id, (err, result) => {
                                 if (err) throw err;
-                                console.log(result)
+                                console.log(result, 'deleted')
                             })
                         }, 21600000);
                          
