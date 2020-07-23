@@ -62,5 +62,8 @@ login.post('/login', (req, res)=>{
     })
 })
 
-
+login.get('/logout', (req, res)=>{
+    req.session.username = false;
+    res.render('login')
+})
 module.exports = login
