@@ -1,6 +1,6 @@
-const cancel = document.querySelector('.cancel'),
-    logout = document.querySelector('.logout'),
-    logoutPrompt = document.querySelector('.prompt');
+// const cancel = document.querySelector('.cancel'),
+//     logout = document.querySelector('.logout'),
+   const logoutPrompt = document.querySelector('.prompt');
 
     window.addEventListener('click', (e)=>{
         if(e.target.id === 'logout'){

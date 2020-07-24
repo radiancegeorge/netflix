@@ -239,12 +239,13 @@ header nav ul li a img {
 #view {
   width: 100vw;
   scroll-behavior: smooth;
-  height: 100vh;
+  height: 70vh;
 }
 
 @media (min-width: 560px) {
   #view {
     width: 90%;
+    height: 100vh;
     margin-left: auto;
     display: block;
     padding-top: 40px;
@@ -291,6 +292,9 @@ header nav ul li a img {
         -ms-flex-flow: column;
             flex-flow: column;
     width: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
   }
   header nav ul li a {
     padding: 10px 25px;
@@ -334,5 +338,73 @@ header nav ul li a img {
     margin-left: -10px;
     margin-top: 15px;
   }
+}
+
+.profile-body .title {
+  font-size: 20px;
+  font-weight: 300;
+  text-align: left !important;
+  background-color: orange;
+  color: white;
+  padding: 10px 26px;
+}
+
+.profile-body .title span {
+  font-size: 18px;
+  display: block;
+  font-weight: 200;
+}
+
+.profile-body h1 {
+  background: white;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.profile-body .profile .headers {
+  color: white;
+  text-align: center;
+  font-size: 12px;
+}
+
+.profile-body .profile form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  padding-top: 20px;
+  padding-top: 0;
+}
+
+.profile-body .profile form label {
+  width: 100%;
+  padding: 20px;
+}
+
+.profile-body .profile form label input {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px 16px;
+}
+
+.profile-body .profile form label button {
+  width: 100px;
+  margin-right: 20px;
+  padding: 10px 16px;
+  background: orange;
+  border: none;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-body .profile form label button:hover {
+  background: green;
 }
 /*# sourceMappingURL=user_dashboard.css.map */
