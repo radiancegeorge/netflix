@@ -83,11 +83,12 @@ header nav ul {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   left: 0;
   width: 100vw;
+  height: 15vh;
 }
 
 header nav ul li {
@@ -106,6 +107,10 @@ header nav ul li a {
   font-weight: 500;
   color: black;
   width: 100%;
+}
+
+header nav ul li a:hover {
+  background: orange;
 }
 
 header nav ul li a img {
@@ -229,5 +234,105 @@ header nav ul li a img {
 
 .hide {
   display: none;
+}
+
+#view {
+  width: 100vw;
+  scroll-behavior: smooth;
+  height: 100vh;
+}
+
+@media (min-width: 560px) {
+  #view {
+    width: 90%;
+    margin-left: auto;
+    display: block;
+    padding-top: 40px;
+  }
+  .container {
+    max-width: 80vw;
+  }
+  header {
+    position: fixed;
+    max-width: 150px;
+    width: 100px;
+    top: 0;
+    left: 0;
+    height: 100vh;
+  }
+  header .container {
+    padding: 0;
+  }
+  header nav {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+    width: 100%;
+    background-color: white;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  header nav .logo {
+    width: 100%;
+    padding: 10px;
+  }
+  header nav .logo img {
+    width: 100%;
+  }
+  header nav ul {
+    position: static;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+    width: 100%;
+  }
+  header nav ul li a {
+    padding: 10px 25px;
+  }
+  header nav ul li a img {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  header nav .notification {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 10px 25px;
+  }
+  header nav .notification div {
+    text-align: center;
+    margin-top: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    width: 100%;
+  }
+  header nav .notification div img {
+    margin: auto;
+  }
+  header nav .notification div #logout {
+    margin-left: -10px;
+    margin-top: 15px;
+  }
 }
 /*# sourceMappingURL=user_dashboard.css.map */
