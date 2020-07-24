@@ -1,11 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/src/css/user_dashboard.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard|Netflix</title>
 </head>
 <body>
-    
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="/src/img/logo 3@0.1x.svg" alt="logo" width="110px">
+                </div>
+                <!-- <div class="burger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div> -->
+                <ul class="nav-content">
+                    <li><a href="/user/home" target="view"><img src="/src/img/dashboard.png" alt=""></a></li>
+                    <li><a href="" target=""><img src="/src/img/testimonial.svg" alt=""> </a></li>
+                    <li><a href="/user/profile" target="view"><img src="/src/img/profile (2).png" alt=""></a></li>
+                    <li><a href=""><img src="/src/img/PngItem_6430338.png" alt=""></a></li>
+                    <!-- <li><a href=""><img src="./src/img/ClipartKey_1023073.png" alt=""> Admin Portal</a></li> -->
+                </ul>
+                <div class="notification">
+                    <div class="notif">
+                        <img src="/src/img/ClipartKey_1023073.png" alt="">
+                        <!-- remember to swap for an icon -->
+                    </div>
+                    <div class="logout">
+                        <!-- remember to swap for an image -->
+                        <img id= 'logout' src="/src/img/—Pngtree—vector logout icon_4184683.png" alt="">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <iframe src="/dashboard_home.html" id="view" name="view" frameborder="0"></iframe>
+    <div class="prompt hide">
+        <div class="content">
+            <p>ARE YOU SURE YOU WANT TO LOGOUT?</p>
+            <div class="options">
+                <div class="cancel">Cancel</div>
+                <div class="yes"><a href="/logout">Continue</a></div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="/src/js/dashboard_setup.js"></script>
 </body>
 </html>

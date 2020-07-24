@@ -8,7 +8,6 @@ const reg = require('./routes/registration/registration');
 app.set('view engine', 'ejs');
 const login = require('./routes/login/login')
 app.use(cors());
-const user_dashboard = require('./routes/dashboard_users/user_dashboard')
 
 // app.get('/dashboard', (req, res)=>{
     
@@ -16,7 +15,7 @@ const user_dashboard = require('./routes/dashboard_users/user_dashboard')
    
 // })
 
-app.use('/user', user_dashboard)
+// app.use('/user', user_dashboard)
 app.use(registration)
 app.use(login)
 app.use(express.static('public'));

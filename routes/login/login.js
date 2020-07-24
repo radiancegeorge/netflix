@@ -5,6 +5,8 @@ const MysqlStore = require('express-mysql-session')(session);
 const bcrypt = require('bcrypt');
 const db = require('../db');
 const uuid = require('uuid').v1;
+const user_dashboard = require('../dashboard_users/user_dashboard')
+
 // login.use(session)
 const sessionStore = new MysqlStore({
     clearExpired: true,
@@ -30,15 +32,15 @@ login.use(session({
 
 login.get('/login', (req, res)=>{
     if(req.session.username){
-        // console.log(req.session)
-        res.redirect('/dashboard')
+        res.redirect('/user/dashboard')
     }else{
-            res.render('login');
-
+        res.render('login');
     }
-})
 
+})
 login.post('/login', (req, res)=>{
+
+
     const data = req.body;
     const values = [data.username, data.username]
     const sql = `select * from registered_users where username = ? or email = ?`;
@@ -49,8 +51,10 @@ login.post('/login', (req, res)=>{
             result = result[0]
             bcrypt.compare(data.password, result.password).then( password =>{
                 if(password){
-                    // console.log('welcome')
-                    res.redirect('/dashboard')
+                    console.log('welcome');
+                    console.log(result)
+                    req.app.locals.email = result.email;
+                    res.redirect('/user/dashboard')
 
                 }else{
                     console.log('wrong password')//re render page with wrong password message
@@ -64,6 +68,8 @@ login.post('/login', (req, res)=>{
 
 login.get('/logout', (req, res)=>{
     req.session.username = false;
+    req.app.locals.email = false;
     res.render('login')
-})
+});
+login.use('/user', user_dashboard)
 module.exports = login
