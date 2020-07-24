@@ -1,7 +1,7 @@
 const express = require('express');
 // const open = require('open')
 const cors = require('cors');
-const reload = require('reload')
+// const reload = require('reload')
 const app = express();
 const registration = require('./routes/registration/registration');
 const reg = require('./routes/registration/registration');
@@ -20,8 +20,6 @@ app.use('/user', user_dashboard)
 app.use(registration)
 app.use(login)
 app.use(express.static('public'));
-reload(app).then(()=>{
-    app.listen(3000,/* open('http:localhost:3000/', {app: 'chrome'})*/ )
-}).catch(err =>{
-    if(err)throw err;
-})
+
+app.listen(3000,/* open('http:localhost:3000/', {app: 'chrome'})*/ )
+
