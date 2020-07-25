@@ -24,7 +24,7 @@ auth.get('/auth/:id', (req, res)=>{
                     });
                 });
             }else if(result.length < 1){
-                res.status(404).send()
+                res.status(404).render('404')
             }
         })
     } catch(error){

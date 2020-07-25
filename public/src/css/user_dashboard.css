@@ -1,0 +1,410 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  outline: none;
+  list-style-type: none;
+  text-decoration: none;
+  font-family: 'Arial Narrow Bold', sans-serif;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+body {
+  background-color: black;
+}
+
+.container {
+  max-width: 99vw;
+  margin: auto;
+  padding: 10px;
+}
+
+header {
+  background: white;
+}
+
+header nav {
+  width: 100% !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header nav .notification {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-preferred-size: 40%;
+      flex-basis: 40%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+header nav .notification .notif {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+  cursor: pointer;
+}
+
+header nav .notification .notif img {
+  width: 80%;
+}
+
+header nav .notification .logout {
+  margin-left: 30px;
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+  cursor: pointer;
+}
+
+header nav .notification .logout img {
+  width: 100%;
+}
+
+header nav ul {
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  left: 0;
+  width: 100vw;
+  height: 15vh;
+}
+
+header nav ul li {
+  -ms-flex-preferred-size: 20%;
+      flex-basis: 20%;
+  border-top: none;
+  border-bottom: none;
+  padding: 5px 0;
+}
+
+header nav ul li a {
+  padding: 10px 5px;
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: black;
+  width: 100%;
+}
+
+header nav ul li a:hover {
+  background: orange;
+}
+
+header nav ul li a img {
+  width: 70%;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.transactions .individualTransaction {
+  padding: 20px 10px;
+  line-height: 30px;
+  color: white;
+  background: orange;
+}
+
+.transactions .individualTransaction h2 {
+  border-bottom: 1px solid white;
+  text-align: center;
+  font-size: 15px;
+}
+
+.transactions .individualTransaction p {
+  text-align: center;
+}
+
+.transactions .individualTransaction a {
+  color: black;
+  background: white;
+  padding: 10px;
+  display: block;
+  text-align: center;
+}
+
+.transactions .individualTransaction a:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.prompt {
+  z-index: 100;
+  color: black;
+  background: rgba(0, 0, 0, 0.9);
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+}
+
+.prompt .content {
+  background: white;
+  padding: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 400px;
+}
+
+.prompt .content p {
+  font-weight: 600;
+}
+
+.prompt .content .options {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding: 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.prompt .content .options .cancel, .prompt .content .options .yes {
+  background: orange;
+  color: white;
+  padding: 10px 0;
+  -ms-flex-preferred-size: 40%;
+      flex-basis: 40%;
+  cursor: pointer;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.prompt .content .options .cancel a, .prompt .content .options .yes a {
+  color: white;
+}
+
+.prompt .content .options .cancel:hover, .prompt .content .options .yes:hover {
+  background-color: rgba(255, 165, 0, 0.8);
+}
+
+.hide {
+  display: none;
+}
+
+#view {
+  width: 100vw;
+  scroll-behavior: smooth;
+  height: 70vh;
+}
+
+@media (min-width: 560px) {
+  #view {
+    width: 90%;
+    height: 100vh;
+    margin-left: auto;
+    display: block;
+    padding-top: 40px;
+  }
+  .container {
+    max-width: 80vw;
+  }
+  header {
+    position: fixed;
+    max-width: 150px;
+    width: 100px;
+    top: 0;
+    left: 0;
+    height: 100vh;
+  }
+  header .container {
+    padding: 0;
+  }
+  header nav {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+    width: 100%;
+    background-color: white;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  header nav .logo {
+    width: 100%;
+    padding: 10px;
+  }
+  header nav .logo img {
+    width: 100%;
+  }
+  header nav ul {
+    position: static;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+    width: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+  header nav ul li a {
+    padding: 10px 25px;
+  }
+  header nav ul li a img {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  header nav .notification {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 10px 25px;
+  }
+  header nav .notification div {
+    text-align: center;
+    margin-top: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    width: 100%;
+  }
+  header nav .notification div img {
+    margin: auto;
+  }
+  header nav .notification div #logout {
+    margin-left: -10px;
+    margin-top: 15px;
+  }
+}
+
+.profile-body .title {
+  font-size: 20px;
+  font-weight: 300;
+  text-align: left !important;
+  background-color: orange;
+  color: white;
+  padding: 10px 26px;
+}
+
+.profile-body .title span {
+  font-size: 18px;
+  display: block;
+  font-weight: 200;
+}
+
+.profile-body h1 {
+  background: white;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.profile-body .profile .headers {
+  color: white;
+  text-align: center;
+  font-size: 12px;
+}
+
+.profile-body .profile form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  padding-top: 20px;
+  padding-top: 0;
+}
+
+.profile-body .profile form label {
+  width: 100%;
+  padding: 20px;
+}
+
+.profile-body .profile form label input {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px 16px;
+}
+
+.profile-body .profile form label button {
+  width: 100px;
+  margin-right: 20px;
+  padding: 10px 16px;
+  background: orange;
+  border: none;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-body .profile form label button:hover {
+  background: green;
+}
+/*# sourceMappingURL=user_dashboard.css.map */
