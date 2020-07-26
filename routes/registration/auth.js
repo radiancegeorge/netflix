@@ -19,6 +19,7 @@ auth.get('/auth/:id', (req, res)=>{
                         if(err)throw err;
                         // console.log(result);
                         req.app.locals.email = data[3];
+                        // console.log(req.app.locals.email, 'this is the email', data[3])
                         req.app.locals.msg = 'Your account has been created successfully!!'
                         res.redirect('/bank');
                     });

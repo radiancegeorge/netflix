@@ -69,6 +69,7 @@ login.post('/login', (req, res)=>{
 login.get('/logout', (req, res)=>{
     req.session.username = false;
     req.app.locals.email = false;
+    req.app.locals.regEmail = false
     res.render('login')
 });
 login.use('/user', user_dashboard)

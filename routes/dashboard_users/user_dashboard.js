@@ -4,8 +4,9 @@ const db = require('../db');
 
 dashboard.get('/dashboard', (req, res)=>{
     console.log(req.session.username)
-    if(req.session.username){
-        const data = req.session.username;
+    if(req.session.username || req.app.locals.regEmail){
+        const data = req.app.locals.regEmail || req.session.username;
+        req.session.username = data;
         res.render('user_dashboard', {data});
     }else{
         res.redirect('/login')

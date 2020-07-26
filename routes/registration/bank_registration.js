@@ -3,6 +3,32 @@ const bankReg = express.Router();
 const Paystack = require('paystack-node');
 const paystack = new Paystack('sk_test_e85eda640ef1d5391c3b79c017c96b4235c4c9c1')
 const db = require('../db');
+const session = require('express-session');
+const MysqlStore = require('express-mysql-session')(session);
+const uuid = require('uuid').v1
+
+const sessionStore = new MysqlStore({
+    clearExpired: true,
+    checkExpirationInterval: 60000,
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'sessions'
+    }
+}, db)
+bankReg.use(session({
+    secret: 'networkingNetflix',
+    resave: false,
+    saveUninitialized: true,
+    genid: () => {
+        return uuid();
+    },
+    cookie: {
+        // secure: true,
+        maxAge: 86400000,
+
+    }
+}))
+
 
 
 // paystack.listBanks({
@@ -62,9 +88,12 @@ bankReg.get('/update_bank_details', (req, res)=>{
     const email = req.app.locals.email,
     account_details = req.app.locals.accountDetails,
         sql = `update registered_users set ? where email = '${email}' `;
+        console.log(account_details, email)
     db.query(sql, account_details, (err, response)=>{
         if(err)throw err;
-        res.status(200).send('welcome')// remember to redirect to the dashboard
+        req.app.locals.regEmail = email;
+        // console.log(email, req.session.email)
+        res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard
     })
 })
 // bankReg.use(express.urlencoded({extended: false}));
