@@ -8,7 +8,12 @@ const reg = require('./routes/registration/registration');
 app.set('view engine', 'ejs');
 const login = require('./routes/login/login')
 app.use(cors());
+const admin = require('./routes/admin/admin')
 
+
+
+
+app.use('/admin',admin);
 // app.get('/dashboard', (req, res)=>{
     
 //         res.send('<a href="/logout"> logout </a>')

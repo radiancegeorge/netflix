@@ -7,7 +7,12 @@ dashboard.get('/dashboard', (req, res)=>{
     if(req.session.username || req.app.locals.regEmail){
         const data = req.app.locals.regEmail || req.session.username;
         req.session.username = data;
-        res.render('user_dashboard', {data});
+        const sql = `select * from activated_users where email = ?`;
+        db.query(sql, data, (err, result)=>{
+            if(err)throw err;
+            result.length < 1 ? data.activated = false : data.activated = true;
+            res.render('user_dashboard', { data });
+        })
     }else{
         res.redirect('/login')
     }

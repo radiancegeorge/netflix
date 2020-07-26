@@ -407,4 +407,74 @@ header nav ul li a img {
 .profile-body .profile form label button:hover {
   background: green;
 }
+
+.activation {
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.activation .wrap {
+  background: white;
+  padding: 10px;
+  max-width: 400px;
+}
+
+.activation .wrap h3 {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.activation .wrap p {
+  margin: 10px 0;
+}
+
+.activation .wrap .account-detail {
+  margin: 40px 0;
+}
+
+.activation .wrap .account-detail p {
+  font-weight: 600;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.activation .wrap .account-detail p span {
+  font-weight: 500;
+  color: orange;
+}
+
+.activation .wrap form h2 {
+  font-size: 15px;
+  color: green;
+  font-weight: 300;
+  margin: 10px 0;
+  margin-top: 20px;
+}
+
+.activation .wrap form button {
+  padding: 10px 16px;
+  color: white;
+  background: green;
+  border: none;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.activation .wrap form button:hover {
+  color: orange;
+  background: lightgrey;
+}
 /*# sourceMappingURL=user_dashboard.css.map */
