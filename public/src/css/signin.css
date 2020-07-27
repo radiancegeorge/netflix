@@ -4,6 +4,14 @@
     padding: 0;
     font-family: 'Arial Narrow Bold', sans-serif;
 }
+.errormsg{
+    /* display: flex; */
+    background: white;
+    color: red;
+}
+.signinbig{
+    display: none;
+}
 h2 span{
     color: orange;
 }
@@ -82,6 +90,11 @@ a{
     background: orange;
 }
 @media(min-width: 600px){
+    .errormsg{
+        padding: 20px;
+        border-bottom: 3px solid black;
+        transition: border 2s;
+    }
     .formcontainer{
         display: flex;
         justify-content: space-around;
