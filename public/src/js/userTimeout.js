@@ -15,8 +15,13 @@ const timeout = ()=>{
                 const elapsed = CurrentDate - dateCreated;
                 const _24hrs = 82800000;
                 const timeLeft = _24hrs - elapsed;
-                const newTime = new Date(timeLeft); 
-                timer.textContent = `${newTime.getHours()} : ${newTime.getMinutes()} : ${newTime.getSeconds()}`
+                const newTime = new Date(timeLeft);
+                if(newTime.getTime() <= 0){
+                    document.querySelector('.message').textContent = 'Your Account Has been deactivated, please pay the following amount below to have your Account Activated';
+                    document.querySelector('.amount'). textContent = 2000;
+                }else{
+                    timer.textContent = `${newTime.getHours()} : ${newTime.getMinutes()} : ${newTime.getSeconds()}`
+                }
             }, 1000);
         }
     };

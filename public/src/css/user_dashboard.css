@@ -432,6 +432,11 @@ header nav ul li a img {
   max-width: 400px;
 }
 
+.activation .wrap .timer span {
+  color: red;
+  font-weight: 600;
+}
+
 .activation .wrap h3 {
   margin: 10px 0;
   text-align: center;
