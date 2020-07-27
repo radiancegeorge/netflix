@@ -38,8 +38,8 @@
             </nav>
         </div>
     </header>
-    <iframe src="/dashboard_home.html" id="view" name="view" frameborder="0"></iframe>
-    <% if(!data.activated){%>
+    <iframe src="/user/home" id="view" name="view" frameborder="0"></iframe>
+    <% if(!status.activated){%>
         <section class="activation">
             <div class="wrap">
                 <h3 class="timer">You have <span> </span> left to activate your account</h3>
@@ -56,6 +56,7 @@
                 </form>
             </div>
         </section>
+        <script src="/src/js/userTimeout.js"></script>
     <% } %> 
    
     <div class="prompt hide">

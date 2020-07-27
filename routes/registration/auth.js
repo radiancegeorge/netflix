@@ -10,8 +10,9 @@ auth.get('/auth/:id', (req, res)=>{
             if(err) throw err;
             // console.log(result)
             if(result.length === 1){
-                const data = [result[0].name, result[0].username, result[0].password, result[0].email, result[0].phone_number, result[0].reffered];
-                let sql = `INSERT INTO registered_users (name, username, password, email, phone_number, referred) values (?, ?, ?, ?, ?, ?)`
+                const date = new Date()
+                const data = [result[0].name, result[0].username, result[0].password, result[0].email, result[0].phone_number, result[0].reffered, date];
+                let sql = `INSERT INTO registered_users (name, username, password, email, phone_number, referred, timeout) values (?, ?, ?, ?, ?, ?, ?)`
                 db.query(sql, data, (err, result) => {
                     if(err)throw err;
                     let sql = `DELETE FROM ongoing_registration WHERE gen_id = ?`;

@@ -15,13 +15,13 @@
         <input type="text" readonly value="<%= data.user %>  " name="name">
         <label for="checkboxes">
             deactivated
-            <input type="radio" readonly name="status" <% if(!data.activated){%>
+            <input type="radio" disabled readonly name="status" <% if(!data.activated){%>
                 checked
            <% } %>  >
         </label>
         <label for="checkboxes">
             activated
-            <input type="radio" readonly name="status" <% if(data.activated){%>
+            <input type="radio" disabled readonly name="status" <% if(data.activated){%>
                 checked
             <%} %>  >
         </label>

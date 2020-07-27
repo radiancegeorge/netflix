@@ -18,7 +18,6 @@ const ls = (sql)=>{
         console.log(result)
     })
 }
-// ls('truncate table registered_users')
-// ls('truncate table sessions')
-ls('select * from activated_users');
+// ls('select * from registered_users')
+// ls('')
 module.exports = db
