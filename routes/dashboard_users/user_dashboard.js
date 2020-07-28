@@ -1,6 +1,7 @@
 const express =  require('express');
 const dashboard = express.Router();
 const db = require('../db');
+const invest = require('./invest')
 
 dashboard.get('/dashboard', (req, res)=>{
     console.log(req.session.username)
@@ -32,10 +33,54 @@ dashboard.get('/profile', (req, res)=>{
     })
 });
 dashboard.get('/home', (req, res)=>{
-   const user = req.session.username;
+    const data = {}
+    req.app.locals.user = req.session.username;
+    const user = req.app.locals.user
+    const sql = 'select * from to_pay where username = ?';
+    db.query(sql, user, (err, result)=>{
+        if(err)throw err;
+        if(result.length < 1){
+            //not found so check in awaiting table to know if he is supposed to be paid;
+            const sql = 'select * from awaiting_payment where username = ?';
+            db.query(sql, user, (err, result)=>{
+                if(err)throw err;
+                if(result.length < 1){
+                    //founding nothing in awaiting payment also; so render home with ability to commence transaction;
+                    data.initialization = true;
+                    res.render('dashboard_home', {data})
+                }else if(result.length === 1){
+                    //found in payment, then go back to to_pay and see if the system has anyone to pay this individual;
+                    const sql = 'select * from to_pay where reciever = ?';
+                    db.query(sql, user, (err, result)=>{
+                        if(err)throw err;
+                        if(result.length < 1){
+                            // nobody to pay yet.. do something about it later;
+                            data.nobody = true;
+                            res.render('dashboard_home', {data});
+                        }else{
+                            //people to pay to this user found... now render persons details to this user;
+                            data.payers = result;
+                            res.render('dashboard_home')
+                        }
+                    })
+                }
+            })
+        }else if(result.length === 1){
+            //found him in pay_to table, now render who he is to pay to**** details
+            result = result[0];
+            const reciever = result.reciever;
+            const sql = `select username,phone_number, account_name, account_number, bank_name from registered_users where username = ?`;
+            db.query(sql, reciever, (err, result)=>{
+                if(err)throw err;
+                data.reciever = result[0];
+                res.render('dashboard_home',{data})
+            })
+        }else{
+            //an unknown problem occured
+        }
+    })
 
-
-    res.render('dashboard_home')
+    // res.render('dashboard_home')
 });
 
 dashboard.get('/timer', (req, res)=>{
@@ -61,4 +106,5 @@ dashboard.post('/dashboard/update_number', (req, res)=>{
         res.redirect('/user/profile')
     })
 });
+dashboard.use(invest)
 module.exports = dashboard;

@@ -1,5 +1,6 @@
 const express =  require('express');
 const bankReg = express.Router();
+const personalDb = require('../personalDb')
 const Paystack = require('paystack-node');
 const paystack = new Paystack('sk_test_e85eda640ef1d5391c3b79c017c96b4235c4c9c1')
 const db = require('../db');
@@ -91,6 +92,16 @@ bankReg.get('/update_bank_details', (req, res)=>{
         console.log(account_details, email)
     db.query(sql, account_details, (err, response)=>{
         if(err)throw err;
+        const data = {};
+        data.name = email;
+        data.transaction_id = 'transaction_id varchar(255) not null unique primary key';
+        data.amount_paid = 'amount_paid varchar(255) not null'
+        data.amount_recieved = 'amount_recieved varchar(255) not null'
+        const sql = 'create tabel ? (?, ?, ?)';
+        db.query(sql, [data.name, data.transaction_id, data.amount_paid, data.amount_recieved],(err, result)=>{
+            if(err)throw err;
+        })
+
         req.app.locals.regEmail = email;
         // console.log(email, req.session.email)
         res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard

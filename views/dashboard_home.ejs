@@ -22,20 +22,26 @@
     </section> -->
     <section class="invest">
         <div class="container">
-            <form action="" class="initialization">
-                <h1>Invest starting from N2,000 and above</h1>
-                <input type="number" placeholder="2000" required>
-                <p>Please note that you have just 24hrs to make this payment once merged</p>
-                <button type="submit">Pay</button>
-            </form>
-            <form action="" class="pay-to">
-                <p class="timer">You have <span>00 : 00 : 00</span> left</p>
-                <h3>Pay into the following acoount details then make use of the <b>I Have Paid Button</b></h3>
-                <input type="text" readonly value="account Name">
-                <input type="number" readonly value=00000>
-                <input type="text" readonly value="bank Name">
-                <button type="submit">I Have Paid</button>
-            </form>
+           <% if(data.initialization){%>
+                    <form action="" class="initialization">
+                        <h1>Invest starting from N2,000 and above</h1>
+                        <input type="number" placeholder="2000" required minlength="4" min="2000" name="amount">
+                        <p>Please note that you have just 24hrs to make this payment once merged</p>
+                        <button type="submit">Pay</button>
+                    </form>
+            <%} %> 
+            <% if(data.reciever){%>
+                    <form action="" class="pay-to">
+                        <p class="timer">You have <span>00 : 00 : 00</span> left</p>
+                        <h3>Pay into the following acoount details then make use of the <b>I Have Paid Button</b></h3>
+                        <input type="text" readonly value="<%= data.reciever.account_name %> ">
+                        <input type="number" readonly value=<%= data.reciever.account_number %> >
+                        <input type="text" readonly value="<%= data.reciever.bank_name %> ">
+                        <input type="text" readonly value="<%= data.reciever.username %> ">
+                        <input type="number" readonly value="<%= data.reciever.phone_number %> ">
+                        <button type="submit">I Have Paid</button>
+                    </form>
+            <%} %> 
         </div>
     </section>
 

@@ -23,5 +23,5 @@ const ls = (sql)=>{
 // array.forEach(item=>{
 //     ls(`alter table awaiting_payment add column ${item}`)
 // })
-// ls(`alter table awaiting_payment add column `)
+// ls(`show databases `)
 module.exports = db
