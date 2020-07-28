@@ -18,6 +18,10 @@ const ls = (sql)=>{
         console.log(result)
     })
 }
-// ls('select * from registered_users')
-// ls('')
+// ls('alter table awaiting_payment modify column transaction_id varchar(45) not null unique')
+// const array = ['username varchar(45) not null unique', 'amount_paid varchar(255) not null unique', 'amount_to_be_recieved varchar(255) not null unique',' amount_recieved varchar(255) unique'];
+// array.forEach(item=>{
+//     ls(`alter table awaiting_payment add column ${item}`)
+// })
+// ls(`alter table awaiting_payment add column `)
 module.exports = db

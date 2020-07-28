@@ -65,5 +65,35 @@ admin.post('/status', (req, res)=>{
         }
     })
 })
+admin.post('/transactions', (req, res)=>{
+    data = {}
+    const search = req.body.search;
+    const sql = `select username, name from registered_users where username = ?`;
+    db.query(sql, search, (err, result)=>{
+        if(err) throw err;
+        if(result.length === 1){
+            data.payee = result[0].username;
+            data.payeeName = result[0].name
+            const sql = 'select username from to_pay where username = ?';
+            db.query(sql, data.payee, (err, result)=>{
+                if(err)throw err;
+                if(result.length === 1){
+                    data.paid = false;
+                    req.app.locals.payee = data.payee
+                    res.render('admin', {data})
 
+                }else{
+                //user paid so therefore nothing found..... do something with it;
+                    data.paid = true;
+                    res.render('admin', {data})
+                }
+            })
+        }else{
+            //user not active or does not exist;
+            msg = 'user does not exist'
+            res.render('admin', {data: msg})
+        }
+       
+    })
+})
 module.exports = admin;

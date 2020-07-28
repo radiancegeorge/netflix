@@ -482,4 +482,81 @@ header nav ul li a img {
   color: orange;
   background: lightgrey;
 }
+
+.invest form {
+  background: white;
+  padding: 20px;
+}
+
+.invest .initialization p {
+  margin: 10px 0;
+  color: red;
+}
+
+.invest .initialization h1 {
+  text-align: center;
+}
+
+.invest .initialization input {
+  padding: 10px;
+  font-size: 18px;
+  margin: 10px 0;
+  display: block;
+}
+
+.invest .initialization button {
+  padding: 10px 20px;
+  color: white;
+  background: orange;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.invest .initialization button:hover {
+  background: green;
+}
+
+.invest .pay-to {
+  margin: 10px 0;
+}
+
+.invest .pay-to p {
+  color: red;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.invest .pay-to p span {
+  color: orange;
+  font-weight: 600;
+}
+
+.invest .pay-to h3 {
+  text-align: center;
+}
+
+.invest .pay-to h3 b {
+  color: green;
+}
+
+.invest .pay-to input {
+  display: block;
+  font-size: 18px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.invest .pay-to button {
+  color: white;
+  background: green;
+  border: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  margin-top: 10px;
+}
+
+.invest .pay-to button:hover {
+  background: orange;
+}
 /*# sourceMappingURL=user_dashboard.css.map */

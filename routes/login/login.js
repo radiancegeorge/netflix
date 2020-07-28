@@ -34,7 +34,7 @@ login.get('/login', (req, res)=>{
     if(req.session.username){
         res.redirect('/user/dashboard')
     }else{
-        res.render('login');
+        res.render('login', {msg: ''});
     }
 
 })
@@ -57,11 +57,15 @@ login.post('/login', (req, res)=>{
                     res.redirect('/user/dashboard')
 
                 }else{
-                    console.log('wrong password')//re render page with wrong password message
+                    console.log('wrong password')
+                    res.render('login', {msg: 'Wrong password'})
+                    //re render page with wrong password message
                 }
             })
         }else{
-            console.log('invalid username')// invalid username... re render the page with an error message
+            console.log('invalid username')
+            res.render('login', {msg: 'Invalid Username'})
+            // invalid username... re render the page with an error message
         }
     })
 })
@@ -70,7 +74,7 @@ login.get('/logout', (req, res)=>{
     req.session.username = false;
     req.app.locals.email = false;
     req.app.locals.regEmail = false
-    res.render('login')
+    res.redirect('/login')
 });
 login.use('/user', user_dashboard)
 module.exports = login

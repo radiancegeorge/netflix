@@ -31,15 +31,15 @@
                     <h2>GENERAL INFORMATION</h2>
                 </div>
                 <div class="details">
-                    <form action="">
+                    <form action="/user/dashboard/update_number" method="POST" enctype="application/x-www-form-urlencoded">
                         <label for="email">
-                            <input type="email" readonly value="<%= data.email %> ">
+                            <input type="email" readonly value="<%= data.email %> " name="email">
                         </label>
                         <label for="name">
-                            <input type="text" readonly value="<%= data.name %> ">
+                            <input type="text" readonly value="<%= data.name %> " name="name">
                         </label>
                         <label for="number">
-                            <input type="number" value="0<%= Number(data.phone_number) %> ">
+                            <input type="number" name="phone_number" value=<%=data.phone_number %>>
                         </label>
                         <label for="actions">
                             <button type="reset">RESET</button>

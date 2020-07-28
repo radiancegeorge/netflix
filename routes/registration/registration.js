@@ -21,7 +21,7 @@ reg.post('/register', (req, res)=>{
         const data = {
             name: req.body.name,
             email: req.body.email,
-            phone_number: Number(req.body.phone_number),
+            phone_number: req.body.phone_number,
             username: req.body.username,
             referred: req.body.referred,
             password: hashed,

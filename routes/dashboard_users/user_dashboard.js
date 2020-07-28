@@ -32,6 +32,9 @@ dashboard.get('/profile', (req, res)=>{
     })
 });
 dashboard.get('/home', (req, res)=>{
+   const user = req.session.username;
+
+
     res.render('dashboard_home')
 });
 
@@ -49,5 +52,13 @@ dashboard.get('/timer', (req, res)=>{
         }
     })
 })
-
+dashboard.post('/dashboard/update_number', (req, res)=>{
+    const data = req.body;
+    const sql = `update registered_users set phone_number = ? where email = ?`
+    db.query(sql, [data.phone_number, data.email], (err, result)=>{
+        if(err)throw err;
+        const data = result[0]
+        res.redirect('/user/profile')
+    })
+});
 module.exports = dashboard;
