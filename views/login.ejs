@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/css/signin.css">
+    <title>Sign In</title>
+</head>
+<body>
+    <% if(msg != ''){%>
+        <div class="errormsg">
+            <span><%= msg %></span> please try again
+        </div>
+    <%} %> 
+    
+    <div class="body">
+        <h2 class="header">
+            SIGN INTO <span>YOUR ACCOUNT</span>
+        </h2>
+        <div class="formcontainer">
+            <div class="signinpng">
+                <img src="/src/img/Mobile login-pana.png" alt="Sign In To Account">
+            </div>
+            <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
+                <h2 class="signinbig">
+                    SIGN IN TO <span>YOUR ACCOUNT</span> 
+                </h2>
+                <label class="" for="">
+                    Username
+                    <input type="text" placeholder="Enter Your Username" required name="username">
+                </label>
+                <label class="" for="">
+                    Password
+                    <input type="password" placeholder="Enter Your password" required name="password">
+                </label>
+                <button class="submitbtn">
+                    Sign In
+                </button>
+                <a href="/forgot_password">
+                    <p>
+                        Forgot password?
+                    </p>
+                </a>
+                <a href="/register">
+                    <p>
+                    I don't have an account
+                    </p>
+                </a>
+                
+            </form>
+            
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial Narrow Bold', sans-serif;
+}
+body{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    height: 100vh;
+}
+div{
+    /* border: 2px solid black; */
+    padding: 80px 20px;
+    max-width: 600px;
+    text-align: center;
+    /* margin: auto; */
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -44%);
+    left: 50%;
+    
+    
+}
+h1{
+    font-size: 180px;
+    margin: 40px 0;
+}
+span{
+    color: orange;
+}
+p{
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+a:link{
+    color: orange;
+}
+a:visited{
+    color: green;
+}

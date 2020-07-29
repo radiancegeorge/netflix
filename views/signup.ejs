@@ -1,0 +1,98 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./src/css/signup.css">
+        <title>Sign Up</title>
+    </head>
+    <body>
+        
+        <form class="signup" action="/register" method="POST" enctype="application/x-www-form-urlencoded">
+            <h1 class="formhead">
+                <span>
+                    CREATE
+                </span> YOUR ACCOUNT
+            </h1>
+            <div class="input referral">
+                <p>
+                    Referral's ID
+                </p>
+                <input name="referred" type="text" placeholder="Referral ID">
+            </div>
+            <div class="input">
+                <p>
+                    Enter Your Full Name
+                </p>
+                <input name="name" required type="text" placeholder="Enter Full Name">
+            </div>
+            <div class="input">
+                <p>
+                    Enter Your E-mail
+                </p>
+                <input name="email" required type="email" placeholder="Enter Your E-mail Address">
+            </div>
+            <!-- <div class="input">
+                <p>
+                    Gender
+                </p>
+                <select required name="Gender" id="">
+                    <option value="Male">
+                        Male
+                    </option>
+                    <option value="Female">
+                        Female
+                    </option>
+                </select>
+            </div> -->
+            <div class="input">
+                <p>
+                    Enter Your Phone Number
+                </p>
+                <input name="phone_number" required type="tel" placeholder="Enter Valid Phone Number">
+            </div>
+            <div class="input">
+                <p>
+                   Choose Username
+                </p>
+                <input name="username" required type="text" placeholder="Choose username">
+            </div>
+            <div class="input">
+                <p>
+                    Choose Password
+                </p>
+                <input name="password" required type="password" placeholder="Choose Password">
+            </div>
+            <div class="input">
+                <p>
+                    Confirm Password
+                </p>
+                <input name="retype_password" required type="password" placeholder="Confirm Password">
+            </div>
+            <p>
+                By clicking "Create My Account", You agree to 
+                <a href="">
+                    Terms and Conditions
+                </a> set out by the site including our 
+                <a href="">
+                    Disclaimer
+                </a> 
+            </p>
+            <div class="input">
+                <button type="submit" class="submit">
+                    CREATE MY ACCOUNT
+                </button>
+            </div>
+            <p>
+                Already have an account?
+                <a href="">
+                    Sign in
+                </a>
+            </p>
+        </form>
+        <div class="signuppng">
+            <img src="/src/img/Mobile login-pana.png" alt="">
+        </div>
+        <script src="./src/js/signup.js"></script>
+    </body>
+    </html>
