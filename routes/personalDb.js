@@ -19,7 +19,7 @@ const command = (text)=>{
         console.log(result);
     })
 }
-// command('create')
+// command('show tables')
 
 
 module.exports = db

@@ -93,19 +93,31 @@ bankReg.get('/update_bank_details', (req, res)=>{
     db.query(sql, account_details, (err, response)=>{
         if(err)throw err;
         const data = {};
-        data.name = email;
-        data.transaction_id = 'transaction_id varchar(255) not null unique primary key';
-        data.amount_paid = 'amount_paid varchar(255) not null'
-        data.amount_recieved = 'amount_recieved varchar(255) not null'
-        const sql = 'create tabel ? (?, ?, ?)';
-        db.query(sql, [data.name, data.transaction_id, data.amount_paid, data.amount_recieved],(err, result)=>{
+        //using email, find users username;
+        const sql = `select username from registered_users where email = ?`
+        db.query(sql, email, (err, result)=>{
             if(err)throw err;
+            data.username = result[0].username
+            data.transaction_id = 'transaction_id varchar(255) not null unique primary key';
+            data.amount_paid = 'amount_paid varchar(255) not null'
+            data.amount_recieved = 'amount_recieved varchar(255) not null'
+            const sql = `create table ${data.username} (${data.transaction_id}, ${data.amount_paid}, ${data.amount_recieved})`;
+            personalDb.query(sql, (err, result)=>{
+                if(err)throw err;
+                console.log(result);
+                req.app.locals.regEmail = email;
+                // console.log(email, req.session.email)
+                res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard
+            })
         })
+        
 
-        req.app.locals.regEmail = email;
-        // console.log(email, req.session.email)
-        res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard
+        
     })
 })
 // bankReg.use(express.urlencoded({extended: false}));
+
+
+
+
 module.exports = bankReg;

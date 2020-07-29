@@ -23,5 +23,5 @@ const ls = (sql)=>{
 // array.forEach(item=>{
 //     ls(`alter table awaiting_payment add column ${item}`)
 // })
-// ls(`show databases `)
+// ls(`delete from registered_users where username = 'radiance_obi' `)
 module.exports = db
