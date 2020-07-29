@@ -55,26 +55,36 @@ dashboard.get('/home', (req, res)=>{
                         if(err)throw err;
                         if(result.length < 1){
                             // nobody to pay yet.. do something about it later;
+                            data.waitingForPayment = true;
                             data.nobody = true;
                             res.render('dashboard_home', {data});
                         }else{
                             //people to pay to this user found... now render persons details to this user;
                             data.payers = result;
-                            res.render('dashboard_home')
+                            res.render('dashboard_home', {data})
                         }
                     })
                 }
             })
         }else if(result.length === 1){
             //found him in pay_to table, now render who he is to pay to**** details
+
             result = result[0];
-            const reciever = result.reciever;
-            const sql = `select username,phone_number, account_name, account_number, bank_name from registered_users where username = ?`;
-            db.query(sql, reciever, (err, result)=>{
-                if(err)throw err;
-                data.reciever = result[0];
-                res.render('dashboard_home',{data})
-            })
+            console.log(result.reciever);
+            if(result.reciever != null){
+                const reciever = result.reciever;
+                const sql = `select username,phone_number, account_name, account_number, bank_name from registered_users where username = ?`;
+                db.query(sql, reciever, (err, result)=>{
+                    if(err)throw err;
+                    data.reciever = result[0];
+                    res.render('dashboard_home',{data})
+                })
+            }else{
+                //no reciever to display cos no merge has occured;
+                data.wait = true;
+                res.render('dashboard_home', {data})
+            }
+            
         }else{
             //an unknown problem occured
         }

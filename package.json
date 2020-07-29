@@ -32,6 +32,8 @@
     "nodemailer": "^6.4.10",
     "paystack": "^2.0.1",
     "paystack-node": "^0.2.4",
+    "sqlstring": "^2.3.2",
+    "uniqid": "^5.2.0",
     "uuid": "^8.2.0"
   }
 }

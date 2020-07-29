@@ -23,7 +23,7 @@
     <section class="invest">
         <div class="container">
            <% if(data.initialization){%>
-                    <form action="" class="initialization">
+                    <form action="/user/invest" class="initialization" method="POST" enctype="application/x-www-form-urlencoded">
                         <h1>Invest starting from N2,000 and above</h1>
                         <input type="number" placeholder="2000" required minlength="4" min="2000" name="amount">
                         <p>Please note that you have just 24hrs to make this payment once merged</p>
@@ -42,6 +42,10 @@
                         <button type="submit">I Have Paid</button>
                     </form>
             <%} %> 
+            <% if(data.wait){%>
+                    <h1 style="color: white;">please wait.. the system will merge you soon, might take up to an hour</h1>
+            <%} %> 
+
         </div>
     </section>
 
