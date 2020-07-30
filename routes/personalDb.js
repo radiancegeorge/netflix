@@ -19,7 +19,7 @@ const command = (text)=>{
         console.log(result);
     })
 }
-// command('show tables')
+// command('select * from radiance_obi order by transaction_id desc')
 
 
 module.exports = db

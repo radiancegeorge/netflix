@@ -110,7 +110,7 @@ admin.get('/validate_payment', (req, res)=>{
                 db.query(sql, payersTransactionDetails.reciever, (err, result)=>{
                     if(err)throw err;
                     const amount_recieved = result[0].amount_recieved
-                    const sql = `update table awaiting_payment set amount_recieved = ? where username = ?`;
+                    const sql = `update awaiting_payment set amount_recieved = ? where username = ?`;
                     db.query(sql, [Number(payersTransactionDetails.amount) + Number(amount_recieved), payersTransactionDetails.reciever], (err, result)=>{
                         if(err)throw err;
                         console.log(result, 'amount recieved has been updated');

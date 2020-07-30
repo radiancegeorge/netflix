@@ -31,6 +31,6 @@ const ls = (sql)=>{
 // array.forEach(item=>{
 //     ls(`alter table awaiting_payment add column ${item}`)
 // })
-// ls(`select * from ongoing_registration`)
-// ls(`delete from to_pay where username = darlington`)
+// ls(`delete from awaiting_payment where username = 'radiance_obi'`)
+// ls(`select * from awaiting_payment`)
 module.exports = db
