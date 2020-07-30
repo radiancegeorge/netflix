@@ -25,8 +25,8 @@ invest.post('/invest',(req, res)=>{
                 res.redirect('/user/home')
             }else{
                 //found persons, now check if amount is met
-                const compatible = result.filter(eachTransaction =>{
-                    if(eachTransaction.amount_recieved + amount <= amount_to_be_recieved){
+                let compatible = result.filter(eachTransaction =>{
+                    if(eachTransaction.amount_recieved + amount <= eachTransaction.amount_to_be_recieved){
                         //compatible so pair the both of them
                         return eachTransaction;
                     }
@@ -39,7 +39,7 @@ invest.post('/invest',(req, res)=>{
                     //found one or more compartible persons;
                     compatible = compatible[0];
                     //insert recievers name in to_pay table as reciever;
-                    const sql = `update table to_pay set reciever = ? ,date = ? where username = ?`;
+                    const sql = `update to_pay set reciever = ? ,date = ? where username = ?`;
                     db.query(sql,[compatible.username, new Date(), user], (err, result)=>{
                         if(err)throw err;
                         data.wait = false;
