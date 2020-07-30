@@ -69,10 +69,16 @@ reg.post('/register', (req, res)=>{
                         const deleteQ = `delete from ongoing_registration where gen_id = ?`;
                         setTimeout(() => {
                             db.query(deleteQ, data.gen_id, (err, result) => {
-                                if (err) throw err;
+                                if (err){
+                                    if (err.code === 'ER_BAD_FIELD_ERROR'){
+                                        //user confirmed aready so do nothing
+                                    }else{
+                                        throw err
+                                    }
+                                };
                                 console.log(result, 'deleted')
                             })
-                        }, 21600000);
+                        }, 60000 * 60);
                          
                     }
                 })

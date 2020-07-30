@@ -111,7 +111,7 @@ admin.get('/validate_payment', (req, res)=>{
                     if(err)throw err;
                     const amount_recieved = result[0].amount_recieved
                     const sql = `update table awaiting_payment set amount_recieved = ? where username = ?`;
-                    db.query(sql, [payersTransactionDetails.amount + amount_recieved, payersTransactionDetails.reciever], (err, result)=>{
+                    db.query(sql, [Number(payersTransactionDetails.amount) + Number(amount_recieved), payersTransactionDetails.reciever], (err, result)=>{
                         if(err)throw err;
                         console.log(result, 'amount recieved has been updated');
                         //after amount recieved update, now write data to personal data;
@@ -125,7 +125,9 @@ admin.get('/validate_payment', (req, res)=>{
                                 if(result.length >= 2){
                                     //add to awaiting payment
                                     const sql = `insert into awaiting_payment (transaction_id,username, amount_paid, amount_to_be_recieved, amount_recieved) values (?,?,?,?,?)`;
-                                    db.query(sql, [payersTransactionDetails.id, user,payersTransactionDetails.amount, payersTransactionDetails.amount + (payersTransactionDetails.amount * 50/100), 0], (err, result)=>{
+                                    // const added = Number(payersTransactionDetails.amount) + Number(payersTransactionDetails.amount * 50 / 100);
+                                    // console.log(added)
+                                    db.query(sql, [payersTransactionDetails.id, user,payersTransactionDetails.amount, Number(payersTransactionDetails.amount) + Number(payersTransactionDetails.amount * 50/100), 0], (err, result)=>{
                                         if(err)throw err;
                                         //inserted successully, now delete record from to_pay;
                                         const sql = `delete from to_pay where username = ?`;
@@ -161,7 +163,7 @@ admin.get('/validate_payment', (req, res)=>{
                         if (result.length >= 2) {
                             //add to awaiting payment
                             const sql = `insert into awaiting_payment (transaction_id,username, amount_paid, amount_to_be_recieved, amount_recieved) values (?,?,?,?,?)`;
-                            db.query(sql, [payersTransactionDetails.id, user, payersTransactionDetails.amount, payersTransactionDetails.amount + (payersTransactionDetails.amount * 50 / 100), 0], (err, result) => {
+                            db.query(sql, [payersTransactionDetails.id, user, payersTransactionDetails.amount, Number(payersTransactionDetails.amount) + Number(payersTransactionDetails.amount * 50 / 100), 0], (err, result) => {
                                 if (err) throw err;
                                 //inserted successully, now delete record from to_pay;
                                 const sql = `delete from to_pay where username = ?`;
@@ -169,6 +171,7 @@ admin.get('/validate_payment', (req, res)=>{
                                     if (err) throw err;
                                     console.log(result, ' deleted from to_pay')
                                     //record deleted
+                                    res.redirect('/admin')
                                 })
                             })
                         } else {
@@ -178,12 +181,13 @@ admin.get('/validate_payment', (req, res)=>{
                                 if (err) throw err;
                                 console.log(result, ' deleted from to_pay but not added to awaiting list')
                                 //record deleted
-                            })
-                        }
-                    })
-                })
-            }
-        })
+                                res.redirect('/admin')
+                            });
+                        };
+                    });
+                });
+            };
+        });
     }else{
         //a huge error..... do something
     }

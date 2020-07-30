@@ -14,7 +14,15 @@ db.connect(()=>{
 const ls = (sql)=>{
     q = sql;
     db.query(q, (err, result)=>{
-        if(err)throw err;
+        // if(err)throw err;
+        if(err){
+            console.log(err.code)
+            if (err.code === 'ER_BAD_FIELD_ERROR'){
+                console.log('no user')
+            }else{
+                throw err;
+            }
+        }
         console.log(result)
     });
 }
@@ -23,5 +31,6 @@ const ls = (sql)=>{
 // array.forEach(item=>{
 //     ls(`alter table awaiting_payment add column ${item}`)
 // })
-// ls(`truncate table to_pay`)
+// ls(`select * from ongoing_registration`)
+// ls(`delete from to_pay where username = darlington`)
 module.exports = db

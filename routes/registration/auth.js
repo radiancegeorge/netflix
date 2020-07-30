@@ -2,6 +2,8 @@ const express = require('express');
 const auth = express.Router();
 const db = require('../db')
 
+
+
 auth.get('/auth/:id', (req, res)=>{
     const id = req.params.id;
     let sql = `SELECT * FROM ongoing_registration WHERE gen_id = ?`;
