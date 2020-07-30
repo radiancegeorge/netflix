@@ -559,4 +559,60 @@ header nav ul li a img {
 .invest .pay-to button:hover {
   background: orange;
 }
+
+.found h1 {
+  color: green;
+  background: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.found form {
+  background: white;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.found form input {
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+  display: block;
+}
+
+.found form button {
+  padding: 10px 16px;
+  margin: 10px 0;
+  color: white;
+  background: green;
+  border: none;
+  cursor: pointer;
+}
+
+.found form button:hover {
+  background: orange;
+}
+
+.waiting-for-payment {
+  color: white;
+}
+
+.waiting-for-payment h1 {
+  background: orange;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.wait {
+  color: white;
+}
+
+.wait h1 {
+  background: green;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
 /*# sourceMappingURL=user_dashboard.css.map */

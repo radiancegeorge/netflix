@@ -39,7 +39,7 @@
        </form>
 
        <% if(data.payee){%>
-            <form action="/validate_payment">
+            <form action="/admin/validate_payment" method="GET" enctype="application/x-www-form-urlencoded"> 
                 <input type="text" value="<%= data.payeeName %> " name="name">
                 <label for="payment status">
                     paid <input type="radio" disabled <% if(data.paid){%>

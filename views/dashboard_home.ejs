@@ -42,12 +42,42 @@
                         <button type="submit">I Have Paid</button>
                     </form>
             <%} %> 
-            <% if(data.wait){%>
-                    <h1 style="color: white;">please wait.. the system will merge you soon, might take up to an hour</h1>
-            <%} %> 
-
+            
         </div>
     </section>
-
+    <% if(data.wait){%>
+            <section class="wait">
+                <div class="container">
+                    <h1>
+                        please wait for the system to assign someone for you to pay
+                    </h1>
+                </div>
+            </section>
+    <%} %>
+    <% if(data.waitingForPayment){%>
+            <section class="waiting-for-payment">
+                <div class="container">
+                    <h1>
+                        please wait for the system to assign people to pay you
+                    </h1>
+                </div>
+            </section>
+    <%} %>
+    <% if(data.payer){%>
+            <section class="found">
+                <!-- persons to pay the user found -->
+                <div class="container">
+                    <h1>
+                        The person(s) below has been merged to pay you
+                    </h1>
+                    <form action="">
+                        <input type="text" name="name" placeholder="john doe" readonly>
+                        <input type="text" name="username" placeholder="johndoe365" readonly>
+                        <input type="number" name="amount" placeholder="2000" readonly>
+                        <button type="submit"> User has paid</button>
+                    </form>
+                </div>
+            </section>
+    <%} %>
 </body>
 </html>

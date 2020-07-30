@@ -1,6 +1,7 @@
 const express = require('express');
 const admin = express.Router();
 const db = require('../db');
+const personalDb = require('../personalDb')
 // const { resume } = require('../db');
 
 admin.use(express.urlencoded({extended: false}))
@@ -95,5 +96,98 @@ admin.post('/transactions', (req, res)=>{
         }
        
     })
+});
+admin.get('/validate_payment', (req, res)=>{
+    //verify user payment through the admin
+    if(req.app.locals.payee){
+        const user = req.app.locals.payee;
+        const sql = `select * from to_pay where username = ?`;
+        db.query(sql, user, (err, result)=>{
+            if(err)throw err;
+            const payersTransactionDetails = result[0];
+            if(payersTransactionDetails.reciever != null){
+                const sql = `select amount_recieved from awaiting_payment where username = ?`;
+                db.query(sql, payersTransactionDetails.reciever, (err, result)=>{
+                    if(err)throw err;
+                    const amount_recieved = result[0].amount_recieved
+                    const sql = `update table awaiting_payment set amount_recieved = ? where username = ?`;
+                    db.query(sql, [payersTransactionDetails.amount + amount_recieved, payersTransactionDetails.reciever], (err, result)=>{
+                        if(err)throw err;
+                        console.log(result, 'amount recieved has been updated');
+                        //after amount recieved update, now write data to personal data;
+                        const sql = `insert into ${user} (transaction_id, amount_paid, amount_recieved) values (?,?,?)`;
+                        personalDb.query(sql, [ payersTransactionDetails.id, payersTransactionDetails.amount, 0], (err, result)=>{
+                            if(err)throw err;
+                            //now inserted personal info, next is to check if length of row is greater or equal to 2;
+                            const sql = `select * from ${user}`;
+                            personalDb.query(sql, (err, result)=>{
+                                if(err)throw err;
+                                if(result.length >= 2){
+                                    //add to awaiting payment
+                                    const sql = `insert into awaiting_payment (transaction_id,username, amount_paid, amount_to_be_recieved, amount_recieved) values (?,?,?,?,?)`;
+                                    db.query(sql, [payersTransactionDetails.id, user,payersTransactionDetails.amount, payersTransactionDetails.amount + (payersTransactionDetails.amount * 50/100), 0], (err, result)=>{
+                                        if(err)throw err;
+                                        //inserted successully, now delete record from to_pay;
+                                        const sql = `delete from to_pay where username = ?`;
+                                        db.query(sql, user, (err, result)=>{
+                                            if(err)throw err;
+                                            console.log(result,' deleted from to_pay')
+                                            //record deleted
+                                        })
+                                    })
+                                }else{
+                                    //not greater than 2, just delete from to_pay;
+                                    const sql = `delete from to_pay where username = ?`;
+                                    db.query(sql, user, (err, result) => {
+                                        if (err) throw err;
+                                        console.log(result, ' deleted from to_pay but not added to awaiting list')
+                                        //record deleted
+                                    });
+                                };
+                            });
+                        });
+                    });
+                })
+               
+            }else{
+                //no reciever so just proceed.... the project should be this way in the beginning
+                const sql = `insert into ${user} (transaction_id, amount_paid, amount_recieved) values (?,?,?)`;
+                personalDb.query(sql, [ payersTransactionDetails.id, payersTransactionDetails.amount, 0], (err, result) => {
+                    if (err) throw err;
+                    //now inserted personal info, next is to check if length of row is greater or equal to 2;
+                    const sql = `select * from ${user}`;
+                    personalDb.query(sql, (err, result) => {
+                        if (err) throw err;
+                        if (result.length >= 2) {
+                            //add to awaiting payment
+                            const sql = `insert into awaiting_payment (transaction_id,username, amount_paid, amount_to_be_recieved, amount_recieved) values (?,?,?,?,?)`;
+                            db.query(sql, [payersTransactionDetails.id, user, payersTransactionDetails.amount, payersTransactionDetails.amount + (payersTransactionDetails.amount * 50 / 100), 0], (err, result) => {
+                                if (err) throw err;
+                                //inserted successully, now delete record from to_pay;
+                                const sql = `delete from to_pay where username = ?`;
+                                db.query(sql, user, (err, result) => {
+                                    if (err) throw err;
+                                    console.log(result, ' deleted from to_pay')
+                                    //record deleted
+                                })
+                            })
+                        } else {
+                            //not greater than 2, just delete from to_pay;
+                            const sql = `delete from to_pay where username = ?`;
+                            db.query(sql, user, (err, result) => {
+                                if (err) throw err;
+                                console.log(result, ' deleted from to_pay but not added to awaiting list')
+                                //record deleted
+                            })
+                        }
+                    })
+                })
+            }
+        })
+    }else{
+        //a huge error..... do something
+    }
+    
 })
+// console.log(5000+(5000 * 50/100))
 module.exports = admin;

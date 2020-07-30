@@ -22,7 +22,7 @@ invest.post('/invest',(req, res)=>{
             if(result.length < 1){
                 // no one on payrow, can check admin or maybe not.. still thinking
                 // data
-                res.render('dashboard_home',{data})
+                res.redirect('/user/home')
             }else{
                 //found persons, now check if amount is met
                 const compatible = result.filter(eachTransaction =>{
@@ -34,7 +34,7 @@ invest.post('/invest',(req, res)=>{
                 if(compatible.length < 1){
                     //no compartible person to pay to;
                     data.wait = true;
-                    res.render('dashboard_home', {data})
+                    res.redirect('/user/home')
                 }else{
                     //found one or more compartible persons;
                     compatible = compatible[0];
@@ -43,8 +43,8 @@ invest.post('/invest',(req, res)=>{
                     db.query(sql,[compatible.username, new Date(), user], (err, result)=>{
                         if(err)throw err;
                         data.wait = false;
-                        res.render('dashboard_home', {data})
-                    })
+                        res.redirect('/user/home')
+                    });
                 }
             }
         })

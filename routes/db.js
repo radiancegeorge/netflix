@@ -16,7 +16,7 @@ const ls = (sql)=>{
     db.query(q, (err, result)=>{
         if(err)throw err;
         console.log(result)
-    })
+    });
 }
 // ls('alter table awaiting_payment modify column transaction_id varchar(45) not null unique')
 // const array = ['username varchar(45) not null unique', 'amount_paid varchar(255) not null unique', 'amount_to_be_recieved varchar(255) not null unique',' amount_recieved varchar(255) unique'];
