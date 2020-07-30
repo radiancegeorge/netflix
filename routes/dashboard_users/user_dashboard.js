@@ -61,11 +61,21 @@ dashboard.get('/home', (req, res)=>{
                         }else{
                             //people to pay to this user found... now render persons details to this user;
                             data.payers = result;
-                            res.render('dashboard_home', {data})
-                        }
-                    })
-                }
-            })
+                            data.payers.forEach(payer => {
+                                const sql = `select name from registered_users where username = ?`;
+                                db.query(sql, payer.username, (err, result)=>{
+                                    if(err)throw err;
+                                    payer.name = result[0].name;
+                                    if(data.payers.indexOf(payer) === data.payers.length - 1){
+                                        res.render('dashboard_home', { data });
+                                    };
+                                });
+
+                            });
+                        };
+                    });
+                };
+            });
         }else if(result.length === 1){
             //found him in pay_to table, now render who he is to pay to**** details
 
