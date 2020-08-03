@@ -75,11 +75,12 @@ admin.post('/transactions', (req, res)=>{
         console.log(result, 'result for admin search on registered users')
         if(result.length === 1){
             data.payee = result[0].username;
-            data.payeeName = result[0].name
+            data.payeeName = result[0].name;
+            req.app.locals.userName = data.payee;
             const sql = 'select username from to_pay where username = ?';
             db.query(sql, data.payee, (err, result) => {
                 if (err)throw err;
-                console.log(result)
+                console.log(result, 'found in to_pay')
                 if(result.length < 1){
                     //user has no ongoing investment; find a way to get the message accross
                     console.log('no investment');
@@ -87,29 +88,28 @@ admin.post('/transactions', (req, res)=>{
                     data.paid = true
                     res.render('admin')
                 }else{
-                    const payersTransactionDetails = result[0];
+                    // const payersTransactionDetails = result[0];
                     //get a list of all the tables so we can start searching for one that contains the investor in the awaiting payment database;
                     awaiting.query('show tables', (err, result) => {
                         if (err) throw err;
                         if (result.length < 1) {
                             //no table in here;
-                            // fresh database
+                            // fresh database;
+
                         } else {
                             //not an empty database so continue with search for investors name;
-                            const data = result;
-                            let tablesContainingInvestor = data.map(table => {
+                            const outcome = result;
+                            let tablesContainingInvestor = outcome.map(table => {
                                 //trying to return tables containing the investors username
                                 const tableName = table.Tables_in_netftgvf_awaiting_payment;
-                                const sql = `select * from ${tableName} where username = ${data.payee}`;
-                                awaiting.query(sql, (err, result) => {
+                                const sql = `select * from ${tableName} where username = ?`;
+                                awaiting.query(sql, data.payee, (err, result) => {
                                     if (err) throw err;
                                     //return table name and user if exist;
                                     if (result.length === 1) {
-                                        const paymentStatus = result[0].status
                                         return {
                                             tableName,
                                             result: result[0],
-                                            status: paymentStatus === 'paid' ? true : false
                                         }
                                     } else {
                                         //this table doesnt have investor on it
@@ -123,11 +123,10 @@ admin.post('/transactions', (req, res)=>{
                             })
                             console.log(tablesContainingInvestor, 'this are tables containnng investors');
                             if(tablesContainingInvestor.length != 0){
-                                
                                 data.transactions = tablesContainingInvestor
-                                res.render('admin', { data })
+                                res.render('admin', { data });
                             }else{
-                                data.paid = true
+                                // data.paid = true
                                 res.render('admin', {data})
                             }
                         }
@@ -165,10 +164,10 @@ admin.post('/validate_payment', (req, res)=>{
                         if(err)throw err;
                         console.log(result, 'amount has been updated for the reciever');
                         //update status in awaiting payment database to true for this reciever;
-                        const sql = `update ${reciever} set status = paid where username = ${username}`;
+                        const sql = `delete from ${reciever} where username = ${username}`;
                         awaiting.query(sql, (err, result)=>{
                             if(err)throw err;
-                            console.log(result, 'status changed to paid');
+                            console.log(result, 'deleted user from this reciever');
                             //extra, check if this user is found in other tables;
 
                             awaiting.query('show tables', (err, result) => {
@@ -178,20 +177,19 @@ admin.post('/validate_payment', (req, res)=>{
                                     // fresh database
                                 } else {
                                     //not an empty database so continue with search for investors name;
-                                    const data = result;
-                                    let tablesContainingInvestor = data.map(table => {
+                                    const outcome = result;
+                                    let tablesContainingInvestor = outcome.map(table => {
                                         //trying to return tables containing the investors username
                                         const tableName = table.Tables_in_netftgvf_awaiting_payment;
-                                        const sql = `select * from ${tableName} where username = ${username} and status = 'not paid'`;
+                                        const sql = `select * from ${tableName} where username = ${username}`;
                                         awaiting.query(sql, (err, result) => {
                                             if (err) throw err;
                                             //return table name and user if exist;
                                             if (result.length === 1) {
-                                                const paymentStatus = result[0].status
+    
                                                 return {
                                                     tableName,
-                                                    result: result[0],
-                                                    status: paymentStatus === 'paid' ? true : false
+                                                    result: result[0]
                                                 }
                                             } else {
                                                 //this table doesnt have investor on it
@@ -222,15 +220,17 @@ admin.post('/validate_payment', (req, res)=>{
                                             personalDb.query(sql, (err, result) => {
                                                 if (err) throw err;
                                                 if (result.length >= 2) {
-                                                    const amount = result[result.length - 1].amount_paid
+                                                    const amount = Number(result[result.length - 1].amount_paid)
                                                     const transactio_id = result[result.length - 1].transaction_id
                                                     const amount_recieved = result[result.length - 1].amount_recieved
                                                     //add to awaiting_payment and create a table in awaiting database;
                                                     const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
-                                                    db.query(sql, [transactio_id, amount, amount_recieved], (err, result) => {
+                                                    const toBeRecieved = Number(amount) + (amount * 50 / 100)
+
+                                                    db.query(sql, [transactio_id,username, amount, amount_recieved, toBeRecieved], (err, result) => {
                                                         if (err) throw err;
                                                         //inserted into awaiting table, next create table for user in awaiting database;
-                                                        const sql = `create table ${username} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varvhar(45))`;
+                                                        const sql = `create table ${username} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varchar(45))`;
                                                         awaiting.query(sql, (err, result) => {
                                                             if (err) throw err;
                                                             console.log('has been added to the awaitinng databas for recieving');
@@ -257,6 +257,44 @@ admin.post('/validate_payment', (req, res)=>{
         }
     })
 
+});
+
+
+admin.get('/validate_payment', (req, res)=>{
+    const user = req.app.locals.userName;
+    const sql = `select * from to_pay where username = ?`;
+    db.query(sql, user, (err, result)=>{
+        if(err)throw err;
+        const data =  result[0];
+        const sql = `delete from to_pay where username = ?`;
+        db.query(sql,user, (err, result) => {
+            if (err) throw err;
+            //deleted from to pay and getting ready to be added to awaiting;
+            const sql = `select * from ${user}`;
+            personalDb.query(sql, (err, result) => {
+                if (err) throw err;
+                if (result.length >= 2) {
+                    const amount = Number(result[result.length - 1].amount_paid)
+                    const transactio_id = result[result.length - 1].transaction_id
+                    const amount_recieved = result[result.length - 1].amount_recieved
+                    //add to awaiting_payment and create a table in awaiting database;
+                    const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
+                    const toBeRecieved = amount + (amount * 50 / 100)
+                    db.query(sql, [transactio_id,user, amount, amount_recieved, toBeRecieved], (err, result) => {
+                        if (err) throw err;
+                        //inserted into awaiting table, next create table for user in awaiting database;
+                        const sql = `create table ${user} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varchar(45))`;
+                        awaiting.query(sql, (err, result) => {
+                            if (err) throw err;
+                            console.log('has been added to the awaitinng databas for recieving');
+                            res.redirect('/admin')
+                        })
+                    })
+
+                }
+            })
+        })
+    })
 })
 // console.log(5000+(5000 * 50/100))
 module.exports = admin;

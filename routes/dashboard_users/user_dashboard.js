@@ -46,7 +46,7 @@ dashboard.get('/home', (req, res)=>{
             db.query(sql, user, (err, result)=>{
                 if(err)throw err;
                 if(result.length < 1){
-                    //founding nothing in awaiting payment also; so render home with ability to commence transaction;
+                    //found nothing in awaiting payment also; so render home with ability to commence transaction;
                     data.initialization = true;
                     res.render('dashboard_home', {data})
                 }else if(result.length === 1){
@@ -58,6 +58,7 @@ dashboard.get('/home', (req, res)=>{
                         if(result.length < 1){
                             // no investor merged yet;
                             data.waitingForPayment = true;
+                            res.render('dashboard_home',{data})
                         }else{
                             //found investors merged
                            data.payers = result;
@@ -68,23 +69,115 @@ dashboard.get('/home', (req, res)=>{
                 };
             });
         }else if(result.length === 1){
-            //found him in pay_to table, now render who he is to pay to**** details
 
-            result = result[0];
-            console.log(result.reciever);
-            if(result.reciever != null){
-                const reciever = result.reciever;
-                const sql = `select username,phone_number, account_name, account_number, bank_name from registered_users where username = ?`;
-                db.query(sql, reciever, (err, result)=>{
-                    if(err)throw err;
-                    data.reciever = result[0];
+            //found in to pay table ... sweep through awaiting database for user in any of the colu
+            console.log(result, 'found in to_pay table');
+
+            awaiting.query('show tables', (err, result) => {
+                if (err) throw err;
+                if (result.length < 1) {
+                    //no table in here;
+                    // fresh database;
+                    data.wait = true;
+                    data.initialization = false
                     res.render('dashboard_home',{data})
-                })
-            }else{
-                //no reciever to display cos no merge has occured;
-                data.wait = true;
-                res.render('dashboard_home', {data})
-            }
+                } else {
+                    //not an empty database so continue with search for investors name;
+                    const outcome = result;
+                    let tablesContainingInvestor = outcome.map(table => {
+                        //trying to return tables containing the investors username
+                        const tableName = table.Tables_in_netftgvf_awaiting_payment;
+                        const sql = `select * from ${tableName} where username = ?`;
+                        awaiting.query(sql, user, (err, result) => {
+                            if (err) throw err;
+                            //return table name and user if exist;
+                            if (result.length === 1) {
+
+                                return {
+                                    tableName,
+                                    result: result[0]
+                                }
+                            } else {
+                                //this table doesnt have investor on it
+                            }
+                        })
+                    });
+                    tablesContainingInvestor = tablesContainingInvestor.filter(item => {
+                        if (item != undefined) {
+                            return item
+                        }
+                    })
+                    console.log(tablesContainingInvestor, 'these are tables containnng investor');
+                    if (tablesContainingInvestor.length != 0) {
+                        data.initialization = false
+                        data.transactions = tablesContainingInvestor;
+                        res.render('dashboard_home', { data })
+                    }else{
+                        data.wait = true;
+                        res.render('dashboard_home', {data})
+                    }
+                    //  else {
+                    //     // empty, user is done investing;
+
+                    //     //check if personal table has morethan 2 transactions;
+
+                    //     //delete user from to_pay table
+
+                    //     const sql = `delete from to_pay where username = ${username}`;
+                    //     db.query(sql, (err, result) => {
+                    //         if (err) throw err;
+                    //         //deleted from to pay and getting ready to be added to awaiting;
+                    //         const sql = `select * from ${username}`;
+                    //         personalDb.query(sql, (err, result) => {
+                    //             if (err) throw err;
+                    //             if (result.length >= 2) {
+                    //                 const amount = result[result.length - 1].amount_paid
+                    //                 const transactio_id = result[result.length - 1].transaction_id
+                    //                 const amount_recieved = result[result.length - 1].amount_recieved
+                    //                 //add to awaiting_payment and create a table in awaiting database;
+                    //                 const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
+                    //                 db.query(sql, [transactio_id, amount, amount_recieved], (err, result) => {
+                    //                     if (err) throw err;
+                    //                     //inserted into awaiting table, next create table for user in awaiting database;
+                    //                     const sql = `create table ${username} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varvhar(45))`;
+                    //                     awaiting.query(sql, (err, result) => {
+                    //                         if (err) throw err;
+                    //                         console.log('has been added to the awaitinng databas for recieving');
+                    //                         res.redirect('admin')
+                    //                     })
+                    //                 })
+
+                    //             }
+                    //         })
+                    //     })
+
+
+                    //     res.redirect('admin')
+                    // }
+                }
+            })
+
+
+
+
+
+            // //found him in pay_to table, now render who he is to pay to**** details
+
+            // result = result[0];
+            // console.log(result.reciever);
+            // if(result.reciever != null){
+            //     const reciever = result.reciever;
+            //     const sql = `select username,phone_number, account_name, account_number, bank_name from registered_users where username = ?`;
+            //     db.query(sql, reciever, (err, result)=>{
+            //         if(err)throw err;
+            //         data.reciever = result[0];
+            //         res.render('dashboard_home',{data})
+            //     })
+            // }else{
+            //     //no reciever to display cos no merge has occured;
+            //     data.wait = true;
+            //     res.render('dashboard_home', {data})
+            // }
             
         }else{
             //an unknown problem occured

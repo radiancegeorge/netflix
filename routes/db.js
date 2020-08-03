@@ -15,18 +15,9 @@ const ls = (sql)=>{
     q = sql;
     db.query(q, (err, result)=>{
         // if(err)throw err;
-        if(err){
-            console.log(err.code)
-            if (err.code === 'ER_BAD_FIELD_ERROR'){
-                console.log('no user')
-            }else{
-                throw err;
-            }
-        }
+        if(err)throw err;
         console.log(result);
-        result.forEach(element => {
-            // console.log(element.Tables_in_netftgvf_netflix_networking)
-        });
+        
     });
 }
 // ls('alter table awaiting_payment modify column transaction_id varchar(45) not null unique')
@@ -34,6 +25,7 @@ const ls = (sql)=>{
 // array.forEach(item=>{
 //     ls(`alter table awaiting_payment add column ${item}`)
 // })
-// ls(`show columns from awaiting_payment`)
-// ls(`show tables`)
+// ls(`truncate table to_pay`)
+// ls(`truncate table awaiting_payment`)
+// ls(`select * from awaiting_payment`)
 module.exports = db

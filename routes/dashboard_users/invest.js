@@ -111,7 +111,7 @@ invest.post('/invest',(req, res)=>{
                                     })
                                 });
 
-
+ 
                                 // let compatible = result.filter(eachTransaction => {
                                 //     if (eachTransaction.amount_recieved + amount <= eachTransaction.amount_to_be_recieved) {
                                 //         //compatible so pair the both of them
