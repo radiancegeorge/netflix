@@ -23,7 +23,10 @@ const ls = (sql)=>{
                 throw err;
             }
         }
-        console.log(result)
+        console.log(result);
+        result.forEach(element => {
+            // console.log(element.Tables_in_netftgvf_netflix_networking)
+        });
     });
 }
 // ls('alter table awaiting_payment modify column transaction_id varchar(45) not null unique')
@@ -31,6 +34,6 @@ const ls = (sql)=>{
 // array.forEach(item=>{
 //     ls(`alter table awaiting_payment add column ${item}`)
 // })
-// ls(`delete from awaiting_payment where username = 'radiance_obi'`)
-// ls(`select * from awaiting_payment`)
+// ls(`show columns from awaiting_payment`)
+// ls(`show tables`)
 module.exports = db

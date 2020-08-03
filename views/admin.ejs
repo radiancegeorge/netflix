@@ -30,7 +30,7 @@
    <% } %> 
 
 
-
+ 
 
    <section class="transactions" style="margin-top: 20px;">
        <form action="/admin/transactions" method="POST" enctype="application/x-www-form-urlencoded">
@@ -51,7 +51,11 @@
                 <button type="submit">activate</button>
             </form>
       <% } %> 
-       
+
+      
+        <% if(data.transactions){%>
+            <h1>data.transactions go in here</h1>
+        <% } %>
    </section>
 </body>
 </html>
