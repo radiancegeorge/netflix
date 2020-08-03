@@ -1,7 +1,8 @@
 const express =  require('express');
 const dashboard = express.Router();
 const db = require('../db');
-const invest = require('./invest')
+const invest = require('./invest');
+const awaiting = require('../awaitingDb')
 
 dashboard.get('/dashboard', (req, res)=>{
     console.log(req.session.username)
@@ -49,31 +50,21 @@ dashboard.get('/home', (req, res)=>{
                     data.initialization = true;
                     res.render('dashboard_home', {data})
                 }else if(result.length === 1){
-                    //found in payment, then go back to to_pay and see if the system has anyone to pay this individual;
-                    const sql = 'select * from to_pay where reciever = ?';
-                    db.query(sql, user, (err, result)=>{
+                    data.initialization = false;
+                    //found in awaiting so, check his table to see if any user has been placed under him;
+                    const sql = `select * from ${user}`
+                    awaiting.query(sql, (err, result)=>{
                         if(err)throw err;
                         if(result.length < 1){
-                            // nobody to pay yet.. do something about it later;
+                            // no investor merged yet;
                             data.waitingForPayment = true;
-                            data.nobody = true;
-                            res.render('dashboard_home', {data});
                         }else{
-                            //people to pay to this user found... now render persons details to this user;
-                            data.payers = result;
-                            data.payers.forEach(payer => {
-                                const sql = `select name from registered_users where username = ?`;
-                                db.query(sql, payer.username, (err, result)=>{
-                                    if(err)throw err;
-                                    payer.name = result[0].name;
-                                    if(data.payers.indexOf(payer) === data.payers.length - 1){
-                                        res.render('dashboard_home', { data });
-                                    };
-                                });
-
-                            });
-                        };
-                    });
+                            //found investors merged
+                           data.payers = result;
+                            data.waitingForPayment = false;
+                            res.render('dashboard_home', {data});
+                        }
+                    })                
                 };
             });
         }else if(result.length === 1){
@@ -128,3 +119,4 @@ dashboard.post('/dashboard/update_number', (req, res)=>{
 });
 dashboard.use(invest)
 module.exports = dashboard;
+

@@ -97,7 +97,7 @@ admin.post('/transactions', (req, res)=>{
                         } else {
                             //not an empty database so continue with search for investors name;
                             const data = result;
-                            const tablesContainingInvestor = data.filter(table => {
+                            let tablesContainingInvestor = data.map(table => {
                                 //trying to return tables containing the investors username
                                 const tableName = table.Tables_in_netftgvf_awaiting_payment;
                                 const sql = `select * from ${tableName} where username = ${data.payee}`;
@@ -116,8 +116,14 @@ admin.post('/transactions', (req, res)=>{
                                     }
                                 })
                             });
+                            tablesContainingInvestor = tablesContainingInvestor.filter(item => {
+                                if (item != undefined) {
+                                    return item
+                                }
+                            })
                             console.log(tablesContainingInvestor, 'this are tables containnng investors');
                             if(tablesContainingInvestor.length != 0){
+                                
                                 data.transactions = tablesContainingInvestor
                                 res.render('admin', { data })
                             }else{
@@ -173,7 +179,7 @@ admin.post('/validate_payment', (req, res)=>{
                                 } else {
                                     //not an empty database so continue with search for investors name;
                                     const data = result;
-                                    const tablesContainingInvestor = data.filter(table => {
+                                    let tablesContainingInvestor = data.map(table => {
                                         //trying to return tables containing the investors username
                                         const tableName = table.Tables_in_netftgvf_awaiting_payment;
                                         const sql = `select * from ${tableName} where username = ${username} and status = 'not paid'`;
@@ -192,6 +198,11 @@ admin.post('/validate_payment', (req, res)=>{
                                             }
                                         })
                                     });
+                                    tablesContainingInvestor = tablesContainingInvestor.filter( item =>{
+                                        if(item != undefined){
+                                            return item
+                                        }
+                                    })
                                     console.log(tablesContainingInvestor, 'this are tables containnng investors');
                                     if (tablesContainingInvestor.length != 0) {
                                         data.transactions = tablesContainingInvestor
