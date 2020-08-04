@@ -11,9 +11,9 @@ const db = mysql.createConnection({
 db.connect(()=>{
     console.log('connected to database')
 });
-const ls = (sql)=>{
+const ls = (sql, data)=>{
     q = sql;
-    db.query(q, (err, result)=>{
+    db.query(q, data, (err, result)=>{
         // if(err)throw err;
         if(err)throw err;
         console.log(result);
@@ -27,5 +27,7 @@ const ls = (sql)=>{
 // })
 // ls(`truncate table to_pay`)
 // ls(`truncate table awaiting_payment`)
-// ls(`select * from awaiting_payment`)
+// ls(`show columns from to_pay`);
+// uni = 'uni'
+// ls(`alter table awaiting_payment drop index amount_to_be_recieved `)
 module.exports = db

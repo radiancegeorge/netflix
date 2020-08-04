@@ -84,38 +84,52 @@ dashboard.get('/home', (req, res)=>{
                 } else {
                     //not an empty database so continue with search for investors name;
                     const outcome = result;
-                    let tablesContainingInvestor = outcome.map(table => {
-                        //trying to return tables containing the investors username
-                        const tableName = table.Tables_in_netftgvf_awaiting_payment;
-                        const sql = `select * from ${tableName} where username = ?`;
-                        awaiting.query(sql, user, (err, result) => {
-                            if (err) throw err;
-                            //return table name and user if exist;
-                            if (result.length === 1) {
+                    const promise = new Promise((resolve, reject)=>{
+                        const searchData = []
 
-                                return {
-                                    tableName,
-                                    result: result[0]
+                        outcome.forEach(table => {
+                            //trying to return tables containing the investors username
+                            const tableName = table.Tables_in_netftgvf_awaiting_payment;
+                            const sql = `select * from ${tableName} where username = ?`;
+                            awaiting.query(sql, user, (err, result) => {
+                                if (err) throw err;
+                                //return table name and user if exist;
+                                if (result.length === 1) {
+                                    const content = result[0]
+                                    const sql = `select bank_name, account_name, username, account_number, phone_number from registered_users where username = ?`;
+                                    db.query(sql, tableName, (err, result)=>{
+                                        if(err)throw err;
+                                        searchData.push({
+                                            reciever: result[0],
+                                            amount: content.amount
+                                        })
+                                        console.log(result, 'details of whom to pay')
+                                    })
+                                } else {
+                                    //this table doesnt have investor on it
                                 }
-                            } else {
-                                //this table doesnt have investor on it
-                            }
-                        })
-                    });
-                    tablesContainingInvestor = tablesContainingInvestor.filter(item => {
-                        if (item != undefined) {
-                            return item
+                            })
+                        });
+                        setTimeout(() => {
+                            resolve(searchData)
+                        }, 3000);
+                    })
+                    promise.then(result=>{
+                        if (result.length != 0) {
+                            data.initialization = false
+                            data.transactions = result;
+                            console.log(data.transactions)
+                            
+
+
+                            res.render('dashboard_home', { data })
+                        } else {
+                            data.wait = true;
+                            res.render('dashboard_home', { data })
                         }
                     })
-                    console.log(tablesContainingInvestor, 'these are tables containnng investor');
-                    if (tablesContainingInvestor.length != 0) {
-                        data.initialization = false
-                        data.transactions = tablesContainingInvestor;
-                        res.render('dashboard_home', { data })
-                    }else{
-                        data.wait = true;
-                        res.render('dashboard_home', {data})
-                    }
+                    
+                    
                     //  else {
                     //     // empty, user is done investing;
 

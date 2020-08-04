@@ -30,18 +30,45 @@
                         <button type="submit">Pay</button>
                     </form>
             <%} %> 
-            <% if(data.reciever){%>
+            <% if(data.transactions){%>
+            <section class="found">
+                <div class="container">
+                    <h1>
+                        You are to pay the person(s) below
+                    </h1>
+                    <% data.transactions.forEach(reciever =>{%>
+                    <form action="/validate_payment/user" method="POST" enctype="application/x-www-form-urlencoded" class="pay-to">
+                        Account Name
+                        <input type="text" readonly value="<%= reciever.reciever.account_name %> ">
+                        Bank Name
+                        <input type="text" readonly value="<%= reciever.reciever.bank_name %> ">
+                        Account Number
+                        <input type="number" readonly value=<%= reciever.reciever.account_number %>>
+                        Phone Number
+                        <input type="number" readonly value=<%= reciever.reciever.phone_number %>>
+                        <!-- User Name -->
+                        <input type="text" name="reciever" placeholder="johndoe365" readonly
+                            value="<%= reciever.reciever.username %> " style="display: none;">
+                            Amount
+                        <input type="number" name="amount" placeholder="2000" readonly value=<%= reciever.amount %>>
+                        <button type="submit"> I have paid</button>
+                    </form>
+                    <% }) %>
+            
+                </div>
+            </section>
+            <%} %>
+            <!-- <% if(data.reciever){%>
                     <form action="" class="pay-to">
                         <p class="timer">You have <span>00 : 00 : 00</span> left</p>
                         <h3>Pay into the following acoount details then make use of the <b>I Have Paid Button</b></h3>
-                        <input type="text" readonly value="<%= data.reciever.account_name %> ">
                         <input type="number" readonly value=<%= data.reciever.account_number %> >
                         <input type="text" readonly value="<%= data.reciever.bank_name %> ">
                         <input type="text" readonly value="<%= data.reciever.username %> ">
                         <input type="number" readonly value=<%= data.reciever.phone_number %> >
                         <button type="submit">I Have Paid</button>
                     </form>
-            <%} %> 
+            <%} %>  -->
             
         </div>
     </section>
@@ -72,7 +99,7 @@
                     </h1>
                     <% data.payers.forEach(payer =>{%>
                             <form action="">
-                                <input type="text" name="name" placeholder="john doe" readonly value="<%= payer.name %> ">
+                                <!-- <input type="text" name="name" placeholder="john doe" readonly value="<%= payer.name %> "> -->
                                 <input type="text" name="username" placeholder="johndoe365" readonly value="<%= payer.username %> ">
                                 <input type="number" name="amount" placeholder="2000" readonly value=<%= payer.amount %> >
                                 <button type="submit"> User has paid</button>
@@ -82,5 +109,7 @@
                 </div>
             </section>
     <%} %>
+    
+    
 </body>
 </html>

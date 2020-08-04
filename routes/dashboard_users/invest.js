@@ -49,9 +49,9 @@ invest.post('/invest',(req, res)=>{
                                 const everyone = result;
 
                                 // now checking for each user that can be satisfied
-                                eeryone.forEach(person => {
-                                    const sql = `select * from to_pay where username = ${user}`
-                                    db.query(sql, (err, result) => {
+                                everyone.forEach(person => {
+                                    const sql = `select * from to_pay where username = ?`
+                                    db.query(sql,user, (err, result) => {
                                         if (err) throw err;
                                         const id = result[0].id
                                         const amount = Number(result[0].amount);
@@ -64,18 +64,18 @@ invest.post('/invest',(req, res)=>{
                                             const investorsRemaining = amount - remaining;
                                             const newRecieved = remaining + amountRecieved;
                                             //add to the recievers recieved amount;
-                                            const sql = `update awaiting_payment set amount_recieved = ? where username = ${person.username} `;
+                                            const sql = `update awaiting_payment set amount_recieved = ? where username = '${person.username}' `;
                                             db.query(sql, newRecieved, (err, result) => {
                                                 if (err) throw err;
                                                 console.log(result, 'updated amount in awaiting_table');
                                                 //send investors data to recievers awaiting table;
-                                                const sql = `insert into ${person.username} (id, username, amount, date, status) values (?,?,?,?)`;
+                                                const sql = `insert into ${person.username} (id, username, amount, date, status) values (?,?,?,?,?)`;
                                                 awaiting.query(sql, [id, user, remaining, new Date(), 'not paid'], (err, result) => {
                                                     if (err) throw err;
                                                     console.log('inserted into recievers personal table');
                                                     //update investors amount
-                                                    const sql = `update to_pay set amount = ${investorsRemaining} where username = ${user}`;
-                                                    db.query(sql, (err, result) => {
+                                                    const sql = `update to_pay set amount = ${investorsRemaining} where username = ?`;
+                                                    db.query(sql,user, (err, result) => {
                                                         if (err) throw err;
                                                         // current balance updated
                                                         if (everyone.indexOf(person) === everyone.length - 1) {
@@ -88,13 +88,13 @@ invest.post('/invest',(req, res)=>{
 
                                         } else if (amount + amountRecieved <= amountToBeRecieved && amount != 0) {
                                             //push everything to reciever
-                                            const sql = `insert into ${person.username} (id, username, amount, date, status) values (?,?,?,?)`;
+                                            const sql = `insert into ${person.username} (id, username, amount, date, status) values (?,?,?,?,?)`;
                                             awaiting.query(sql, [id, user, amount, new Date(), 'not paid'], (err, result) => {
                                                 if (err) throw err;
                                                 console.log('inserted into recievers personal table');
                                                 //update investors amount
-                                                const sql = `update to_pay set amount = ${0} where username = ${user}`;
-                                                db.query(sql, (err, result) => {
+                                                const sql = `update to_pay set amount = ${0} where username = ?`;
+                                                db.query(sql, user, (err, result) => {
                                                     if (err) throw err;
                                                     // current balance updated
                                                     if (everyone.indexOf(person) === everyone.length - 1) {

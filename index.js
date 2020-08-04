@@ -9,9 +9,10 @@ app.set('view engine', 'ejs');
 const login = require('./routes/login/login')
 app.use(cors());
 const admin = require('./routes/admin/admin')
+const validate = require('./routes/payment validation/validatePayment')
 // const personalDb = require('./routes/personalDb');
 
-
+app.use(validate)
 
 app.use('/admin',admin);
 // app.get('/dashboard', (req, res)=>{

@@ -52,9 +52,21 @@
             </form>
       <% } %> 
 
-      
+
         <% if(data.transactions){%>
-            <h1>data.transactions go in here</h1>
+            <% data.transactions.forEach(data=>{%>
+                <form action="/validate_payment" method="POST" enctype="application/x-www-form-urlencoded" style="display: flex; flex-flow: column;justify-content: space-between;  align-items: flex-start;">
+                    transaction id
+                    <input type="text" value="<%= data.investor.id %> ">
+                    username
+                    <input type="text" value="<%= data.investor.username %>" name="username">
+                    amount
+                    <input type="number" value= <%= data.investor.amount %> >
+                    reciever
+                    <input type="text" value= '<%= data.reciever %>' name="reciever">
+                    <button type="submit">paid</button>
+                </form>
+            <%}) %> 
         <% } %>
    </section>
 </body>
