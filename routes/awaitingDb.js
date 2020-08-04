@@ -24,5 +24,6 @@ const command = (text) => {
 
 
 // command('drop table radianceobi')
-// command('create table test (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varchar(45))')
+// command('drop table radiance_obi')
+command('show tables')
 module.exports = db

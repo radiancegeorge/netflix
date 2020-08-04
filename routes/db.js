@@ -27,7 +27,7 @@ const ls = (sql, data)=>{
 // })
 // ls(`truncate table to_pay`)
 // ls(`truncate table awaiting_payment`)
-// ls(`show columns from to_pay`);
+// ls(`select * from to_pay`);
 // uni = 'uni'
 // ls(`alter table awaiting_payment drop index amount_to_be_recieved `)
 module.exports = db
