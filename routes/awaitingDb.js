@@ -25,5 +25,6 @@ const command = (text) => {
 
 // command('drop table radianceobi')
 // command('drop table radiance_obi')
-command('show tables')
+// command('show tables')
 module.exports = db
+ 

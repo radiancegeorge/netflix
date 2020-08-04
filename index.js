@@ -9,7 +9,8 @@ app.set('view engine', 'ejs');
 const login = require('./routes/login/login')
 app.use(cors());
 const admin = require('./routes/admin/admin')
-const validate = require('./routes/payment validation/validatePayment')
+const validate = require('./routes/payment validation/validatePayment');
+const system = require('./routes/system')
 // const personalDb = require('./routes/personalDb');
 
 app.use(validate)
@@ -20,7 +21,7 @@ app.use('/admin',admin);
 //         res.send('<a href="/logout"> logout </a>')
    
 // })
-
+ 
 // app.use('/user', user_dashboard)
 app.use(registration)
 app.use(login)
