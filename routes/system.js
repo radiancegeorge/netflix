@@ -3,7 +3,8 @@
 const db = require('./db'),
 awaiting = require('./awaitingDb'),
 personalDb = require('./personalDb'),
-customMail = require('./customMail');
+customMail = require('./customMail'),
+checkDate = require('./system2');
 
 
 
@@ -84,28 +85,36 @@ const system = ()=>{
                             awaiting.query(sql, [id, user, amount, new Date(), 'not paid'], (err, result) => {
                                 if (err) throw err;
                                 console.log('inserted into recievers personal table');
-                                //update investors amount
-                                const sql = `update to_pay set amount = ${0} where username = ?`;
-                                db.query(sql, user, (err, result) => {
-                                    if (err) throw err;
-                                    //get details and try to send a mail;
+                                //update investors amount and recievers recieved;
+                                const amountRecievedUpdate = amount + amountRecieved;
 
-                                    const sql = `select email from registered_users where username = ?`;
-                                    db.query(sql, person.username, (err, result)=>{
-                                        if(err)throw err;
-                                        result = result[0].email;
-                                        console.log(result, 'mail to')
-                                        customMail(result, message);
-                                        //send message to the investor also;
-                                        const sql = `select email from registered_users where username = ?`
-                                        db.query(sql, user, (err, result)=>{
-                                            if(err)throw err;
+                                const sql = `update awaiting_payment set amount_recieved = ?  where username = ?`;
+                                db.query(sql,[amountRecievedUpdate , person.username], (err, result)=>{
+                                    if(err)throw err;
+                                    console.log(result, 'recievers updated')
+                                    const sql = `update to_pay set amount = ${0} where username = ?`;
+                                    db.query(sql, user, (err, result) => {
+                                        if (err) throw err;
+                                        //get details and try to send a mail;
+
+                                        const sql = `select email from registered_users where username = ?`;
+                                        db.query(sql, person.username, (err, result) => {
+                                            if (err) throw err;
                                             result = result[0].email;
-                                            customMail(result, notification);
-                                        })
+                                            console.log(result, 'mail to')
+                                            customMail(result, message);
+                                            //send message to the investor also;
+                                            const sql = `select email from registered_users where username = ?`
+                                            db.query(sql, user, (err, result) => {
+                                                if (err) throw err;
+                                                result = result[0].email;
+                                                customMail(result, notification);
+                                            })
 
+                                        })
                                     })
                                 })
+                                
                             })
                         } else {
                            //
@@ -160,10 +169,12 @@ const system = ()=>{
             //empty
         }
         
-    })
+    });
+    // checkDate()
 };
 
 setInterval(() => {
-    system()
+    system();
 }, 10000);
 module.exports = system;
+

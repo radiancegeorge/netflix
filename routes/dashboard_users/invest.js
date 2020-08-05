@@ -92,15 +92,23 @@ invest.post('/invest',(req, res)=>{
                                             awaiting.query(sql, [id, user, amount, new Date(), 'not paid'], (err, result) => {
                                                 if (err) throw err;
                                                 console.log('inserted into recievers personal table');
-                                                //update investors amount
-                                                const sql = `update to_pay set amount = ${0} where username = ?`;
-                                                db.query(sql, user, (err, result) => {
-                                                    if (err) throw err;
-                                                    // current balance updated
-                                                    if (everyone.indexOf(person) === everyone.length - 1) {
-                                                        res.redirect('/user/home');
-                                                    }
-                                                })
+                                                //update investors amount;
+                                                const amountRecievedUpdate = amount + amountRecieved;
+
+                                                const sql = `update awaiting_payment set amount_recieved = ?  where username = ?`;
+                                                db.query(sql, [amountRecievedUpdate, person.username], (err, result)=>{
+                                                    if(err)throw err;
+                                                    console.log(result, 'reciever amount updated')
+                                                    const sql = `update to_pay set amount = ${0} where username = ?`;
+                                                    db.query(sql, user, (err, result) => {
+                                                        if (err) throw err;
+                                                        // current balance updated
+                                                        if (everyone.indexOf(person) === everyone.length - 1) {
+                                                            res.redirect('/user/home');
+                                                        }
+                                                    })
+                                                } )
+                                                
                                             })
                                         } else {
                                             //no match at all, so leave for system to figure out later, just go home if its the last in the loop6
