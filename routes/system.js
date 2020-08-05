@@ -108,10 +108,7 @@ const system = ()=>{
                                 })
                             })
                         } else {
-                            //no match at all, so leave for system to figure out later, just go home if its the last in the loop6
-                            // if (everyone.indexOf(person) === everyone.length - 1) {
-                            //     // res.redirect('/user/home');
-                            // }
+                           //
                         }
                     })
                 });
@@ -119,10 +116,54 @@ const system = ()=>{
             })
         })
 
+    });
+
+
+    //check for complete transactions on recievers;
+    //check recievers in awaiting table with amount to be recieved = amount recieved;
+    const rsql = `select * from awaiting_payment where amount_to_be_recieved = amount_recieved`;
+    db.query(rsql, (err, result)=>{
+        if(err)throw err;
+        if(result.length >= 1){
+            const possibleRecievers = result;
+            //check personalDb to know if the reciever is really done recieving;
+            possibleRecievers.forEach(reciever => {
+                const user = reciever.username;
+                const transaction_id = reciever.transaction_id;
+                const amountToBeRecieved = Number(reciever.amount_to_be_recieved);
+                const sql = `select * from ${user} where transaction_id = ?`;
+                personalDb.query(sql, transaction_id, (err, result) => {
+                    if (err) throw err;
+                    if(result.length === 1){
+                        const amountRecieved = Number(result[0].amount_recieved);
+                        if(amountRecieved === amountToBeRecieved){
+                            //a match so empty drop table in awaiting database and clear log from awaiting table;
+                            const sql = `delete from awaiting_payment where username = ?`
+                            db.query(sql, user, (err, result)=>{
+                                if(err)throw err;
+                                console.log(result,'reciever deleted');
+                                // drop table in awaiting db
+                                const sql = `drop table ${user}`;
+                                awaiting.query(sql, (err, result)=>{
+                                    if(err)throw err;
+                                    console.log(result, 'table in awaiting dropped')
+                                })
+                            })
+                        }
+                    }else{
+                        //empty
+                    }
+                })
+
+            });
+        }else{
+            //empty
+        }
+        
     })
 };
 
 setInterval(() => {
     system()
-}, 20000);
+}, 10000);
 module.exports = system;
