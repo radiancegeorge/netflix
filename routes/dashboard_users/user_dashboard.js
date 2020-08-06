@@ -2,7 +2,8 @@ const express =  require('express');
 const dashboard = express.Router();
 const db = require('../db');
 const invest = require('./invest');
-const awaiting = require('../awaitingDb')
+const awaiting = require('../awaitingDb');
+const refdb = require('../referralsDb')
 
 dashboard.get('/dashboard', (req, res)=>{
     console.log(req.session.username)
@@ -128,70 +129,8 @@ dashboard.get('/home', (req, res)=>{
                             res.render('dashboard_home', { data })
                         }
                     })
-                    
-                    
-                    //  else {
-                    //     // empty, user is done investing;
-
-                    //     //check if personal table has morethan 2 transactions;
-
-                    //     //delete user from to_pay table
-
-                    //     const sql = `delete from to_pay where username = ${username}`;
-                    //     db.query(sql, (err, result) => {
-                    //         if (err) throw err;
-                    //         //deleted from to pay and getting ready to be added to awaiting;
-                    //         const sql = `select * from ${username}`;
-                    //         personalDb.query(sql, (err, result) => {
-                    //             if (err) throw err;
-                    //             if (result.length >= 2) {
-                    //                 const amount = result[result.length - 1].amount_paid
-                    //                 const transactio_id = result[result.length - 1].transaction_id
-                    //                 const amount_recieved = result[result.length - 1].amount_recieved
-                    //                 //add to awaiting_payment and create a table in awaiting database;
-                    //                 const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
-                    //                 db.query(sql, [transactio_id, amount, amount_recieved], (err, result) => {
-                    //                     if (err) throw err;
-                    //                     //inserted into awaiting table, next create table for user in awaiting database;
-                    //                     const sql = `create table ${username} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varvhar(45))`;
-                    //                     awaiting.query(sql, (err, result) => {
-                    //                         if (err) throw err;
-                    //                         console.log('has been added to the awaitinng databas for recieving');
-                    //                         res.redirect('admin')
-                    //                     })
-                    //                 })
-
-                    //             }
-                    //         })
-                    //     })
-
-
-                    //     res.redirect('admin')
-                    // }
                 }
             })
-
-
-
-
-
-            // //found him in pay_to table, now render who he is to pay to**** details
-
-            // result = result[0];
-            // console.log(result.reciever);
-            // if(result.reciever != null){
-            //     const reciever = result.reciever;
-            //     const sql = `select username,phone_number, account_name, account_number, bank_name from registered_users where username = ?`;
-            //     db.query(sql, reciever, (err, result)=>{
-            //         if(err)throw err;
-            //         data.reciever = result[0];
-            //         res.render('dashboard_home',{data})
-            //     })
-            // }else{
-            //     //no reciever to display cos no merge has occured;
-            //     data.wait = true;
-            //     res.render('dashboard_home', {data})
-            // }
             
         }else{
             //an unknown problem occured
@@ -224,6 +163,36 @@ dashboard.post('/dashboard/update_number', (req, res)=>{
         res.redirect('/user/profile')
     })
 });
+dashboard.get('/refer', (req, res)=>{
+    const user = req.session.username;
+    const promise = new Promise((resolve, reject)=>{
+        const data = {};
+        data.total = 0;
+        const sql = `select amount from ${user} where amount is not null`;
+        refdb.query(sql, (err, result)=>{
+            if(err)throw err;
+            if(result.length != 0){
+                result.forEach(money =>{
+                    const amount = Number(money.amount);
+                    data.total += amount;
+                })
+            }else{
+                data.noRef = true;
+            }
+        });
+        setTimeout(() => {
+            resolve(data)
+        }, 2000);
+    });
+    promise.then(result=>{
+        const data = result;
+        if(!data.noRef){
+            req.app.locals.total = data.total;
+        };
+        res.render('dashboard_ref', { data });
+
+    })
+})
 dashboard.use(invest)
 module.exports = dashboard;
 
