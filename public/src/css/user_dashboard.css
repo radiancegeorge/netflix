@@ -113,6 +113,14 @@ header nav ul li a:hover {
   background: orange;
 }
 
+header nav ul li a:active {
+  background: orange;
+}
+
+header nav ul li a:focus {
+  background: orange;
+}
+
 header nav ul li a img {
   width: 70%;
   display: block;
@@ -615,5 +623,45 @@ header nav ul li a img {
   padding: 10px;
   font-size: 16px;
   text-align: center;
+}
+
+.refer {
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.refer h1 {
+  font-size: 18px;
+  text-align: center;
+}
+
+.refer h2 {
+  margin: 20px 0;
+  font-size: 15px;
+}
+
+.refer h2 input {
+  background: green;
+  color: white;
+  padding: 10px;
+  display: block;
+  margin: 5px 0;
+  border: none;
+  max-width: 400px;
+}
+
+.refer label button {
+  padding: 10px 16px;
+  color: white;
+  background: orange;
+  border: none;
+  display: block;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.refer label button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 /*# sourceMappingURL=user_dashboard.css.map */
