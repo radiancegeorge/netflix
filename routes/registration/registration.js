@@ -12,7 +12,11 @@ const domainName = `http://localhost:3000`;
 
 
 reg.get('/register', (req, res) => {
-    res.render('signup')
+    const data = {};
+    data.msg = 'welcome';
+    req.query.ref ? data.ref = req.query.ref : data.ref = false;
+    res.render('signup', {data});
+
 });
 
 reg.post('/register', (req, res)=>{
@@ -29,7 +33,7 @@ reg.post('/register', (req, res)=>{
         };
         req.app.locals.data = data;
             try {
-                db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, referred) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.reffered}')`,(err, result) => {
+                db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, referred) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.referred}')`,(err, result) => {
                     const mailing = ()=>{
                         let html = `
                         <p> Please confirm your E-mail by clicking on the link below </p>

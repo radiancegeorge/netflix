@@ -19,7 +19,7 @@ const command = (text)=>{
         console.log(result);
     })
 }
-// command('select * from radiance_obi order by transaction_id desc')
+// command('drop table radiance_obi')
 
 
 module.exports = db 

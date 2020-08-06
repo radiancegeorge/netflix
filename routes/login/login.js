@@ -39,10 +39,11 @@ login.get('/login', (req, res)=>{
 
 })
 login.post('/login', (req, res)=>{
-
+    
 
     const data = req.body;
-    const values = [data.username, data.username]
+    const values = [data.username, data.username];
+    
     const sql = `select * from registered_users where username = ? or email = ?`;
     db.query(sql, values, (err, result)=>{
         if(err)throw err;
@@ -54,14 +55,28 @@ login.post('/login', (req, res)=>{
                     console.log('welcome');
                     console.log(result)
                     req.app.locals.email = result.email;
-                    res.redirect('/user/dashboard')
+
+                    const sql = `select * from registered_users where username = ? or email = ? `;
+                    db.query(sql, values, (err, result) => {
+                        if(err)throw err;
+                        const bnk = result[0].bank_name;
+                        if(bnk === null){
+                            //add email to locals;
+                            req.app.locals.email = result[0].email;
+                            req.app.locals.msg = 'Please put in your account details'
+                            console.log('no bank detail');
+                            res.redirect('/bank');
+                        }else{
+                            res.redirect('/user/dashboard')
+                        };
+                    });
 
                 }else{
                     console.log('wrong password')
                     res.render('login', {msg: 'Wrong password'})
                     //re render page with wrong password message
-                }
-            })
+                };
+            });
         }else{
             console.log('invalid username')
             res.render('login', {msg: 'Invalid Username'})

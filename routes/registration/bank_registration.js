@@ -6,7 +6,8 @@ const paystack = new Paystack('sk_test_e85eda640ef1d5391c3b79c017c96b4235c4c9c1'
 const db = require('../db');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
-const uuid = require('uuid').v1
+const uuid = require('uuid').v1;
+const refDb = require('../referralsDb')
 
 const sessionStore = new MysqlStore({
     clearExpired: true,
@@ -105,9 +106,15 @@ bankReg.get('/update_bank_details', (req, res)=>{
             personalDb.query(sql, (err, result)=>{
                 if(err)throw err;
                 console.log(result);
-                req.app.locals.regEmail = email;
-                // console.log(email, req.session.email)
-                res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard
+                const sql = `create table ${data.username} (id int auto_increment primary key, username varchar(45) not null unique, first_investment varchar(255) null, percentage varchar(255) null)`;
+                refDb.query(sql, (err, result)=>{
+                    if(err)throw err;
+                    console.log(result, 'ref data initiated');
+                    req.app.locals.regEmail = email;
+                    // console.log(email, req.session.email)
+                    res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard
+                })
+                
             })
         })
         
