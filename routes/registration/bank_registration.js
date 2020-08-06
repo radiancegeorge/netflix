@@ -106,7 +106,7 @@ bankReg.get('/update_bank_details', (req, res)=>{
             personalDb.query(sql, (err, result)=>{
                 if(err)throw err;
                 console.log(result);
-                const sql = `create table ${data.username} (id int auto_increment primary key, username varchar(45) not null unique, first_investment varchar(255) null, percentage varchar(255) null)`;
+                const sql = `create table ${data.username} (id int auto_increment primary key, username varchar(45) not null unique, investment varchar(255) null, amount varchar(255) null, transaction_id varchar(45) null)`;
                 refDb.query(sql, (err, result)=>{
                     if(err)throw err;
                     console.log(result, 'ref data initiated');

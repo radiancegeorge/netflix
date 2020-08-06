@@ -16,7 +16,7 @@ const sendMail = (mail, text)=>{
     transporter.sendMail({
         from: '"Netflix Networking" <notify@netflixnetworking.com>', // sender address
         to: mail, // list of receivers
-        subject: 'Merge', // Subject line
+        subject: 'Notify', // Subject line
         text: text, // plain text body
         html:'', // html body
     }, (err, info) => {

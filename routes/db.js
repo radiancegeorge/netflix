@@ -27,7 +27,7 @@ const ls = (sql, data)=>{
 // })
 // ls(`truncate table to_pay`)
 // ls(`truncate table awaiting_payment`)
-// ls(`select * from awaiting_payment`);
+// ls(`show columns from to_pay`);
 // uni = 'uni'
-// ls(`delete from registered_users where username = 'radiance_obi'`)
+// ls(`select referred from registered_users where username = 'radianceobi'`)
 module.exports = db 

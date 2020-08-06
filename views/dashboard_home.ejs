@@ -24,9 +24,9 @@
         <div class="container">
            <% if(data.initialization){%>
                     <form action="/user/invest" class="initialization" method="POST" enctype="application/x-www-form-urlencoded">
-                        <h1>Invest starting from N2,000 and above</h1>
+                        <h1>Invest starting from N2,000 and a maximum of 200,000</h1>
                         <input type="number" placeholder="2000" required minlength="4" min="2000" name="amount">
-                        <p>Please note that you have just 24hrs to make this payment once merged</p>
+                        <p>Please note that you have just 12hrs to make this payment once merged</p>
                         <button type="submit">Pay</button>
                     </form>
             <%} %> 

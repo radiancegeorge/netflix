@@ -23,4 +23,5 @@ const ls = (sql, data) => {
 };
 // ls(`drop table radiance_obi`)
 // ls(`drop table radianceobi`)
+// ls('select * from radianceobi')
 module.exports = db;
