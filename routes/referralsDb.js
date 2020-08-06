@@ -23,5 +23,5 @@ const ls = (sql, data) => {
 };
 // ls(`drop table radiance_obi`)
 // ls(`drop table radianceobi`)
-// ls('select * from radianceobi')
+// ls(`update radianceobi set amount = 5000 where username = 'radiance_obi' `) 
 module.exports = db;

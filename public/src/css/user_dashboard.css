@@ -251,6 +251,9 @@ header nav ul li a img {
 }
 
 @media (min-width: 560px) {
+  .refer {
+    width: 95vw;
+  }
   #view {
     width: 90%;
     height: 100vh;
@@ -628,6 +631,10 @@ header nav ul li a img {
 .refer {
   margin: 10px 0;
   background: rgba(255, 255, 255, 0.92);
+}
+
+.refer .container {
+  margin: auto;
 }
 
 .refer h1 {

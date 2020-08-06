@@ -10,9 +10,11 @@ const login = require('./routes/login/login')
 app.use(cors());
 const admin = require('./routes/admin/admin')
 const validate = require('./routes/payment validation/validatePayment');
-const system = require('./routes/system')
-// const personalDb = require('./routes/personalDb');
+const system = require('./routes/system');
+const refPay = require('./routes/payment validation/refPay');
 
+// const personalDb = require('./routes/personalDb');
+app.use(refPay)
 app.use(validate)
 
 app.use('/admin',admin);

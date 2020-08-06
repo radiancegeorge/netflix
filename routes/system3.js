@@ -59,7 +59,7 @@ const referrals = ()=>{
                         const allReferred = result;
                         allReferred.forEach(person=>{
                             const referred = person.username;
-                            if(person.transaction_id === null){
+                            if(person.amount === null){
                                 const sql = `select * from ${referred}`;
                                 personalDb.query(sql, (err, result) => {
                                     if (err) throw err;
@@ -88,6 +88,8 @@ const referrals = ()=>{
                                         })
                                     }
                                 })
+                            }else{
+                                console.log('already assigned first investment');
                             }
                         })
                     }

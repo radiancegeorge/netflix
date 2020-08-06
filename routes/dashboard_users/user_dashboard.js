@@ -186,7 +186,9 @@ dashboard.get('/refer', (req, res)=>{
     });
     promise.then(result=>{
         const data = result;
-        data.ref = `www.netflixnetworking.com/register?ref=${user}`
+        data.msg = req.app.locals.msg
+        data.ref = `www.netflixnetworking.com/register?ref=${user}`;
+        req.app.locals.username = user
         if(!data.noRef){
             req.app.locals.total = data.total;
         };

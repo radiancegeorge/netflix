@@ -10,16 +10,19 @@
     
     <section class="refer">
 
-
+        <% if(data.msg){%>
+            <p style="padding: 10px; color: white; background: green;"><%= data.msg %> </p>
+       <% } %> 
         <div class="container">
+                <h2>YourReferral link is: <input type="text" readonly value="<%= data.ref %> "></h2>
+
             <% if(data.noRef){%>
                 <h1>You currently do not have any referral bonus</h1>    
             <% }else{%>
 <!-- referral link in here -->
 
-                <h2>YourReferral link is: <input type="text" readonly value="<%= data.ref %> "></h2>
 
-                <form action="/refWithdraw" >
+                <form action="/refWithdraw" method="GET" >
                     <label for="">
                         <h3>Your Referal bonus is: N<span><%= data.total %> </span></h3>
                         <button type="submit" <% if(data.total < 5000){%>
