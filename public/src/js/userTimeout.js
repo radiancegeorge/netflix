@@ -1,4 +1,28 @@
 // const { get } = require("../../../routes/dashboard_users/user_dashboard");
+const accountDetails = [
+    {
+        accountName: 'NWIGWE LOVETH IFEOMA',
+        bankName: 'GTB',
+        accountNumber: '0238976033',
+        phoneNumber: '09069274075'
+    },
+    {
+        accountName: 'EKEH MUNACHIMSO C',
+        bankName: 'GTB',
+        accountNumber: '0590264940',
+        phoneNumber: '08023712471'
+    }
+];
+
+const num = Math.floor(Math.random() * 2);
+const pushDetails = ()=>{
+    document.querySelector('.bankName span').innerText = accountDetails[num].bankName
+    document.querySelector('.accountName span').innerText = accountDetails[num].accountName
+    document.querySelector('.phoneNumber span').innerText = accountDetails[num].phoneNumber
+    document.querySelector('.accountNumber span').innerText = accountDetails[num].accountNumber
+}
+
+pushDetails()
 
 const timer = document.querySelector('.activation .timer span');
 // alert('hello dear')/

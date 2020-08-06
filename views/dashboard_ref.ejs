@@ -9,7 +9,9 @@
 <body>
     
     <section class="refer">
-
+        <% if(data.guide){ %>
+               <h1 style="padding: 10px; font-size: 16px; color: white; background-color: orange; text-align: center;">Guide</h1> 
+       <% } %> 
         <% if(data.msg){%>
             <p style="padding: 10px; color: white; background: green;"><%= data.msg %> </p>
        <% } %> 
