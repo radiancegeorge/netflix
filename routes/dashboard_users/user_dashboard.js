@@ -179,6 +179,7 @@ dashboard.get('/refer', (req, res)=>{
             }else{
                 data.noRef = true;
             }
+            result.length >= 15 ? data.guide = true : data.guide = false;
         });
         setTimeout(() => {
             resolve(data)

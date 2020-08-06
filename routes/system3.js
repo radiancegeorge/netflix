@@ -98,6 +98,52 @@ const referrals = ()=>{
         }else{
             console.log('empty')
         }
+    });
+    //guide section;
+    refDb.query('show tables', (err, result)=>{
+        if(err)throw err;
+        if(result.length != 0){
+            result.forEach(person =>{
+                const user = person.Tables_in_netftgvf_referrals;
+                const sql = `select * from ${user} where amount is not null`;
+                refDb.query(sql, (err, result)=>{
+                    if(err)throw err;
+                    if(result.length >= 15){
+                        const allReferred = result;
+                        allReferred.forEach(referred =>{
+                            const referredName = referred.username
+                            const id = referred.transaction_id;
+                            const amount = Number(referred.amount);
+                            const sql = `select * from ${referredName}`;
+                            personalDb.query(sql, (err, result)=>{
+                                if(err)throw err;
+                                if(result.length != 0){
+                                    const targetTransaction = result[result.length - 1];
+                                    if(targetTransaction.transaction_id != id){
+                                        //checking to_pay to confirm if its a finished transaction;;
+                                        const sql = `select * from to_pay where id = ?`;
+                                        db.query(sql, targetTransaction.transaction_id, (err, result)=>{
+                                            if(err)throw err;
+                                            if(result.length === 0){
+                                                //found nothing, meaning its a done transaction;
+                                                const invested = Number(targetTransaction.amount_paid);
+                                                const newAmount = (invested * 1 / 100) + amount;
+                                                //update the refdb
+                                                const sql = `update ${user} set transaction_id = ?, amount = ?, investment = ? where username = ?`;
+                                                refDb.query(sql, [targetTransaction.transaction_id, newAmount, invested, referredName], (err, result)=>{
+                                                    if(err)throw err;
+                                                    console.log(result, 'guide updated')
+                                                })
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        }
     })
 };
 setInterval(() => {
