@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Arial Narrow Bold', sans-serif;
+  outline: none;
+}
+
+.message {
+  background: lightgrey;
+  padding: 10px;
+  text-align: center;
+}
+
+form {
+  max-width: 400px;
+  margin: auto;
+  padding: 40px 0;
+}
+
+form h1 {
+  text-align: center;
+  font-weight: 800;
+  padding: 10px;
+}
+
+form h3 {
+  margin: 20px 0;
+  font-weight: 500;
+  padding: 10px;
+}
+
+form label {
+  display: block;
+  width: 100%;
+  padding: 10px;
+}
+
+form label input {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+}
+
+form label input::-webkit-outer-spin-button, form label input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+form label select {
+  font-size: 18px;
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+form .account_name {
+  width: calc(100% - 20px);
+  margin: auto;
+  height: 160px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: lightgrey;
+  margin-top: 20px;
+  padding: 10px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+form .account_name p {
+  font-size: 20px;
+  text-align: center;
+}
+
+form .account_name h2 {
+  font-size: 30px;
+  text-align: center;
+}
+
+form .account_name div {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: lightgrey;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  opacity: 0;
+}
+
+form .account_name div iframe {
+  width: 90px;
+  height: 100px;
+}
+
+form .btn {
+  padding: 20px 40px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  background: lightgreen;
+  color: white;
+  font-size: 20px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+form .btn:hover {
+  background: lightgreen;
+}
+/*# sourceMappingURL=bank_verification.css.map */

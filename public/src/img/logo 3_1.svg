@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33" height="16.5" viewBox="0 0 1000 500">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        font-size: 73.928px;
+        fill: #ef7204;
+        font-family: "Alien Encounters Solid";
+      }
+
+      .cls-3 {
+        filter: url(#filter-2);
+      }
+    </style>
+    <filter id="filter" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" dx="-4.045" dy="2.939" in="SourceAlpha"/>
+      <feGaussianBlur result="blur" stdDeviation="2.236"/>
+      <feFlood result="flood" flood-opacity="0.68"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feBlend result="blend" in="SourceGraphic"/>
+      <feImage preserveAspectRatio="none" x="14" y="127" width="971" height="246" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iOTcxIiBoZWlnaHQ9IjI0NiIgdmlld0JveD0iMCAwIDk3MSAyNDYiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB5MT0iMTMxLjQ3NCIgeDI9Ijk3MSIgeTI9IjExNC41MjYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSItMC4yNSIgc3RvcC1jb2xvcj0iI2ZjM2UwMyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI2ZmN2YwMCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEuMjUiIHN0b3AtY29sb3I9IiNmYzNlMDMiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IGNsYXNzPSJjbHMtMSIgd2lkdGg9Ijk3MSIgaGVpZ2h0PSIyNDYiLz4KPC9zdmc+Cg=="/>
+      <feComposite result="composite-2" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in2="blend"/>
+    </filter>
+    <filter id="filter-2" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" dx="-4.045" dy="2.939" in="SourceAlpha"/>
+      <feGaussianBlur result="blur" stdDeviation="2"/>
+      <feFlood result="flood" flood-opacity="0.36"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feBlend result="blend" in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g class="cls-1">
+    <text id="networking" class="cls-2" transform="matrix(1.321, 0, 0, 1.321, 180.04, 371.837)">networking</text>
+    <text id="netflix" class="cls-2" transform="matrix(3.232, 0, 0, 3.232, 7.347, 294.93)">netflix</text>
+  </g>
+  <image x="6" y="126" width="980" height="177" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAGCAYAAACij5zfAAABk0lEQVQokb1SzW6cMBAe/+AAaxJApCtF6qHtvaqqvP+lz1D1BSK5W3adgg0LBuxqUq/EsaeONBprfr9vxsRa+yWEsEgpvwMAAYA7AIDT6cSEEJwx9kgIefXePwghnjnnB+/9eZ7nH+u6/gKAhyRJxnmeXdM0s9Y6ret6AIAN+2it7/M8/+qce0nT9LNz7puUsh3H8WmaJosAjt77atu2n2VZ9gAgAGCCv8KjxWYBY9fr9V3f96/H43Fo21ZyzllVVSMA+JjHYq6PtWwYhuZwOJy6rqsYY4kxxkop86IoNLlcLvd1XbtY4OD/CBJbcRIJIbAdS9gxX/8RComMb0J37Pe+EJVERd+Kg1DfhltrH9GGEDzenBDyGx8odV3jebAwAYAF05RSeZIkrGkacwPTdd0HjDHGDCGE9n1vsiwTZVl28TzYY7PWVlJKQ9u2xYZvW1iWxWFRURQDpVRwzj9yzp+yLCtuVJRSCBjRA6WULMuy31wQQsyc80+U0vfbthVpmiZlWU5Kqex8Pue3/2SMGbTW4g86FMG3WCD98QAAAABJRU5ErkJggg=="/>
+  <g class="cls-3">
+    <circle cx="829.422" cy="329.485" r="90.203"/>
+    <circle id="Ellipse_1_copy_2" data-name="Ellipse 1 copy 2" cx="593.563" cy="163.75" r="57.938"/>
+    <circle id="Ellipse_1_copy" data-name="Ellipse 1 copy" cx="188.031" cy="189.094" r="108.813"/>
+  </g>
+</svg>

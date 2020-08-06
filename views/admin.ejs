@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/admin/find_user" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="search" name="search" id="search">
+        <button type="submit">search</button>
+    </form>
+    <% if(data.user){%>
+        <form action="/admin/status" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="text" readonly value="<%= data.user %>  " name="name">
+        <label for="checkboxes">
+            deactivated
+            <input type="radio" disabled readonly name="status" <% if(!data.activated){%>
+                checked
+           <% } %>  >
+        </label>
+        <label for="checkboxes">
+            activated
+            <input type="radio" disabled readonly name="status" <% if(data.activated){%>
+                checked
+            <%} %>  >
+        </label>
+        <button type = 'submit'>change</button>
+    </form>
+   <% } %> 
+
+
+
+
+   <section class="transactions" style="margin-top: 20px;">
+       <form action="/admin/transactions" method="POST" enctype="application/x-www-form-urlencoded">
+            <input type="search" value="" name="search">
+            <button type="submit">search</button>
+       </form>
+
+       <% if(data.payee){%>
+            <form action="/validate_payment">
+                <input type="text" value="<%= data.payeeName %> " name="name">
+                <label for="payment status">
+                    paid <input type="radio" disabled <% if(data.paid){%>
+                        checked
+                    <%} %> > not paid <input type="radio" disabled <% if(!data.paid){%>
+                        checked
+                    <%} %>>
+                </label>
+                <button type="submit">activate</button>
+            </form>
+      <% } %> 
+       
+   </section>
+</body>
+</html>
