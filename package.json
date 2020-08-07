@@ -24,6 +24,7 @@
     "bcrypt": "^5.0.0",
     "ejs": "^3.1.3",
     "express": "^4.17.1",
+    "express-fileupload": "^1.1.10",
     "express-mysql-session": "^2.1.4",
     "express-session": "^1.17.1",
     "messagebird": "^3.5.0",
@@ -32,6 +33,8 @@
     "nodemailer": "^6.4.10",
     "paystack": "^2.0.1",
     "paystack-node": "^0.2.4",
+    "sqlstring": "^2.3.2",
+    "uniqid": "^5.2.0",
     "uuid": "^8.2.0"
   }
 }

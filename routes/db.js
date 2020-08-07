@@ -11,14 +11,23 @@ const db = mysql.createConnection({
 db.connect(()=>{
     console.log('connected to database')
 });
-const ls = (sql)=>{
+const ls = (sql, data)=>{
     q = sql;
-    db.query(q, (err, result)=>{
+    db.query(q, data, (err, result)=>{
+        // if(err)throw err;
         if(err)throw err;
-        console.log(result)
-    })
+        console.log(result);
+        
+    });
 }
-// ls('truncate table ongoing_registration')
-// ls('truncate table sessions')
-// ls('select * from sessions');
-module.exports = db
+// ls('alter table awaiting_payment modify column transaction_id varchar(45) not null unique')
+// const array = ['username varchar(45) not null unique', 'amount_paid varchar(255) not null unique', 'amount_to_be_recieved varchar(255) not null unique',' amount_recieved varchar(255) unique'];
+// array.forEach(item=>{
+//     ls(`alter table awaiting_payment add column ${item}`)
+// })
+// ls(`truncate table awaiting_payment`)
+// ls(`delete from ongoing_registration where username = 'radianceobi'`)
+// ls(`show columns from awaiting_payment`);
+// uni = 'uni'
+// ls(`update registered_users set referred = 'radianceobi' where username = 'radiance_obi'`)
+module.exports = db 

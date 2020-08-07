@@ -6,9 +6,9 @@ const formD = document.querySelector('form')
 const submit = () => {
         formD.submit()  
 }
-const errorMessage = (input)=>{
+const errorMessage = (input, custom)=>{
     const p = document.createElement('p');
-    p.innerText = `There is an error in ${input} field,
+    p.innerText = custom || `There is an error in ${input} field,
     It is already in use.
     `;
     p.style.position = 'fixed';
@@ -39,36 +39,62 @@ submitBtn.addEventListener('click', (e)=>{
     }
 
     const check = (property, value, optional)=>{
-        const verify = new XMLHttpRequest();
-        verify.onreadystatechange = ()=>{
-            if(verify.status === 200 && verify.readyState === 4){
-                determinant.value++;
-                console.log('async ' + determinant.value)
-                if (determinant.value === 7) {
-                    submit()
+        if(property === 'username'){
+            const expression = /[-!@#$%^&* /(),.? ":{}|<>]/g;
+            
+            if (!expression.test(value)){
+                const verify = new XMLHttpRequest();
+                verify.onreadystatechange = ()=>{
+                    if(verify.status === 200 && verify.readyState === 4){
+                        determinant.value++;
+                        console.log('async ' + determinant.value)
+                        if (determinant.value === 7) {
+                            submit()
+                        }
+                    }else if(verify.status === 409){
+                        console.log(value);
+                        optional.preventDefault()
+                        determinant.value--
+                        errorMessage(property)
+                    }
                 }
-            }else if(verify.status === 409){
-                console.log(value);
-                optional.preventDefault()
-                determinant.value--
-                errorMessage(property)
+                verify.open('get',`http://localhost:3000/validate/${property}/${value}`, true);
+                verify.send()
+            }else{
+                //found unwanted characters, find a way to notify them
+                // const usernameInput = document.getElementsByName('username');
+                const msg = `There are unwanted characters in the ${property} input field`
+                errorMessage(property, msg)
             }
+        }else{
+            //not username so proceed as norm;
+            const verify = new XMLHttpRequest();
+            verify.onreadystatechange = () => {
+                if (verify.status === 200 && verify.readyState === 4) {
+                    determinant.value++;
+                    console.log('async ' + determinant.value)
+                    if (determinant.value === 7) {
+                        submit()
+                    }
+                } else if (verify.status === 409) {
+                    console.log(value);
+                    optional.preventDefault()
+                    determinant.value--
+                    errorMessage(property)
+                }
+            }
+            verify.open('get', `http://localhost:3000/validate/${property}/${value}`, true);
+            verify.send()
         }
-        verify.open('get',`http://localhost:3000/validate/${property}/${value}`, true);
-        verify.send()
+
     }
+        
 
     inputs.forEach( input =>{
         if(input.value.trim() !== ''){
-            if(input.name === 'email' || input.name === 'username' || input.name === 'phone_number'){
-                if(input.name === 'phone_number'){
-                    const newValue = input.value.substr(1);
-                    check(input.name, newValue, e);
-                }else{
-                    check(input.name, input.value, e);
-                }
-                
-                
+            if(input.name === 'email' || input.name === 'username' || input.name === 'phone_number'){  
+                    check(input.name, input.value, e); 
+
             }else if(input.name === 'retype_password'){
                 inputs.forEach(element => {
                     if(element.name === 'password'){

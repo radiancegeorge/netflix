@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <section class="transactions">
+    <!-- <section class="transactions">
         <div class="container">
             <div class="individualTransaction">
                 <h2>Your Investment Profile For <span>transaction ID</span></h2>
@@ -19,6 +19,91 @@
                 <a href="/withdraw"> Withdraw <span>transaction ID</span></a>
             </div>
         </div>
+    </section> -->
+    <section class="invest">
+        <div class="container">
+           <% if(data.initialization){%>
+                    <form action="/user/invest" class="initialization" method="POST" enctype="application/x-www-form-urlencoded">
+                        <h1 style="text-align: center;">Invest starting from N2,000 and a maximum of 200,000</h1>
+                        <input type="number" placeholder="2000" required minlength="4" min="2000" name="amount">
+                        <p>Please note that you have just 12hrs to make this payment once merged</p>
+                        <button type="submit">Pay</button>
+                    </form>
+            <%} %> 
+            <% if(data.transactions){%>
+            <section class="found">
+                <div class="container">
+                    <h1>
+                        You are to pay the person(s) below
+                    </h1>
+                    <% data.transactions.forEach(reciever =>{%>
+                    <form action="/user/fileupload" class="pay-to" enctype="multipart/form-data" method="POST">
+                        Account Name
+                        <input type="text" readonly value="<%= reciever.reciever.account_name %> ">
+                        Bank Name
+                        <input type="text" readonly value="<%= reciever.reciever.bank_name %> ">
+                        Account Number
+                        <input type="number" readonly value=<%= reciever.reciever.account_number %>>
+                        Phone Number
+                        <input type="number" readonly value=<%= reciever.reciever.phone_number %>>
+                        <!-- User Name -->
+                        <input type="text" name="reciever" placeholder="johndoe365" readonly
+                            value="<%= reciever.reciever.username %> " style="display: none;">
+                            Amount
+                        <input type="number" name="amount" placeholder="2000" readonly value=<%= reciever.amount %>>
+                        <% if(data.msg){%>
+                                <p style="padding: 10px; color: red;"><%= data.msg %> </p>
+                       <% } %> 
+                        <input type="file" name="image" required>
+                        <button type="submit"> I have paid</button>
+                    </form>
+                    <% }) %>
+            
+                </div>
+            </section>
+            <%} %>
+            
+            
+        </div>
     </section>
+    <% if(data.wait){%>
+            <section class="wait">
+                <div class="container">
+                    <h1>
+                        please wait for the system to assign someone for you to pay
+                    </h1>
+                </div>
+            </section>
+    <%} %>
+    <% if(data.waitingForPayment){%>
+            <section class="waiting-for-payment">
+                <div class="container">
+                    <h1>
+                        please wait for the system to assign people to pay you
+                    </h1>
+                </div>
+            </section>
+    <%} %> 
+    <% if(data.payers){%>
+            <section class="found">
+                <!-- persons to pay the user found -->
+                <div class="container">
+                    <h1>
+                        The person(s) below has been merged to pay you
+                    </h1>
+                    <% data.payers.forEach(payer =>{%>
+                            <form action = "/validate_payment" method="POST" enctype="application/x-www-form-urlencoded">
+                                <!-- <input type="text" name="name" placeholder="john doe" readonly value="<%= payer.name %> "> -->
+                                <input type="text" name="username" placeholder="johndoe365" readonly value="<%= payer.username %> ">
+                                <input type="number" name="amount" placeholder="2000" readonly value=<%= payer.amount %> >
+                                <button type="submit"> User has paid</button>
+                            </form> 
+                   <% }) %> 
+                   
+                </div>
+            </section>
+    <%} %>
+    
+    
 </body>
 </html>

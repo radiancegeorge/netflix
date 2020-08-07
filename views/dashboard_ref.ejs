@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/src/css/user_dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <section class="refer">
+        <% if(data.guide){ %>
+               <h1 style="padding: 10px; font-size: 16px; color: white; background-color: orange; text-align: center;">Guide</h1> 
+       <% } %> 
+        <% if(data.msg){%>
+            <p style="padding: 10px; color: white; background: green;"><%= data.msg %> </p>
+       <% } %> 
+        <div class="container">
+                <h2>YourReferral link is: <input type="text" readonly value="<%= data.ref %> "></h2>
+
+            <% if(data.noRef){%>
+                <h1>You currently do not have any referral bonus</h1>    
+            <% }else{%>
+<!-- referral link in here -->
+
+
+                <form action="/refWithdraw" method="GET" >
+                    <label for="">
+                        <h3>Your Referal bonus is: N<span><%= data.total %> </span></h3>
+                        <button type="submit" <% if(data.total < 5000){%>
+                            disabled
+                        <%} %> >Withdraw</button>
+                        <span style="color: red;display: block; margin: 10px 0;">You can only withdraw your referral bonus when it is up to N5,000</span>
+                    </label>
+                </form>
+           <% } %>
+   
+        </div>
+    </section>
+</body>
+</html>

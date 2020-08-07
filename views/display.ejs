@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/src/css/user_dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section class="display">
+        <div class="wrap">
+            <h1>Proof of Payment</h1>
+            <div class="image">
+                <img src="/src/img/uploaded/<%= data.fileName %> " alt="">
+            </div>
+            <div class="details">
+                <h3>Details</h3>
+                <p>Name: <span><%= data.details.name %> </span></p>
+                <p>Username: <span><%= data.details.username %> </span></p>
+                <p>Phone number: <span><%= data.details.phone_number %> </span></p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

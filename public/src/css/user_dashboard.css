@@ -113,6 +113,14 @@ header nav ul li a:hover {
   background: orange;
 }
 
+header nav ul li a:active {
+  background: orange;
+}
+
+header nav ul li a:focus {
+  background: orange;
+}
+
 header nav ul li a img {
   width: 70%;
   display: block;
@@ -243,6 +251,13 @@ header nav ul li a img {
 }
 
 @media (min-width: 560px) {
+  .refer {
+    width: 95vw;
+  }
+  .notification .wrap {
+    max-width: 90vw;
+    margin: auto;
+  }
   #view {
     width: 90%;
     height: 100vh;
@@ -406,5 +421,329 @@ header nav ul li a img {
 
 .profile-body .profile form label button:hover {
   background: green;
+}
+
+.activation {
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.activation .wrap {
+  background: white;
+  padding: 10px;
+  max-width: 400px;
+}
+
+.activation .wrap .timer span {
+  color: red;
+  font-weight: 600;
+}
+
+.activation .wrap h3 {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.activation .wrap p {
+  margin: 10px 0;
+}
+
+.activation .wrap .account-detail {
+  margin: 40px 0;
+}
+
+.activation .wrap .account-detail p {
+  font-weight: 600;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.activation .wrap .account-detail p span {
+  font-weight: 500;
+  color: orange;
+}
+
+.activation .wrap form h2 {
+  font-size: 15px;
+  color: green;
+  font-weight: 300;
+  margin: 10px 0;
+  margin-top: 20px;
+}
+
+.activation .wrap form button {
+  padding: 10px 16px;
+  color: white;
+  background: green;
+  border: none;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.activation .wrap form button:hover {
+  color: orange;
+  background: lightgrey;
+}
+
+.invest form {
+  background: white;
+  padding: 20px;
+}
+
+.invest .initialization p {
+  margin: 10px 0;
+  color: red;
+}
+
+.invest .initialization h1 {
+  text-align: center;
+}
+
+.invest .initialization input {
+  padding: 10px;
+  font-size: 18px;
+  margin: 10px 0;
+  display: block;
+}
+
+.invest .initialization button {
+  padding: 10px 20px;
+  color: white;
+  background: orange;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.invest .initialization button:hover {
+  background: green;
+}
+
+.invest .pay-to {
+  margin: 10px 0;
+}
+
+.invest .pay-to p {
+  color: red;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.invest .pay-to p span {
+  color: orange;
+  font-weight: 600;
+}
+
+.invest .pay-to h3 {
+  text-align: center;
+}
+
+.invest .pay-to h3 b {
+  color: green;
+}
+
+.invest .pay-to input {
+  display: block;
+  font-size: 18px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.invest .pay-to button {
+  color: white;
+  background: green;
+  border: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  margin-top: 10px;
+}
+
+.invest .pay-to button:hover {
+  background: orange;
+}
+
+.found h1 {
+  color: green;
+  background: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.found form {
+  background: white;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.found form input {
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+  display: block;
+}
+
+.found form button {
+  padding: 10px 16px;
+  margin: 10px 0;
+  color: white;
+  background: green;
+  border: none;
+  cursor: pointer;
+}
+
+.found form button:hover {
+  background: orange;
+}
+
+.waiting-for-payment {
+  color: white;
+}
+
+.waiting-for-payment h1 {
+  background: orange;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.wait {
+  color: white;
+}
+
+.wait h1 {
+  background: green;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.refer {
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.refer .container {
+  margin: auto;
+}
+
+.refer h1 {
+  font-size: 18px;
+  text-align: center;
+}
+
+.refer h2 {
+  margin: 20px 0;
+  font-size: 15px;
+}
+
+.refer h2 input {
+  background: green;
+  color: white;
+  padding: 10px;
+  display: block;
+  margin: 5px 0;
+  border: none;
+  max-width: 400px;
+}
+
+.refer label button {
+  padding: 10px 16px;
+  color: white;
+  background: orange;
+  border: none;
+  display: block;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.refer label button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.notification .wrap {
+  background-color: white;
+  margin: auto;
+}
+
+.notification .wrap .person {
+  margin: 10px 0;
+  display: block;
+  border-bottom: 10px solid black;
+}
+
+.notification .wrap a {
+  padding: 10px;
+  display: block;
+  color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.notification .wrap a p {
+  padding: 20px;
+}
+
+.display {
+  margin-top: 10px;
+}
+
+.display .wrap {
+  margin: auto;
+  padding: 10px;
+  background: white;
+}
+
+.display .wrap .image {
+  max-width: 400px;
+  margin: auto;
+}
+
+.display .wrap .image img {
+  width: 100%;
+}
+
+.display .wrap h3 {
+  background: white;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.display .wrap h1 {
+  padding: 10px;
+  background: green;
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.display .wrap p {
+  margin: 10px 0;
+}
+
+.display .wrap p span {
+  font-weight: 600;
 }
 /*# sourceMappingURL=user_dashboard.css.map */

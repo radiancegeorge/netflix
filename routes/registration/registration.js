@@ -12,7 +12,11 @@ const domainName = `http://localhost:3000`;
 
 
 reg.get('/register', (req, res) => {
-    res.render('signup')
+    const data = {};
+    data.msg = 'welcome';
+    req.query.ref ? data.ref = req.query.ref : data.ref = false;
+    res.render('signup', {data});
+
 });
 
 reg.post('/register', (req, res)=>{
@@ -21,7 +25,7 @@ reg.post('/register', (req, res)=>{
         const data = {
             name: req.body.name,
             email: req.body.email,
-            phone_number: Number(req.body.phone_number),
+            phone_number: req.body.phone_number,
             username: req.body.username,
             referred: req.body.referred,
             password: hashed,
@@ -29,7 +33,7 @@ reg.post('/register', (req, res)=>{
         };
         req.app.locals.data = data;
             try {
-                db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, referred) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.reffered}')`,(err, result) => {
+                db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, referred) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.referred}')`,(err, result) => {
                     const mailing = ()=>{
                         let html = `
                         <p> Please confirm your E-mail by clicking on the link below </p>
@@ -69,10 +73,16 @@ reg.post('/register', (req, res)=>{
                         const deleteQ = `delete from ongoing_registration where gen_id = ?`;
                         setTimeout(() => {
                             db.query(deleteQ, data.gen_id, (err, result) => {
-                                if (err) throw err;
+                                if (err){
+                                    if (err.code === 'ER_BAD_FIELD_ERROR'){
+                                        //user confirmed aready so do nothing
+                                    }else{
+                                        throw err
+                                    }
+                                };
                                 console.log(result, 'deleted')
                             })
-                        }, 21600000);
+                        }, 60000 * 60);
                          
                     }
                 })

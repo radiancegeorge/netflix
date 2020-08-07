@@ -52,6 +52,7 @@ label input{
     border: none;
     border-radius: 10px;
     border-bottom: 1.5px solid orange;
+    
     /*  */
     font-size: 13px;
     transition: border .5s;
@@ -127,10 +128,16 @@ a{
     .body{
         background: white;
     }
-    /* label input{
-        min-width: 50%;
+    label input{
+        padding: 20px;
+        margin-bottom: 50px;
+
     }
-    .submitbtn{
-        width: 50%;
-    } */
+    form button{
+        margin-bottom: 40px;
+    }
+    form a{
+        display: block;
+        margin: 20px 0;
+    }
 }

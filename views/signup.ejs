@@ -18,7 +18,9 @@
                 <p>
                     Referral's ID
                 </p>
-                <input name="referred" type="text" placeholder="Referral ID">
+                <input name="referred" type="text" placeholder="Referral ID" value="<% if(data.ref){%>
+                    <%= data.ref %> 
+               <% } %> ">
             </div>
             <div class="input">
                 <p>

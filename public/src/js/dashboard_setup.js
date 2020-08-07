@@ -9,3 +9,5 @@
             logoutPrompt.classList.toggle('hide');
         }
     })
+const date = new Date();
+console.log(date.getTime())

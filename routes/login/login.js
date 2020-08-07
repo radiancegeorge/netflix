@@ -34,15 +34,16 @@ login.get('/login', (req, res)=>{
     if(req.session.username){
         res.redirect('/user/dashboard')
     }else{
-        res.render('login');
+        res.render('login', {msg: ''});
     }
 
 })
 login.post('/login', (req, res)=>{
-
+    
 
     const data = req.body;
-    const values = [data.username, data.username]
+    const values = [data.username, data.username];
+    
     const sql = `select * from registered_users where username = ? or email = ?`;
     db.query(sql, values, (err, result)=>{
         if(err)throw err;
@@ -54,14 +55,32 @@ login.post('/login', (req, res)=>{
                     console.log('welcome');
                     console.log(result)
                     req.app.locals.email = result.email;
-                    res.redirect('/user/dashboard')
+                    req.app.locals.everyDetail = result;
+                    const sql = `select * from registered_users where username = ? or email = ? `;
+                    db.query(sql, values, (err, result) => {
+                        if(err)throw err;
+                        const bnk = result[0].bank_name;
+                        if(bnk === null){
+                            //add email to locals;
+                            req.app.locals.email = result[0].email;
+                            req.app.locals.msg = 'Please put in your account details'
+                            console.log('no bank detail');
+                            res.redirect('/bank');
+                        }else{
+                            res.redirect('/user/dashboard')
+                        };
+                    });
 
                 }else{
-                    console.log('wrong password')//re render page with wrong password message
-                }
-            })
+                    console.log('wrong password')
+                    res.render('login', {msg: 'Wrong password'})
+                    //re render page with wrong password message
+                };
+            });
         }else{
-            console.log('invalid username')// invalid username... re render the page with an error message
+            console.log('invalid username')
+            res.render('login', {msg: 'Invalid Username'})
+            // invalid username... re render the page with an error message
         }
     })
 })
@@ -69,7 +88,8 @@ login.post('/login', (req, res)=>{
 login.get('/logout', (req, res)=>{
     req.session.username = false;
     req.app.locals.email = false;
-    res.render('login')
+    req.app.locals.regEmail = false
+    res.redirect('/login')
 });
 login.use('/user', user_dashboard)
 module.exports = login
