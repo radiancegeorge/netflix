@@ -6,7 +6,8 @@ const awaiting = require('../awaitingDb');
 const refdb = require('../referralsDb')
 
 dashboard.get('/dashboard', (req, res)=>{
-    console.log(req.session.username)
+    console.log(req.session.username);
+    
     if(req.session.username || req.app.locals.regEmail){
         const data = req.app.locals.regEmail || req.session.username;
         req.session.username = data;
@@ -16,6 +17,7 @@ dashboard.get('/dashboard', (req, res)=>{
             // console.log(result, 'this is the result')
             const status = {}
             result.length < 1 ? status.activated = false : status.activated = true;
+            status.msg = req.app.locals.msg
             res.render('user_dashboard', { status });
         })
     }else{

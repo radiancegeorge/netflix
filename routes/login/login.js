@@ -55,7 +55,7 @@ login.post('/login', (req, res)=>{
                     console.log('welcome');
                     console.log(result)
                     req.app.locals.email = result.email;
-
+                    req.app.locals.everyDetail = result;
                     const sql = `select * from registered_users where username = ? or email = ? `;
                     db.query(sql, values, (err, result) => {
                         if(err)throw err;

@@ -10,7 +10,7 @@ const username = 'netflix@admin.com'
 const password = '$2b$10$3U7Hhffvay2rrUyGZZAM1Ohzb2aMuSu5Bdotaevv8WaSLmqTb1wbK'
 
 admin.get('/', (req, res)=>{
-    if(req.app.locals.user){
+    if(req.app.locals.user === username){
         res.render('admin', {data: 'welcome'})
     }else{
         res.send(`

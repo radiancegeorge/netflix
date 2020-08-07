@@ -42,6 +42,9 @@
     <% if(!status.activated){%>
         <section class="activation">
             <div class="wrap">
+            <% if(status.msg){%>
+                    <p style="padding: 10px; color: white; background-color: orange;"><%= status.msg %> </p>
+            <%} %> 
                 <h3 class="timer">You have <span>00 : 00 : 00 </span> left to activate your account</h3>
                 <p class="message">Pay into the account detail below to have your account activated <span>
                     </span></p>
@@ -53,7 +56,7 @@
                     <p class="phoneNumber">Phone Number: <span></span></p>
 
                 </div>
-                <form action="/paid/verify" method="POST">
+                <form action="/user/paid" method="POST">
                     <h2>If you have made this Payment, please click the button below</h2>
                     <button type="submit">I Have Paid</button>
                 </form>
