@@ -3,13 +3,65 @@ const admin = express.Router();
 const db = require('../db');
 const personalDb = require('../personalDb')
 const awaiting  = require('../awaitingDb');
+const bcryt = require('bcrypt');
 
-admin.use(express.urlencoded({extended: false}))
+admin.use(express.urlencoded({extended: false}));
+const username = 'netflix@admin.com'
+const password = '$2b$10$3U7Hhffvay2rrUyGZZAM1Ohzb2aMuSu5Bdotaevv8WaSLmqTb1wbK'
 
 admin.get('/', (req, res)=>{
-    res.render('admin', {data: 'welcome'})
+    if(req.app.locals.user){
+        res.render('admin', {data: 'welcome'})
+    }else{
+        res.send(`
+     <form action="/admin" method = "Post" enctype="application/x-www-form-urlencoded">
+                <h2 class="signinbig">
+                    SIGN IN TO <span>Admin</span> 
+                </h2>
+                <label class="" for="">
+                    Username
+                    <input type="text" placeholder="Enter Your Username" required name = "username">
+                </label>
+                <label class="" for="">
+                    Password
+                    <input type="password" placeholder="Enter Your password" required name = "password">
+                </label>
+                <button class="submitbtn">
+                    Sign In
+                </button>
+                <a href="">
+                    <p>
+                        Forgot password?
+                    </p>
+                </a>
+                <a href="">
+                    <p>
+                    I don't have an account
+                    </p>
+                </a>
+                
+            </form>
+    `)
+    }
 });
+admin.post('/', (req, res)=>{
+    data = req.body;
+    if(data.username === username){
+        bcryt.compare(data.password, password).then(result =>{
+            if(result){
+                req.app.locals.user = data.username
+                res.render('admin', {data: 'welcome'})
+            }else{
+                req.app.locals.wrong = 'wrong password';
+                res.redirect('/admin')
+            }
+        })
 
+    }else{
+        req.app.locals.wrong = 'wrong username';
+        res.redirect('/admin')
+    }
+})
 admin.post('/find_user', (req, res)=>{
    if(req.body.search != ''){
        const search = req.body.search;
