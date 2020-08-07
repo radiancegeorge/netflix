@@ -6,6 +6,7 @@ const awaiting = require('../awaitingDb');
 const refdb = require('../referralsDb');
 const fileUpload = require('./fileUpload');
 const notifDb = require('../notifDb');
+const bcrypt = require('bcrypt');
 
 
 dashboard.get('/dashboard', (req, res)=>{
@@ -30,6 +31,8 @@ dashboard.get('/dashboard', (req, res)=>{
 });
 
 dashboard.get('/profile', (req, res)=>{
+    const data = {}
+    data.msg = req.app.locals.msg
     const sql = `select * from registered_users where email = ? or username = ?`;
     const email = req.session.username
     db.query(sql, [email, email], (err, resut)=>{
@@ -242,6 +245,49 @@ dashboard.get('/notification/view', (req, res)=>{
         })
     }
     // res.render('display');
+});
+
+dashboard.get('/change_password', (req, res)=>{
+    const data = {};
+    data.msg = req.app.locals.msg
+    res.render('changepassword', {data})
+});
+dashboard.post('/change_password', (req, res)=>{
+    const data = req.body;
+    if(data.old){
+        const user = req.app.locals.user;
+        const sql = `select password from registered_users where username = ?`;
+        db.query(sql, user, (err, result)=>{
+            if(err)throw err;
+            const password = result[0].password;
+            bcrypt.compare(data.old, password)
+            .then(result=>{
+                if(result){
+                    if(data.password === data.rePassword){
+                        bcrypt.hash(data.password, 10)
+                        .then( result =>{
+                            const newPassword = result;
+                            const sql = `update registered_users set password = ? where username = ?`;
+                            db.query(sql, [newPassword, user], (err, result)=>{
+                                if(err)throw err;
+                                console.log(result, 'password changed');
+                                res.redirect('/user/profile');
+                            })
+
+                        })
+                    }else{
+                        req.app.locals.msg = 'invalid password';
+                        res.redirect('/user/change_password')
+                    }
+                }else{
+                    req.app.locals.msg = ' wrong password';
+                    res.redirect('/user/change_password')
+                }
+            })
+        })
+    }else{
+        //request external
+    }
 })
 dashboard.use(invest);
 dashboard.use(fileUpload);
