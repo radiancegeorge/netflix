@@ -254,6 +254,10 @@ header nav ul li a img {
   .refer {
     width: 95vw;
   }
+  .notification .wrap {
+    max-width: 90vw;
+    margin: auto;
+  }
   #view {
     width: 90%;
     height: 100vh;
@@ -670,5 +674,76 @@ header nav ul li a img {
 .refer label button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.notification .wrap {
+  background-color: white;
+  margin: auto;
+}
+
+.notification .wrap .person {
+  margin: 10px 0;
+  display: block;
+  border-bottom: 10px solid black;
+}
+
+.notification .wrap a {
+  padding: 10px;
+  display: block;
+  color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.notification .wrap a p {
+  padding: 20px;
+}
+
+.display {
+  margin-top: 10px;
+}
+
+.display .wrap {
+  margin: auto;
+  padding: 10px;
+  background: white;
+}
+
+.display .wrap .image {
+  max-width: 400px;
+  margin: auto;
+}
+
+.display .wrap .image img {
+  width: 100%;
+}
+
+.display .wrap h3 {
+  background: white;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.display .wrap h1 {
+  padding: 10px;
+  background: green;
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.display .wrap p {
+  margin: 10px 0;
+}
+
+.display .wrap p span {
+  font-weight: 600;
 }
 /*# sourceMappingURL=user_dashboard.css.map */

@@ -5,6 +5,7 @@ const invest = require('./invest');
 const awaiting = require('../awaitingDb');
 const refdb = require('../referralsDb');
 const fileUpload = require('./fileUpload');
+const notifDb = require('../notifDb');
 
 
 dashboard.get('/dashboard', (req, res)=>{
@@ -201,6 +202,46 @@ dashboard.get('/refer', (req, res)=>{
         res.render('dashboard_ref', { data });
 
     })
+});
+dashboard.get('/notification', (req, res)=>{
+    const data = {}
+    const user = req.app.locals.user;
+    const sql = `select * from ${user} order by id desc limit 10 `;
+    notifDb.query(sql, (err, result)=>{
+        if(err)throw err;
+        const notifications = result;
+        if(notifications.length != 0){
+            data.notification = notifications
+            res.render('notification', {data});
+
+        }else{
+
+            data.notification = false
+            res.render('notification', {data})
+        }
+    })
+});
+dashboard.get('/notification/view', (req, res)=>{
+    if(req.query){
+        const data = {}
+        const user = req.app.locals.user;
+        const id = req.query.id;
+        const sql = `select * from ${user} where id = ?`;
+        notifDb.query(sql, id, (err, result)=>{
+            if(err)throw err;
+            if(result.length != 0){
+                data.username = result[0].username;
+                data.fileName = result[0].file_name;
+                const sql = `select name, username, phone_number from registered_users where username = ?`
+                db.query(sql, data.username, (err, result)=>{
+                    if(err)throw err;
+                    data.details = result[0];
+                    res.render('display', {data})
+                })
+            }
+        })
+    }
+    // res.render('display');
 })
 dashboard.use(invest);
 dashboard.use(fileUpload);
