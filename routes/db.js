@@ -27,7 +27,7 @@ const ls = (sql, data)=>{
 // })
 // ls(`truncate table awaiting_payment`)
 // ls(`delete from ongoing_registration where username = 'radianceobi'`)
-// ls(`show columns from awaiting_payment`);
+// ls(`drop table change_password`);
 // uni = 'uni'
-// ls(`update registered_users set referred = 'radianceobi' where username = 'radiance_obi'`)
+// ls(`create table change_password (id varchar(45) unique primary key, email varchar(150) unique not null)`)
 module.exports = db 

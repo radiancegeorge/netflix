@@ -7,6 +7,9 @@ const refdb = require('../referralsDb');
 const fileUpload = require('./fileUpload');
 const notifDb = require('../notifDb');
 const bcrypt = require('bcrypt');
+const customMail = require('../customMail');
+const uniqid = require('uniqid');
+const domain = 'http://localhost:3000'
 
 
 dashboard.get('/dashboard', (req, res)=>{
@@ -44,7 +47,7 @@ dashboard.get('/profile', (req, res)=>{
 });
 dashboard.get('/home', (req, res)=>{
     const data = {};
-    data.msg = req.app.locals.msg
+    data.message = req.app.locals.msg
     req.app.locals.user = req.session.username;
     const user = req.app.locals.user
     const sql = 'select * from to_pay where username = ?';
@@ -252,6 +255,7 @@ dashboard.get('/change_password', (req, res)=>{
     data.msg = req.app.locals.msg
     res.render('changepassword', {data})
 });
+
 dashboard.post('/change_password', (req, res)=>{
     const data = req.body;
     if(data.old){
@@ -287,6 +291,96 @@ dashboard.post('/change_password', (req, res)=>{
         })
     }else{
         //request external
+        const email = req.app.locals.email;
+        if(data.password === data.rePassword){
+
+            bcrypt.hash(data.password, 10)
+            .then( result=>{
+                const sql = `update registered_users set password = ? where email = ?`;
+                db.query(sql, [result, email], (err, result)=>{
+                    if(err)throw err;
+                    res.redirect('/login')
+                })
+            })
+        }else{
+            const data =  {}
+            data.msg = 'passwords not match'
+            res.render('ressetpassword',{data})
+        }
+        const sql =  `select email, password from registered_users where email = ?`;
+        db.query(sql, email, (err, result)=>{
+           
+        })
+    }
+});
+
+dashboard.post('/forgot_enterMail', (req, res)=>{
+    const email = req.body.email;
+    const sql = `select * from registered_users where email = ?`;
+    db.query(sql, email, (err, result)=>{
+        if(err)throw err;
+        if(result.length != 0){
+            const id = uniqid.time();
+            const text =  `
+                You have requested to change your password,
+                use the link below to proceed..
+                ${domain}/user/forgotpassword?id=${id}
+
+
+
+                Please ignore this message if you know nothing about it
+            `;
+            const sql = `insert into change_password (id, email) values (?,?)`;
+            db.query(sql, [id, email], (err, result)=>{
+                if(err)throw err;
+                console.log('sent');
+                customMail(email, text);
+                setTimeout(() => {
+                    const sql = `delete from change_password where id = ?`;
+                    db.query(sql, id, (err, result)=>{
+                        if(err)throw err;
+                        console.log(result, 'timed out delete')
+                    })
+                }, 60000 * 60 / 2);
+                setTimeout(() => {
+                    req.app.locals.msg = 'An email has been sent to  you, please continue with the email'
+                    res.redirect('/user/forgotpassword')
+                }, 3000);
+            })
+
+
+        }
+    })
+});
+
+
+
+dashboard.get('/forgotpassword', (req, res)=>{
+    const data = {}
+
+    if(req.query.id){
+        const id = req.query.id;
+        const sql =` select * from change_password where id = ?`;
+        db.query(sql, id, (err, result)=>{
+            if(err)throw err;
+            if(result.length != 0){
+                data.email = result[0].email;
+                req.app.locals.email = data.email
+                res.render('resetpassword', {data});
+                setTimeout(() => {
+                    const sql = `delete from change_password where id = ?`;
+                    db.query(sql, id, (err, result) => {
+                        if (err) throw err;
+                        console.log(result, 'timed out delete')
+                    })
+                }, 60000 * 5);
+            }else{
+                res.redirect('/user/forgotpassword');
+            }
+        })
+    }else{
+        data.msg = req.app.locals.msg
+        res.render('forgotpassword', { data });
     }
 })
 dashboard.use(invest);

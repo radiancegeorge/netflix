@@ -51,8 +51,8 @@
                             value="<%= reciever.reciever.username %> " style="display: none;">
                             Amount
                         <input type="number" name="amount" placeholder="2000" readonly value=<%= reciever.amount %>>
-                        <% if(data.msg){%>
-                                <p style="padding: 10px; color: red;"><%= data.msg %> </p>
+                        <% if(data.message){%>
+                                <p style="padding: 10px; color: red;"><%= data.message %> </p>
                        <% } %> 
                         <input type="file" name="image" required>
                         <button type="submit"> I have paid</button>
