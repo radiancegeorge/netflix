@@ -23,6 +23,9 @@
       overflow: hidden;
       justify-content: center;
   }
+  .in p{
+      margin-bottom: 30px;
+  }
   .in .img{
       display: flex;
       justify-content: center;
@@ -45,7 +48,7 @@
   .jumbodiv a{
       background: green;
       border: none;
-      padding: 15px 30px;
+      padding: 15px 25px;
       color: white;
       margin-right: 10px;
       text-decoration: none;
@@ -130,21 +133,56 @@
   .about a{
     color: orange;
   }
+  @media (min-width: 600px){
+    .rest{
+        display: flex;
+        flex-flow: row wrap;
+    }
+    .restdiv{
+        flex-basis: 50%;
+    }
+  }
+  @media (min-width: 768px){
+    .right p{
+        text-align: left;
+    }
+    .off{
+        display: flex;
+    }
+    .aboutus{
+        flex-basis: 50%;
+        margin-top: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .caro{
+        flex-basis: 50%;
+    }
+    .offbig{
+        display: none;
+    }
+    .about{
+        padding: 0;
+    }
+    .flex{
+        display: flex;
+    }
+  }
   @media (min-width: 992px){
-      .rest{
+      /* .rest{
           display: flex;
           flex-flow: row wrap;
       }
       .restdiv{
           flex-basis: 50%;
-      }
+      } */
       .restdiv:hover{
           background: black;
           color: white;
           transition: background 1s;
           
       }
-      .right p{
+      /* .right p{
           text-align: left;
       }
       .off{
@@ -167,5 +205,5 @@
       }
       .flex{
           display: flex;
-      }
+      } */
   }

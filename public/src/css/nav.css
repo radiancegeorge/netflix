@@ -1,0 +1,17 @@
+nav{
+    box-shadow: 1px 1px 5px black;
+}
+.brandlogo{
+    width: 90px;
+    padding: 0;
+}
+.brandlogo img{
+    width: 100%;
+}
+.nav-link:visited{
+    color: green!important;
+}
+.but:focus{
+    outline: none;
+    border: none;
+}
