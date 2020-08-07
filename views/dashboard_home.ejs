@@ -103,6 +103,28 @@
                 </div>
             </section>
     <%} %>
+<% if(data.transaction){%>
+<% data.transaction.forEach(transaction =>{%>
+<div class="transaction">
+    <div class="container">
+        <ul>
+            <li>Transaction ID: <span><%= transaction.transaction_id %> </span></li>
+            <li> Amount Paid: <span><%= transaction.amount_paid %> </span></li>
+            <li>Amount Recieved: <span> <%= transaction.amount_recieved %> </span></li>
+        </ul>
+    </div>
+</div>
+<% }) %>
+<!-- <div class="transaction">
+        <div class="container">
+            <ul>
+                <li>Transaction ID: <span></span></li>
+                <li> Amount Paid: <span></span></li>
+                <li>Amount Recieved: <span></span></li>
+            </ul>
+        </div>
+    </div> -->
+<%} %>
     
     
 </body>

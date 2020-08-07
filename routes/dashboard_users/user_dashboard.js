@@ -9,7 +9,8 @@ const notifDb = require('../notifDb');
 const bcrypt = require('bcrypt');
 const customMail = require('../customMail');
 const uniqid = require('uniqid');
-const domain = 'http://localhost:3000'
+const domain = 'http://localhost:3000';
+const personalDb = require('../personalDb')
 
 
 dashboard.get('/dashboard', (req, res)=>{
@@ -18,14 +19,17 @@ dashboard.get('/dashboard', (req, res)=>{
     if(req.session.username || req.app.locals.regEmail){
         const data = req.app.locals.regEmail || req.session.username;
         req.session.username = data;
+
+        
         const sql = `select * from activated_users where username = ? or email = ?`;
         db.query(sql, [data ,data], (err, result)=>{
             if(err)throw err;
             // console.log(result, 'this is the result')
             const status = {}
             result.length < 1 ? status.activated = false : status.activated = true;
-            status.msg = req.app.locals.msg
+            status.msg = req.app.locals.msg;
             res.render('user_dashboard', { status });
+            
         })
     }else{
         res.redirect('/login')
@@ -49,7 +53,14 @@ dashboard.get('/home', (req, res)=>{
     const data = {};
     data.message = req.app.locals.msg
     req.app.locals.user = req.session.username;
-    const user = req.app.locals.user
+    const user = req.app.locals.user;
+    const sqlt = `select * from ${user} order by transaction_id desc`;
+    personalDb.query(sqlt, (err, result) => {
+        if (err) throw err;
+        if (result.length != 0) {
+            data.transaction = result;
+        }
+    })
     const sql = 'select * from to_pay where username = ?';
     db.query(sql, user, (err, result)=>{
         if(err)throw err;

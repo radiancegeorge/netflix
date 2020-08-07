@@ -746,4 +746,23 @@ header nav ul li a img {
 .display .wrap p span {
   font-weight: 600;
 }
+
+.transaction {
+  background: white;
+  padding: 10px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.transaction ul {
+  padding: 0;
+  max-width: 400px;
+  margin: auto;
+  line-height: 3;
+}
+
+.transaction ul li {
+  padding: 0;
+  font-weight: 600;
+}
 /*# sourceMappingURL=user_dashboard.css.map */
