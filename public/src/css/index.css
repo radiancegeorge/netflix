@@ -6,3 +6,166 @@
     font-family: 'Arial Narrow Bold', sans-serif;
     outline: none;
   }
+  .jumbosect{
+      background: black;
+  }
+  .container{
+      max-width: 90%;
+      margin: auto;
+  }
+  .jumbodiv{
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      color: white;
+      height: 100vh;
+      /* padding: 20px; */
+      overflow: hidden;
+      justify-content: center;
+  }
+  .in .img{
+      display: flex;
+      justify-content: center;
+  }
+  .jumbodiv img{
+      width: 160px;
+      height: 150px;
+  }
+  .jumbodiv h1{
+      font-size: 25px;
+      font-weight: 800;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid orange;
+  }
+  .jumbodiv p{
+      color: orange;
+      font-size: 18px;
+  }
+  .jumbodiv a{
+      background: green;
+      border: none;
+      padding: 15px 30px;
+      color: white;
+      margin-right: 10px;
+      text-decoration: none;
+      font-size: 14px;
+  }
+  .jumbodiv a:hover{
+      transition: background 1s;
+      font-weight: bold;
+      background: orange;
+      color: black;
+  }
+  .corevalue h3{
+      text-align: center;
+      padding: 30px 0px;
+      font-weight: 900;
+      font-size: 25px;
+  }
+  .corevalue p{
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 30px;
+      line-height: 1.4;
+  }
+  .rest{
+      /* background: orange; */
+      padding: 10px;
+  }
+  .restdiv{
+      background: white;
+      display: flex;
+      padding: 10px;
+      margin-top: 10px;
+      flex-flow: row wrap;
+      border-bottom: 2px solid orange;
+  }
+  .left{
+      flex-basis: 100%;
+      text-align: center;
+  }
+  .left h1{
+      font-size: 50px;
+      color: green;
+  }
+  .right {
+      text-align: center;
+  }
+  .testimonials{
+      margin-top: 30px;
+  }
+  .testimonials h4{
+      color: orange;
+  }
+  .slides{
+      font-weight: normal!important;
+      /* margin: auto; */
+      min-height: 200px!important;
+      /* color: white!important; */
+  }
+  .slides h6{
+      padding-top: 10px;
+  }
+  .slides p{
+      font-style: italic;
+      color: green;
+  }
+  .aboutus{
+      margin-top: 30px;
+      background: black;
+      color: orange;
+      display: flex;
+      overflow: hidden;
+  }
+  .off{
+      display: none;
+  }
+  .about{
+      padding-top: 20px;
+  }
+  .about p{
+      color: white;
+  }
+  .about a{
+    color: orange;
+  }
+  @media (min-width: 992px){
+      .rest{
+          display: flex;
+          flex-flow: row wrap;
+      }
+      .restdiv{
+          flex-basis: 50%;
+      }
+      .restdiv:hover{
+          background: black;
+          color: white;
+          transition: background 1s;
+          
+      }
+      .right p{
+          text-align: left;
+      }
+      .off{
+          display: flex;
+      }
+      .aboutus{
+          flex-basis: 50%;
+          margin-top: 0;
+          padding-left: 15px;
+          padding-right: 15px;
+      }
+      .caro{
+          flex-basis: 50%;
+      }
+      .offbig{
+          display: none;
+      }
+      .about{
+          padding: 0;
+      }
+      .flex{
+          display: flex;
+      }
+  }

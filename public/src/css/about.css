@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-family: 'Arial Narrow Bold', sans-serif;
+    outline: none;
+}
+.container{
+    max-width: 90%;
+    margin: auto;
+}
+.container h5{
+    padding: 5px 0px;
+    margin: 0;
+    text-align: center;
+    color: green;
+}
+hr{
+    background: orange;
+    height: 2px;
+    margin: 3px 0px;
+}
+/* .container h3:after{
+    content: "";
+    display: block;
+    width: 40%;
+    border-bottom: 5px solid green;
+} */
+
+  
