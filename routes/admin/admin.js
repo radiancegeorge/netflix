@@ -29,16 +29,7 @@ admin.get('/', (req, res)=>{
                 <button class="submitbtn">
                     Sign In
                 </button>
-                <a href="">
-                    <p>
-                        Forgot password?
-                    </p>
-                </a>
-                <a href="">
-                    <p>
-                    I don't have an account
-                    </p>
-                </a>
+               
                 
             </form>
     `)

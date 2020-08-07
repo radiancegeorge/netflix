@@ -37,7 +37,7 @@
                         You are to pay the person(s) below
                     </h1>
                     <% data.transactions.forEach(reciever =>{%>
-                    <form action="" class="pay-to">
+                    <form action="/user/fileupload" class="pay-to" enctype="multipart/form-data" method="POST">
                         Account Name
                         <input type="text" readonly value="<%= reciever.reciever.account_name %> ">
                         Bank Name
@@ -51,7 +51,11 @@
                             value="<%= reciever.reciever.username %> " style="display: none;">
                             Amount
                         <input type="number" name="amount" placeholder="2000" readonly value=<%= reciever.amount %>>
-                        <!-- <button type="submit"> I have paid</button> -->
+                        <% if(data.msg){%>
+                                <p style="padding: 10px; color: red;"><%= data.msg %> </p>
+                       <% } %> 
+                        <input type="file" name="image" required>
+                        <button type="submit"> I have paid</button>
                     </form>
                     <% }) %>
             

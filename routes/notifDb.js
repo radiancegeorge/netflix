@@ -4,22 +4,22 @@ const db = mysql.createConnection({
     port: 3306,
     user: 'netftgvf_admin',
     password: 'netflixnetworking',
-    database: 'netftgvf_user_transactions',
+    database: 'netftgvf_notification',
 });
-db.connect((err)=>{
-    if(err)throw err;
+db.connect((err) => {
+    if (err) throw err;
     console.log('personalDb online')
 });
 
 
-const command = (text)=>{
+const command = (text) => {
     sql = text;
-    db.query(sql, (err, result)=>{
-        if(err)throw err;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
         console.log(result);
     })
 }
-// command('drop table radiance_obi')
+// command('drop table radianceobi')
 
 
 module.exports = db 

@@ -3,7 +3,9 @@ const dashboard = express.Router();
 const db = require('../db');
 const invest = require('./invest');
 const awaiting = require('../awaitingDb');
-const refdb = require('../referralsDb')
+const refdb = require('../referralsDb');
+const fileUpload = require('./fileUpload');
+
 
 dashboard.get('/dashboard', (req, res)=>{
     console.log(req.session.username);
@@ -37,7 +39,8 @@ dashboard.get('/profile', (req, res)=>{
     })
 });
 dashboard.get('/home', (req, res)=>{
-    const data = {}
+    const data = {};
+    data.msg = req.app.locals.msg
     req.app.locals.user = req.session.username;
     const user = req.app.locals.user
     const sql = 'select * from to_pay where username = ?';
@@ -199,6 +202,7 @@ dashboard.get('/refer', (req, res)=>{
 
     })
 })
-dashboard.use(invest)
+dashboard.use(invest);
+dashboard.use(fileUpload);
 module.exports = dashboard;
 

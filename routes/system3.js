@@ -17,7 +17,7 @@ const referrals = ()=>{
                 const sql = `select username from ${user} where username = ?`;
                 refDb.query(sql, referred, (err, result)=>{
                     if(err){
-                        if (err.code === 'ER_NO_SUCH_TABLE'){
+                        if (err.code === 'ER_NO_SUCH_TABLE' || err.code === 'ER_PARSE_ERROR'){
                             console.log('no such table')
                         }else{
                             throw err;
@@ -62,31 +62,35 @@ const referrals = ()=>{
                             if(person.amount === null){
                                 const sql = `select * from ${referred}`;
                                 personalDb.query(sql, (err, result) => {
-                                    if (err) throw err;
-                                    if (result.length === 1) {
-                                        const transaction_id = result[0].transaction_id,
-                                            amount_paid = Number(result[0].amount_paid),
-                                            //attempting to find transaction in to_pay to know if its still ongoing or done
-                                            sql = `select * from to_pay where id = ?`;
-                                        db.query(sql, transaction_id, (err, result) => {
-                                            if (err) throw err;
-                                            if (result.length < 1) {
-                                                //completed transaction;
-                                                //add update user;
-                                                const amount = (amount_paid * 5) / 100;
-                                                const sql = `update ${user} set transaction_id = ?, investment = ?, amount = ? where username = ?`;
-                                                refDb.query(sql, [transaction_id, amount_paid, amount, referred], (err, result) => {
-                                                    if (err) throw err;
-                                                    //succesfully updated;
-                                                    console.log('updated first transaction')
-                                                })
-                                            } else {
-                                                //still ongoing transaction
+                                    if (err){
+                                        console.log(err)
+                                    }else{
+                                        if (result.length === 1) {
+                                            const transaction_id = result[0].transaction_id,
+                                                amount_paid = Number(result[0].amount_paid),
+                                                //attempting to find transaction in to_pay to know if its still ongoing or done
+                                                sql = `select * from to_pay where id = ?`;
+                                            db.query(sql, transaction_id, (err, result) => {
+                                                if (err) throw err;
+                                                if (result.length < 1) {
+                                                    //completed transaction;
+                                                    //add update user;
+                                                    const amount = (amount_paid * 5) / 100;
+                                                    const sql = `update ${user} set transaction_id = ?, investment = ?, amount = ? where username = ?`;
+                                                    refDb.query(sql, [transaction_id, amount_paid, amount, referred], (err, result) => {
+                                                        if (err) throw err;
+                                                        //succesfully updated;
+                                                        console.log('updated first transaction')
+                                                    })
+                                                } else {
+                                                    //still ongoing transaction
 
-                                                console.log(result, 'still an ongoing transaction')
-                                            }
-                                        })
-                                    }
+                                                    console.log(result, 'still an ongoing transaction')
+                                                }
+                                            })
+                                        }
+                                    } /*throw err;*/
+                                    
                                 })
                             }else{
                                 console.log('already assigned first investment');

@@ -7,7 +7,8 @@ const db = require('../db');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
 const uuid = require('uuid').v1;
-const refDb = require('../referralsDb')
+const refDb = require('../referralsDb');
+const notifDb = require('../notifDb')
 
 const sessionStore = new MysqlStore({
     clearExpired: true,
@@ -111,8 +112,14 @@ bankReg.get('/update_bank_details', (req, res)=>{
                     if(err)throw err;
                     console.log(result, 'ref data initiated');
                     req.app.locals.regEmail = email;
-                    // console.log(email, req.session.email)
-                    res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard
+                    // console.log(email, req.session.email);
+                    //create notif table
+                    const sql = `create table ${data.username} (id int auto_increment primary key, username varchar(45) not null, file_name varchar(255) not null, previous_count int not null)`;
+                    notifDb.query(sql, (err, result)=>{
+                        if(err)throw err;
+                        res.status(200).redirect('/user/dashboard')// remember to redirect to the dashboard
+
+                    })
                 })
                 
             })
