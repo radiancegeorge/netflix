@@ -15,3 +15,39 @@ nav{
     outline: none;
     border: none;
 }
+footer{
+    padding: 10px 0px;
+    text-align: center;
+}
+footer a{
+    margin-right: 10px;
+    font-size: 30px;
+    text-decoration: none;
+    outline: none;
+}
+footer a:hover {
+    text-decoration: none;
+    outline: none;
+}
+.fa-whatsapp{
+    color: green;
+}
+.fa-instagram{
+color: lightcoral;
+}
+.fa-youtube{
+    color: red;
+}
+.fa-telegram{
+    color: skyblue;
+}
+.fa-twitter{
+    color: skyblue;
+}
+.fa-facebook{
+    color: blue;
+}
+.footerdiv p{
+    font-weight: bolder;
+    margin-bottom: 0;
+}

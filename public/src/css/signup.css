@@ -5,7 +5,7 @@ body{
     background: black;
     color: white;
     font-family: "segoe ui";
-    height: 100vh;
+    /* height: 100vh; */
 }
 .formhead{
     text-align: center;
