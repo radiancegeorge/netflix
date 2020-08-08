@@ -2,11 +2,11 @@ nav{
     box-shadow: 1px 1px 5px black;
 }
 .brandlogo{
-    width: 90px;
+    width: 90px!important;
     padding: 0;
 }
 .brandlogo img{
-    width: 100%;
+    width: 100%!important;
 }
 .nav-link{
     font-weight: bolder;
