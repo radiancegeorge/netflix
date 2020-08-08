@@ -16,6 +16,9 @@
                     <span>
                         Update your personal information.
                     </span>
+                    <% if(data.message){%>
+                        <p style="padding: 10px; color: white; background: green;"><%= data.message %> </p>
+                    <%} %> 
                 </h1>
                 <div class="wrap">
                     <h1>
@@ -51,7 +54,7 @@
         </div>
     </section>
     <div class="container">
-        <a href="" style="color: white;">change Your Password</a>
+        <a href="/user/forgot_enterMail" style="color: white;">change Your Password</a>
     </div>
 </body>
 </html>

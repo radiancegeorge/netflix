@@ -51,8 +51,8 @@
                             value="<%= reciever.reciever.username %> " style="display: none;">
                             Amount
                         <input type="number" name="amount" placeholder="2000" readonly value=<%= reciever.amount %>>
-                        <% if(data.msg){%>
-                                <p style="padding: 10px; color: red;"><%= data.msg %> </p>
+                        <% if(data.message){%>
+                                <p style="padding: 10px; color: red;"><%= data.message %> </p>
                        <% } %> 
                         <input type="file" name="image" required>
                         <button type="submit"> I have paid</button>
@@ -103,6 +103,42 @@
                 </div>
             </section>
     <%} %>
+<% if(data.transaction){%>
+<% data.transaction.forEach(transaction =>{%>
+<div class="transaction">
+    <div class="container">
+        <% if(data.waitingForPayment || data.wait){%>
+            <% if(data.transaction.indexOf(transaction) === 0){%>
+
+                <p style="padding: 10px; text-align: center; color: white; background: orange;">Ongoing Transaction</p>
+
+           <% } %> 
+       <% } %> 
+        <ul>
+            <li>Transaction ID: <span><%= transaction.transaction_id %> </span></li>
+            <li> <% if(data.wait){%>
+                        <% if(data.transaction.indexOf(transaction) === 0){%>
+                            Amount Epected To Be Paid:
+                        <% } %>
+
+                <%}else{%>
+                    Amount Paid:
+           <% } %> <span><%= transaction.amount_paid %> </span></li>
+            <li>Amount Recieved: <span> <%= transaction.amount_recieved %> </span></li>
+        </ul>
+    </div>
+</div>
+<% }) %>
+<!-- <div class="transaction">
+        <div class="container">
+            <ul>
+                <li>Transaction ID: <span></span></li>
+                <li> Amount Paid: <span></span></li>
+                <li>Amount Recieved: <span></span></li>
+            </ul>
+        </div>
+    </div> -->
+<%} %>
     
     
 </body>

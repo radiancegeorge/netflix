@@ -56,7 +56,7 @@
                 <p>
                     Referral's ID
                 </p>
-                <input name="referred" type="text" placeholder="Referral ID" value="<% if(data.ref){%>
+                <input name="referred" type="text" placeholder="" value="<% if(data.ref){%>
                     <%= data.ref %> 
                <% } %> ">
             </div>
@@ -64,13 +64,13 @@
                 <p>
                     Enter Your Full Name
                 </p>
-                <input name="name" required type="text" placeholder="Enter Full Name">
+                <input name="name" required type="text" placeholder="">
             </div>
             <div class="input">
                 <p>
                     Enter Your E-mail
                 </p>
-                <input name="email" required type="email" placeholder="Enter Your E-mail Address">
+                <input name="email" required type="email" placeholder="">
             </div>
             <!-- <div class="input">
                 <p>
@@ -89,25 +89,25 @@
                 <p>
                     Enter Your Phone Number
                 </p>
-                <input name="phone_number" required type="tel" placeholder="Enter Valid Phone Number">
+                <input name="phone_number" required type="tel" placeholder="">
             </div>
             <div class="input">
                 <p>
                    Choose Username
                 </p>
-                <input name="username" required type="text" placeholder="Choose username">
+                <input name="username" required type="text" placeholder="">
             </div>
             <div class="input">
                 <p>
                     Choose Password
                 </p>
-                <input name="password" required type="password" placeholder="Choose Password">
+                <input name="password" required type="password" placeholder="">
             </div>
             <div class="input">
                 <p>
                     Confirm Password
                 </p>
-                <input name="retype_password" required type="password" placeholder="Confirm Password">
+                <input name="retype_password" required type="password" placeholder="">
             </div>
             <p>
                 By clicking "Create My Account", You agree to 
@@ -125,7 +125,7 @@
             </div>
             <p>
                 Already have an account?
-                <a href="">
+                <a href="/login">
                     Sign in
                 </a>
             </p>
