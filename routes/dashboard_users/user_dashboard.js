@@ -360,6 +360,9 @@ dashboard.post('/forgot_enterMail', (req, res)=>{
             })
 
 
+        }else{
+            req.app.locals.msg = 'Sorry, No such account with this mail';
+            res.redirect('/user/forgotpassword')
         }
     })
 });
