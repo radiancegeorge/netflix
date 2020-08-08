@@ -58,7 +58,7 @@ submitBtn.addEventListener('click', (e)=>{
                         errorMessage(property)
                     }
                 }
-                verify.open('get',`http://localhost:3000/validate/${property}/${value}`, true);
+                verify.open('get',`/validate/${property}/${value}`, true);
                 verify.send()
             }else{
                 //found unwanted characters, find a way to notify them
@@ -83,7 +83,7 @@ submitBtn.addEventListener('click', (e)=>{
                     errorMessage(property)
                 }
             }
-            verify.open('get', `http://localhost:3000/validate/${property}/${value}`, true);
+            verify.open('get', `/validate/${property}/${value}`, true);
             verify.send()
         }
 
