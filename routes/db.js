@@ -26,6 +26,9 @@ const ls = (sql, data)=>{
 //     ls(`alter table awaiting_payment add column ${item}`)
 // })
 // ls(`truncate table awaiting_payment`)
+// ls(`truncate table to_pay`)
+// ls(`truncate table registered_users`)
+// ls(`truncate table ongoing_registration`)
 // ls(`delete from ongoing_registration where username = 'radianceobi'`)
 // ls(`drop table change_password`);
 // uni = 'uni'

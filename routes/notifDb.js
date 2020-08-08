@@ -19,7 +19,7 @@ const command = (text) => {
         console.log(result);
     })
 }
-// command('drop table radianceobi')
+// command('drop table radiance_obi')
 
 
 module.exports = db 
