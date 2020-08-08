@@ -17,7 +17,7 @@ h2 span{
     color: orange;
 }
 .body{
-    padding: 20px 0px;
+    padding: 70px 0px;
     background: black;
     color: white;
     /* height: 100vh; */
@@ -97,7 +97,7 @@ form a:hover{
 
     background: orange;
 }
-@media(min-width: 600px){
+@media(min-width: 768px){
     .errormsg{
         padding-top: 60px;
         /* border-bottom: 3px solid black; */

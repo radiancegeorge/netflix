@@ -8,6 +8,10 @@ nav{
 .brandlogo img{
     width: 100%;
 }
+.nav-link{
+    font-weight: bolder;
+    font-size: larger;
+}
 .nav-link:visited{
     color: green!important;
 }
