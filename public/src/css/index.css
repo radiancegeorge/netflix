@@ -119,6 +119,7 @@
       background: black;
       color: orange;
       display: flex;
+      padding-bottom: 10px;
       overflow: hidden;
   }
   .off{

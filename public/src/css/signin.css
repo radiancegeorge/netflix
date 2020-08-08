@@ -7,6 +7,7 @@
 .errormsg{
     /* display: flex; */
     background: white;
+    padding-top: 60px;
     color: red;
 }
 .signinbig{
@@ -16,10 +17,10 @@ h2 span{
     color: orange;
 }
 .body{
-    padding: 20px 0px;
+    padding: 70px 0px;
     background: black;
     color: white;
-    height: 100vh;
+    /* height: 100vh; */
     justify-content: center;
     align-items: center;
     display: flex;
@@ -41,6 +42,9 @@ h2 span{
 .formcontainer{
     margin: 20px;
     flex-basis: 100%;
+}
+label{
+    min-width: 100%;
 }
 label input{
     display: flex;
@@ -65,11 +69,14 @@ label input{
     border-top: 2px dotted orange; */
     border-bottom: 2.5px solid orange; 
 }
-a{
+form a{
     display: block;
     color: orange;
     font-size: smaller;
     margin-bottom: 5px;
+}
+form a:hover{
+    color: orange;
 }
 .submitbtn{
     min-height: 40px;
@@ -90,10 +97,10 @@ a{
 
     background: orange;
 }
-@media(min-width: 600px){
+@media(min-width: 768px){
     .errormsg{
-        padding: 20px;
-        border-bottom: 3px solid black;
+        padding-top: 60px;
+        /* border-bottom: 3px solid black; */
         transition: border 2s;
     }
     .formcontainer{

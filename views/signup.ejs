@@ -4,10 +4,48 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./src/css/signup.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+        <link rel="stylesheet" href="./src/css/nav.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <title>Sign Up</title>
     </head>
     <body>
-        
+        <nav class="navbar bg-white navbar-expand-md fixed-top navbar-light">
+            <!-- Brand -->
+            <a class="navbar-brand brandlogo" href="/">
+                <img src="./src/img/logo 3.svg" alt="">
+            </a>
+          
+            <!-- Toggler/collapsibe Button -->
+            <button class="but navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <!-- Navbar links -->
+            <div class="ml-auto justify-content-center collapse navbar-collapse" id="collapsibleNavbar">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link a" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/about.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="FAQ's.html">FAQs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://wa.me/09035999264">Customer Service</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Sign Up</a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+
         <form class="signup" action="/register" method="POST" enctype="application/x-www-form-urlencoded">
             <h1 class="formhead">
                 <span>
@@ -73,7 +111,7 @@
             </div>
             <p>
                 By clicking "Create My Account", You agree to 
-                <a href="">
+                <a href="/terms.html">
                     Terms and Conditions
                 </a> set out by the site including our 
                 <a href="">
@@ -95,6 +133,43 @@
         <div class="signuppng">
             <img src="/src/img/Mobile login-pana.png" alt="">
         </div>
+        <footer>
+            <div class="container">
+                <div class="footerdiv">
+                    <p>
+                        Follow us on social media
+                    </p>
+                    <div>
+                        <a href="https://wa.me/09035999264">
+                            <i class="fa fa-whatsapp"></i>
+                        </a>
+                        <a href="https://t.me/joinchat/RQy0IhOS14WcpSIV1-taXA">
+                            <i class="fa fa-telegram"></i>
+                        </a>
+                        <a href="https://lm.facebook.com/l.php?u=https%3A%2F%2Ffb.me%2Fnetflixnetworking&h=AT2n_pmnw1Us5DvDSv7gLhMZyx8Qe_7UXAausdPXUF2gkWTJCe-HlJz6fX5TmNpPHAoZ-ZtokngxRgNA6JW0gcYpIm_dvqxOXp_iMKH-cXm5eMMncTLItICPqi8LeXnrDGBI">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-youtube"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <p>
+                            &copy;Netflix networking
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
         <script src="./src/js/signup.js"></script>
     </body>
     </html>
