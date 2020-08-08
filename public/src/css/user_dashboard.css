@@ -88,7 +88,7 @@ header nav ul {
           align-items: center;
   left: 0;
   width: 100vw;
-  height: 11vh;
+  height: 12vh;
   overflow: hidden;
 }
 
@@ -252,6 +252,14 @@ header nav ul li a img {
 }
 
 @media (min-width: 560px) {
+  .reminder {
+    max-width: 600px;
+    left: 40%;
+    -webkit-transform: translate(-50% -50%);
+            transform: translate(-50% -50%);
+    position: absolute;
+    top: 0;
+  }
   .transaction {
     max-width: 85vw;
   }
@@ -772,5 +780,53 @@ header nav ul li a img {
 .transaction ul li span {
   color: green;
   font-size: 18px;
+}
+
+.reminder {
+  margin: auto;
+  background: rgba(0, 10, 0, 0.9);
+  height: 100vh;
+  z-index: 999;
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  -webkit-animation-name: slide;
+          animation-name: slide;
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  position: absolute;
+  top: 0;
+  max-width: 100%;
+}
+
+.reminder .wrap {
+  padding: 10px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.reminder .cancel-reminder {
+  cursor: pointer;
+  font-size: 40px;
+  position: relative;
+  text-align: right;
+  padding: 20px;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+  top: -20vh;
+  left: 10vw;
+  color: orange;
+}
+
+@-webkit-keyframes slide {
+  from {
+    top: 100vh;
+  }
+}
+
+@keyframes slide {
+  from {
+    top: 100vh;
+  }
 }
 /*# sourceMappingURL=user_dashboard.css.map */
