@@ -149,15 +149,23 @@ const system = ()=>{
                         if(amountRecieved === amountToBeRecieved){
                             //a match so empty drop table in awaiting database and clear log from awaiting table;
                             const sql = `delete from awaiting_payment where username = ?`
+                            //######
                             db.query(sql, user, (err, result)=>{
                                 if(err)throw err;
                                 console.log(result,'reciever deleted');
-                                // drop table in awaiting db
-                                const sql = `drop table ${user}`;
-                                awaiting.query(sql, (err, result)=>{
+                                // drop table in awaiting db if now empty;
+                                const amend = `select * from ${user}`;
+                                awaiting.query(amend, (err, result)=>{
                                     if(err)throw err;
-                                    console.log(result, 'table in awaiting dropped')
+                                    if(result.length < 1){
+                                        const sql = `drop table ${user}`;
+                                        awaiting.query(sql, (err, result) => {
+                                            if (err) throw err;
+                                            console.log(result, 'table in awaiting dropped')
+                                        })
+                                    }
                                 })
+                                
                             })
                         }
                     }else{

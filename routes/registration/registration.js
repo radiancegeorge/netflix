@@ -45,6 +45,7 @@ reg.post('/register', (req, res)=>{
 
 
                         verifyMailTransporter.sendMail({
+                            
                             from: '"Netflix Networking" <verify@netflixnetworking.com>', // sender address
                             to: data.email, // list of receivers
                             subject: 'Please Verify Your E-mail', // Subject line

@@ -54,16 +54,16 @@ login.post('/login', (req, res)=>{
                 if(password){
                     console.log('welcome');
                     console.log(result)
-                    req.app.locals.email = result.email;
-                    req.app.locals.everyDetail = result;
+                    req.session.email = result.email;
+                    req.session.everyDetail = result;
                     const sql = `select * from registered_users where username = ? or email = ? `;
                     db.query(sql, values, (err, result) => {
                         if(err)throw err;
                         const bnk = result[0].bank_name;
                         if(bnk === null){
                             //add email to locals;
-                            req.app.locals.email = result[0].email;
-                            req.app.locals.msg = 'Please put in your account details'
+                            req.session.email = result[0].email;
+                            req.session.msg = 'Please put in your account details'
                             console.log('no bank detail');
                             res.redirect('/bank');
                         }else{
@@ -87,8 +87,8 @@ login.post('/login', (req, res)=>{
 
 login.get('/logout', (req, res)=>{
     req.session.username = false;
-    req.app.locals.email = false;
-    req.app.locals.regEmail = false
+    req.session.email = false;
+    req.session.regEmail = false
     res.redirect('/login')
 });
 login.use('/user', user_dashboard)

@@ -10,8 +10,9 @@ const customMail = require('../customMail')
 invest.post('/invest',(req, res)=>{
     const amount = req.body.amount;
     if(amount >= 2000 && amount <= 200000){
-        console.log('within range')
-        const user = req.app.locals.user;
+        console.log('within range');
+        // console.log(req.session.username, 'still checking something')
+        const user = req.session.username;
 //firstly lets find out the users previous pay in to continue transaction;
         //if empty table or amount not less than previous paid, carry on with the transaction
         const sql = `select * from ${user}`;
@@ -54,7 +55,7 @@ invest.post('/invest',(req, res)=>{
 })
 invest.post('/paid', (req, res)=>{
     // console.log(req.app.locals.everyDetail, 'this are users details');
-    const data = req.app.locals.everyDetail
+    const data = req.session.everyDetail
     const text = `
     The user with the following details wishes to let you know that he/she has paid to be activated
     name: ${data.name}
@@ -64,7 +65,7 @@ invest.post('/paid', (req, res)=>{
     
     `;
     const adminMail = 'radiancegeorge@gmail.com';
-    req.app.locals.msg = 'The admin has been notified of Your claims, You will get a Response shortly'
+    req.session.msg = 'The admin has been notified of Your claims, You will get a Response shortly'
     customMail(adminMail, text);
     setTimeout(() => {
         res.redirect('/login')

@@ -12,14 +12,29 @@ const uniqid = require('uniqid');
 const domain = 'http://localhost:3000';
 const personalDb = require('../personalDb')
 
+const store = {
+    user: ''
+}
+
+dashboard.use((req, res, next) => {
+    res.locals.person = store.user;
+    next()
+});
+
+
+
+
 
 dashboard.get('/dashboard', (req, res)=>{
     console.log(req.session.username);
-    
-    if(req.session.username || req.app.locals.regEmail){
-        const data = req.app.locals.regEmail || req.session.username;
-        req.session.username = data;
+    console.log()
 
+
+    if(req.session.username || req.session.regEmail){
+        const data = req.session.regEmail || req.session.username;
+        req.session.username = data;
+        store.user = data;
+       
         
         const sql = `select * from activated_users where username = ? or email = ?`;
         db.query(sql, [data ,data], (err, result)=>{
@@ -27,7 +42,10 @@ dashboard.get('/dashboard', (req, res)=>{
             // console.log(result, 'this is the result')
             const status = {}
             result.length < 1 ? status.activated = false : status.activated = true;
-            status.msg = req.app.locals.msg;
+            status.msg = req.session.msg;
+            setTimeout(() => {
+                req.session.msg = ''
+            }, 3000);
             res.render('user_dashboard', { status });
             
         })
@@ -39,7 +57,10 @@ dashboard.get('/dashboard', (req, res)=>{
 
 dashboard.get('/profile', (req, res)=>{
     const data = {}
-    data.msg = req.app.locals.msg
+    data.msg = req.session.msg;
+    setTimeout(() => {
+        req.session.msg = ''
+    }, 3000);
     const sql = `select * from registered_users where email = ? or username = ?`;
     const email = req.session.username
     db.query(sql, [email, email], (err, resut)=>{
@@ -51,9 +72,12 @@ dashboard.get('/profile', (req, res)=>{
 });
 dashboard.get('/home', (req, res)=>{
     const data = {};
-    data.message = req.app.locals.msg
-    req.app.locals.user = req.session.username;
-    const user = req.app.locals.user;
+    data.message = req.session.msg;
+    setTimeout(() => {
+                req.session.msg = ''
+            }, 3000);
+    req.session.user = req.session.username;
+    const user = req.session.username;
     const sqlt = `select * from ${user} order by transaction_id desc`;
     personalDb.query(sqlt, (err, result) => {
         if (err) throw err;
@@ -210,11 +234,14 @@ dashboard.get('/refer', (req, res)=>{
     });
     promise.then(result=>{
         const data = result;
-        data.msg = req.app.locals.msg
+        data.msg = req.session.msg;
+        setTimeout(() => {
+            req.session.msg = ''
+        }, 3000);
         data.ref = `www.netflixnetworking.com/register?ref=${user}`;
-        req.app.locals.username = user
+        req.session.username = user
         if(!data.noRef){
-            req.app.locals.total = data.total;
+            req.session.total = data.total;
         };
         res.render('dashboard_ref', { data });
 
@@ -222,7 +249,8 @@ dashboard.get('/refer', (req, res)=>{
 });
 dashboard.get('/notification', (req, res)=>{
     const data = {}
-    const user = req.app.locals.user;
+    console.log(req.session.username);
+    const user = req.session.username;
     const sql = `select * from ${user} order by id desc limit 10 `;
     notifDb.query(sql, (err, result)=>{
         if(err)throw err;
@@ -241,7 +269,7 @@ dashboard.get('/notification', (req, res)=>{
 dashboard.get('/notification/view', (req, res)=>{
     if(req.query){
         const data = {}
-        const user = req.app.locals.user;
+        const user = req.session.username;
         const id = req.query.id;
         const sql = `select * from ${user} where id = ?`;
         notifDb.query(sql, id, (err, result)=>{
@@ -263,14 +291,17 @@ dashboard.get('/notification/view', (req, res)=>{
 
 dashboard.get('/change_password', (req, res)=>{
     const data = {};
-    data.msg = req.app.locals.msg
+    data.msg = req.session.msg;
+    setTimeout(() => {
+        req.session.msg = ''
+    }, 3000);
     res.render('changepassword', {data})
 });
 
 dashboard.post('/change_password', (req, res)=>{
     const data = req.body;
     if(data.old){
-        const user = req.app.locals.user;
+        const user = req.session.username;
         const sql = `select password from registered_users where username = ?`;
         db.query(sql, user, (err, result)=>{
             if(err)throw err;
@@ -291,18 +322,24 @@ dashboard.post('/change_password', (req, res)=>{
 
                         })
                     }else{
-                        req.app.locals.msg = 'invalid password';
+                        req.session.msg = 'invalid password';
+                        setTimeout(() => {
+                            req.session.msg = ''
+                        }, 3000);
                         res.redirect('/user/change_password')
                     }
                 }else{
-                    req.app.locals.msg = ' wrong password';
+                    req.session.msg = ' wrong password';
+                    setTimeout(() => {
+                        req.session.msg = ''
+                    }, 3000);
                     res.redirect('/user/change_password')
                 }
             })
         })
     }else{
         //request external
-        const email = req.app.locals.email;
+        const email = req.session.email;
         if(data.password === data.rePassword){
 
             bcrypt.hash(data.password, 10)
@@ -354,14 +391,20 @@ dashboard.post('/forgot_enterMail', (req, res)=>{
                     })
                 }, 60000 * 60 / 2);
                 setTimeout(() => {
-                    req.app.locals.msg = 'An email has been sent to  you, please continue with the email'
-                    res.redirect('/user/forgotpassword')
+                    req.session.msg = 'An email has been sent to  you, please continue with the email'
+                    res.redirect('/user/forgotpassword');
+                    setTimeout(() => {
+                        req.session.msg = ''
+                    }, 3000);
                 }, 3000);
             })
 
 
         }else{
-            req.app.locals.msg = 'Sorry, No such account with this mail';
+            req.session.msg = 'Sorry, No such account with this mail';
+            setTimeout(() => {
+                req.session.msg = ''
+            }, 3000);
             res.redirect('/user/forgotpassword')
         }
     })
@@ -379,7 +422,7 @@ dashboard.get('/forgotpassword', (req, res)=>{
             if(err)throw err;
             if(result.length != 0){
                 data.email = result[0].email;
-                req.app.locals.email = data.email
+                req.session.email = data.email
                 res.render('resetpassword', {data});
                 setTimeout(() => {
                     const sql = `delete from change_password where id = ?`;
@@ -393,7 +436,10 @@ dashboard.get('/forgotpassword', (req, res)=>{
             }
         })
     }else{
-        data.msg = req.app.locals.msg
+        data.msg = req.session.msg;
+        setTimeout(() => {
+            req.session.msg = ''
+        }, 3000);
         res.render('forgotpassword', { data });
     }
 })

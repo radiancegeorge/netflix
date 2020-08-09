@@ -29,8 +29,8 @@ const ls = (sql, data)=>{
 // ls(`truncate table to_pay`)
 // ls(`truncate table registered_users`)
 // ls(`truncate table ongoing_registration`)
-// ls(`delete from ongoing_registration where username = 'radianceobi'`)
-// ls(`drop table change_password`);
+// ls(`alter table to_pay add constraint username unique (username) `)
+// ls(`select * from to_pay`);
 // uni = 'uni'
 // ls(`truncate table change_password`)
 module.exports = db 

@@ -84,7 +84,9 @@ validate.post('/validate_payment/', (req, res) => {
                                             res.redirect(file.data)
                                         } else {
                                             // empty, user is done investing;
-
+                                            // if(file.data === '/user/home'){
+                                            //     res.redirect(file.data);
+                                            // }
                                             //check if personal table has morethan 2 transactions;
                                             //first check if amount in to_pay is = 0;
                                             const sql = `select amount from to_pay where username = ?`;
@@ -97,6 +99,8 @@ validate.post('/validate_payment/', (req, res) => {
                                                         const sql = `delete from to_pay where username = ?`;
                                                         db.query(sql, username, (err, result) => {
                                                             if (err) throw err;
+                                                            console.log('finished transaction for investor, now deleting from to_pay')
+                                                            //######
                                                             //deleted from to pay and getting ready to be added to awaiting;
                                                             const sql = `select * from ${username}`;
                                                             personalDb.query(sql, (err, result) => {

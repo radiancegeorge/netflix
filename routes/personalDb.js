@@ -19,7 +19,8 @@ const command = (text)=>{
         console.log(result);
     })
 }
-// command('drop table radianceobi')
+// command('truncate table radiance_obi')
+// command('truncate table Preshnwoko')
 
 
 module.exports = db 

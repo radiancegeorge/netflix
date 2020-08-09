@@ -3,14 +3,43 @@ const admin = express.Router();
 const db = require('../db');
 const personalDb = require('../personalDb')
 const awaiting  = require('../awaitingDb');
+const session = require('express-session');
+
 const bcryt = require('bcrypt');
+const MysqlStore = require('express-mysql-session')(session);
+const uuid = require('uuid').v1;
+
 
 admin.use(express.urlencoded({extended: false}));
 const username = 'netflix@admin.com'
 const password = '$2b$10$3U7Hhffvay2rrUyGZZAM1Ohzb2aMuSu5Bdotaevv8WaSLmqTb1wbK'
+// login.use(session)
+const sessionStore = new MysqlStore({
+    clearExpired: true,
+    checkExpirationInterval: 60000,
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'sessions'
+    }
+}, db)
+admin.use(session({
+    secret: 'networkingNetflix',
+    resave: false,
+    saveUninitialized: true,
+    genid: () => {
+        return uuid();
+    },
+    cookie: {
+        // secure: true,
+        maxAge: 86400000,
+
+    }
+}))
+
+
 
 admin.get('/', (req, res)=>{
-    if(req.app.locals.user === username){
+    if(req.session.admin === username){
         res.render('admin', {data: 'welcome'})
     }else{
         res.send(`
@@ -40,16 +69,16 @@ admin.post('/', (req, res)=>{
     if(data.username === username){
         bcryt.compare(data.password, password).then(result =>{
             if(result){
-                req.app.locals.user = data.username
+                req.session.admin = data.username
                 res.render('admin', {data: 'welcome'})
             }else{
-                req.app.locals.wrong = 'wrong password';
+                req.session.wrong = 'wrong password';
                 res.redirect('/admin')
             }
         })
 
     }else{
-        req.app.locals.wrong = 'wrong username';
+        req.session.wrong = 'wrong username';
         res.redirect('/admin')
     }
 })
@@ -64,14 +93,14 @@ admin.post('/find_user', (req, res)=>{
                const data = {
                     user: result[0].name
                 };
-                req.app.locals.wholeData = result[0];
+                req.session.wholeData = result[0];
                 //found user then another search to know if user is activated
                 const sql = `select username from activated_users where username = ?`;
                 db.query(sql, search, (err, result) => {
                     if (err) throw err;
                     result.length < 1 ? data.activated = false : data.activated = true;
                     console.log(data.activated)
-                    req.app.locals.user = search;
+                    req.session.user = search;
                     res.render('admin', { data });
                  })
            }else{
@@ -85,8 +114,8 @@ admin.post('/find_user', (req, res)=>{
 });
 admin.post('/status', (req, res)=>{
     data = req.body;
-    data.user = req.app.locals.user;
-    data.wholeData = req.app.locals.wholeData;
+    data.user = req.session.user;
+    data.wholeData = req.session.wholeData;
     // console.log(data.wholeData.id)
     const sql = `select * from activated_users where username = ?`;
     db.query(sql, data.user, (err, result)=>{
@@ -119,7 +148,7 @@ admin.post('/transactions', (req, res)=>{
         if(result.length === 1){
             data.payee = result[0].username;
             data.payeeName = result[0].name;
-            req.app.locals.userName = data.payee;
+            req.session.userName = data.payee;
             const sql = 'select username from to_pay where username = ?';
             db.query(sql, data.payee, (err, result) => {
                 if (err)throw err;
@@ -199,7 +228,7 @@ admin.post('/transactions', (req, res)=>{
 
 
 admin.get('/validate_payment', (req, res)=>{
-    const user = req.app.locals.userName;
+    const user = req.session.userName;
     const sql = `select * from to_pay where username = ?`;
     db.query(sql, user, (err, result)=>{
         if(err)throw err;
@@ -208,13 +237,14 @@ admin.get('/validate_payment', (req, res)=>{
         db.query(sql,user, (err, result) => {
             if (err) throw err;
             //deleted from to pay and getting ready to be added to awaiting;
+            console.log('want to be sure this user has been deleted')
             const sql = `select * from ${user}`;
             personalDb.query(sql, (err, result) => {
                 if (err) throw err;
                 if (result.length >= 2) {
                     const amount = Number(result[result.length - 1].amount_paid)
                     const transactio_id = result[result.length - 1].transaction_id
-                    const amount_recieved = result[result.length - 1].amount_recieved
+                    const amount_recieved = Number(result[result.length - 1].amount_recieved)
                     //add to awaiting_payment and create a table in awaiting database;
                     const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
                     const toBeRecieved = amount + (amount * 50 / 100)
@@ -229,6 +259,8 @@ admin.get('/validate_payment', (req, res)=>{
                         })
                     })
 
+                }else{
+                    res.redirect('/admin')
                 }
             })
         })
@@ -236,4 +268,3 @@ admin.get('/validate_payment', (req, res)=>{
 })
 // console.log(5000+(5000 * 50/100))
 module.exports = admin;
-
