@@ -9,9 +9,32 @@ const validate = require('./frontEnd verification/validation');
 const bankReg = require('./bank_registration');
 reg.use(express.urlencoded({ extended: false }));
 const domainName = `http://localhost:3000`;
+const session = require('express-session');
+const MysqlStore = require('express-mysql-session')(session);
 
+const sessionStore = new MysqlStore({
+    clearExpired: true,
+    checkExpirationInterval: 60000,
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'sessions'
+    }
+}, db)
+reg.use(session({
+    secret: 'networkingNetflix',
+    resave: false,
+    saveUninitialized: true,
+    genid: () => {
+        return uuid.v1();
+    },
+    cookie: {
+        // secure: true,
+        maxAge: 86400000,
 
+    }
+}))
 reg.get('/register', (req, res) => {
+    // console.log(req.session)
     const data = {};
     data.msg = 'welcome';
     req.query.ref ? data.ref = req.query.ref : data.ref = false;
@@ -20,7 +43,6 @@ reg.get('/register', (req, res) => {
 });
 
 reg.post('/register', (req, res)=>{
-    console.log(req.body)
     bcrypt.hash(req.body.password, 10).then( hashed =>{
         const data = {
             name: req.body.name,
@@ -31,7 +53,7 @@ reg.post('/register', (req, res)=>{
             password: hashed,
             gen_id: uuid.v4()
         };
-        req.app.locals.data = data;
+        req.session.data = data;
             try {
                 db.query(`INSERT INTO ongoing_registration (name, email, phone_number, username, password, gen_id, referred) VALUES ('${data.name}', '${data.email}', '${data.phone_number}', '${data.username}', '${data.password}', '${data.gen_id}', '${data.referred}')`,(err, result) => {
                     const mailing = ()=>{
@@ -56,7 +78,7 @@ reg.post('/register', (req, res)=>{
                             console.log(info)
                             console.log("Message sent: %s", info.messageId);
                             res.render('checkmail');
-                            req.app.locals.email = data.email;
+                            req.session.email = data.email;
 
                         });
                     }
@@ -94,7 +116,7 @@ reg.post('/register', (req, res)=>{
 
     });
     reg.get('/remail', (req, res)=>{
-        const data = req.app.locals.data;
+        const data = req.session.data;
         let html = `
                         <p> Please confirm your E-mail by clicking on the link below </p>
                         <a href =' ${domainName}/mail/auth/${data.gen_id}'> Click here </a>
@@ -126,6 +148,6 @@ reg.use(validate)
 
 
 
-
+// console.log(uuid.v1())
 // reg.use(express.json());
 module.exports = reg;

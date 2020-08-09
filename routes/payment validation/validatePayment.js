@@ -5,11 +5,13 @@ const personalDb = require('../personalDb');
 const validate = express.Router();
 
 validate.use(express.urlencoded({extended: false}))
-
+validate.get('/val', (req, res)=>{
+    // console.log(req.session)
+})
 validate.post('/validate_payment/', (req, res) => {
     data = {}
     const username = req.body.username ;
-    const reciever = req.body.reciever || req.app.locals.user;
+    const reciever = req.body.reciever || req.session.user;
     const file = {};
     if(req.body.reciever === undefined){
         file.data = '/user/home'
@@ -153,5 +155,7 @@ validate.post('/validate_payment/', (req, res) => {
     })
 
 });
+
+
 
 module.exports = validate

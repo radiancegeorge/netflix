@@ -21,7 +21,9 @@ const ls = (sql, data) => {
 
     });
 };
-// ls(`truncate table radiance_obi`)
+// ls(`drop table radiance_obi`)
+// ls(`drop table Preshnwoko`)
+// ls(`drop table Ifeoma`)
 // ls(`select * `)
 // ls(`update radianceobi set amount = 5000 where username = 'radiance_obi' `) 
 module.exports = db;

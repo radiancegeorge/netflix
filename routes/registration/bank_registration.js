@@ -41,6 +41,7 @@ bankReg.use(session({
 // })
 
 bankReg.get('/', (req, res)=>{
+    // console.log(req.session)
     paystack.listBanks({
         perPage: 50,
         country: 'nigeria',
@@ -49,9 +50,9 @@ bankReg.get('/', (req, res)=>{
         if(response.body.status === true){
             const data = response.body.data;
             //making all banks available for further use throughout the request
-            req.app.locals.allBanks = data
+            req.session.allBanks = data
             // now render the bank registration page with banks in the select tag
-            const msg = req.app.locals.msg;
+            const msg = req.session.msg;
             res.render('bank_verification', {data, msg})
         }
     }).catch(err =>{
@@ -65,7 +66,7 @@ bankReg.get('/user/:account_number/:bank_code', (req, res)=>{
           bank_code: req.params.bank_code
       }).then( response =>{
           if(response.body.status === true){
-                const allBanks = req.app.locals.allBanks;
+                const allBanks = req.session.allBanks;
                 const selectedBank = allBanks.filter(bank => {
                     if(bank.code == req.params.bank_code){
                         return bank;
@@ -77,7 +78,7 @@ bankReg.get('/user/:account_number/:bank_code', (req, res)=>{
                 delete data.bank_id
               data.bank_name = selectedBank[0].name
               console.log(data)
-              req.app.locals.accountDetails = data
+              req.session.accountDetails = data
                 res.status(201).send(data.account_name)
           }
       }) .catch(error =>{
@@ -88,8 +89,8 @@ bankReg.get('/user/:account_number/:bank_code', (req, res)=>{
 
 
 bankReg.get('/update_bank_details', (req, res)=>{
-    const email = req.app.locals.email,
-    account_details = req.app.locals.accountDetails,
+    const email = req.session.email,
+    account_details = req.session.accountDetails,
         sql = `update registered_users set ? where email = '${email}' `;
         console.log(account_details, email)
     db.query(sql, account_details, (err, response)=>{
@@ -111,7 +112,7 @@ bankReg.get('/update_bank_details', (req, res)=>{
                 refDb.query(sql, (err, result)=>{
                     if(err)throw err;
                     console.log(result, 'ref data initiated');
-                    req.app.locals.regEmail = email;
+                    req.session.regEmail = data.username;
                     // console.log(email, req.session.email);
                     //create notif table
                     const sql = `create table ${data.username} (id int auto_increment primary key, username varchar(45) not null, file_name varchar(255) not null, previous_count int not null)`;
