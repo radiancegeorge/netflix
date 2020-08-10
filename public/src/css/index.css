@@ -60,6 +60,13 @@
       background: orange;
       color: black;
   }
+  .jumbobut{
+      width: 100%;
+  }
+  .jumbobut div{
+      display: flex;
+      justify-content: center;
+  }
   .corevalue{
       max-width: 600px;
       margin: auto;
@@ -182,6 +189,9 @@
       .restdiv{
           flex-basis: 50%;
       } */
+      .restdiv{
+          padding: 10px 50px;
+      }
       .restdiv:hover{
           background: black;
           color: white;

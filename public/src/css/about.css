@@ -68,4 +68,9 @@ hr{
         padding: 20px 10px;
     }
 }
+@media (min-width: 992px){
+    .aboutsect{
+        padding: 20px 40px;
+    }
+}
   
