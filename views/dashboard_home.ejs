@@ -107,7 +107,7 @@
 <% data.transaction.forEach(transaction =>{%>
 <div class="transaction">
     <div class="container">
-        <% if(data.waitingForPayment || data.wait){%>
+        <% if(data.waitingForPayment || data.wait || data.payers || data.transactions){%>
             <% if(data.transaction.indexOf(transaction) === 0){%>
 
                 <p style="padding: 10px; text-align: center; color: white; background: orange;">Ongoing Transaction</p>

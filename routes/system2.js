@@ -31,7 +31,7 @@ const checkDate = ()=>{
                                 // hoursLeft = 25
                                 hoursLeft = timeLeft / 3600000;
                                 console.log(hoursLeft)
-                                if(hoursLeft >= 24){
+                                if(hoursLeft >= 17){
                                     //time elapsed transfer and reset data then block user;
                                     const sql = `delete from activated_users where username = ?`;
                                     db.query(sql, investor.username, (err, result)=>{
@@ -70,7 +70,10 @@ const checkDate = ()=>{
                                                                         //delete user from to_pay and finally from receiver;
                                                                         const sql = `delete from to_pay where username = ?`;
                                                                         db.query(sql, investor.username, (err, result)=>{
-                                                                            if(err)throw err;
+                                                                            //### patch
+                                                                            if(err){
+                                                                                console.log('deleted previously from to pay')
+                                                                            }
                                                                             console.log(result, 'investor deleted from to_pay');
                                                                             const sql = `delete from ${reciever} where username = ?`;
                                                                             awaiting.query(sql, investor.username, (err, result)=>{

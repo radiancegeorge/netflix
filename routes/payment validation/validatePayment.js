@@ -27,7 +27,7 @@ validate.post('/validate_payment/', (req, res) => {
             const sql = `select * from ${reciever}`;
             personalDb.query(sql, (err, result) => {
                 if (err) throw err;
-                if (!result.length < 1) {
+                if (result.length >= 1) {
                     //table has data;
                     const id = result[result.length - 1].transaction_id
                     const recieversBalance = Number(result[result.length - 1].amount_recieved);

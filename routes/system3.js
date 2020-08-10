@@ -84,8 +84,7 @@ const referrals = ()=>{
                                                     })
                                                 } else {
                                                     //still ongoing transaction
-
-                                                    console.log(result, 'still an ongoing transaction')
+                                                    console.log(result, 'still an ongoing transaction');
                                                 }
                                             })
                                         }
