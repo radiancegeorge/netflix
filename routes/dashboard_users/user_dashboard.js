@@ -115,7 +115,7 @@ dashboard.get('/home', (req, res)=>{
                         if(result.length < 1){
                             // no investor merged yet;
                             data.waitingForPayment = true;
-                            res.render('dashboard_home',{data})
+                            res.render('dashboard_home',{data});
                         }else{
                             //found investors merged
                            data.payers = result;
@@ -158,7 +158,8 @@ dashboard.get('/home', (req, res)=>{
                                         if(err)throw err;
                                         searchData.push({
                                             reciever: result[0],
-                                            amount: content.amount
+                                            amount: content.amount,
+                                            time: content.date
                                         })
                                         console.log(result, 'details of whom to pay')
                                     })
@@ -175,6 +176,7 @@ dashboard.get('/home', (req, res)=>{
                         if (result.length != 0) {
                             data.initialization = false
                             data.transactions = result;
+                            req.session.transactionForFrontend = result;
                             console.log(data.transactions)
                             
 
@@ -451,6 +453,12 @@ dashboard.get('/forgotpassword', (req, res)=>{
         }, 3000);
         res.render('forgotpassword', { data });
     }
+});
+
+dashboard.get('/timeout', (req, res)=>{
+    const data = req.session.transactionForFrontend;
+    console.log( 'time for front end');
+    res.status(200).send(data);
 })
 dashboard.use(invest);
 dashboard.use(fileUpload);

@@ -42,6 +42,6 @@ const clean = ()=>{
 // clean()
 // command('create table tests (username varchar(45), date varchar(255))')
 // command('drop table radiance_obi')
-// command('show tables')
+// command('select * from Preshnwoko')
 module.exports = db
  

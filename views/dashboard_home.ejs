@@ -49,6 +49,7 @@
                     </h1>
                     <% data.transactions.forEach(reciever =>{%>
                     <form action="/user/fileupload" class="pay-to" enctype="multipart/form-data" method="POST">
+                        <p class="time">You have: <span></span> Left to complete this transaction</p>
                         Account Name
                         <input type="text" readonly value="<%= reciever.reciever.account_name %> ">
                         Bank Name
@@ -71,6 +72,7 @@
                     <% }) %>
             
                 </div>
+                <script src="/src/js/transactionTimeout.js"></script>
             </section>
             <%} %>
             

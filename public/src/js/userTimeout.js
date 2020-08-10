@@ -33,7 +33,7 @@ const timeout = ()=>{
         if (getHour.readyState === 4 && getHour.status === 200) {
             const response = getHour.response.timeout;
             const dateCreated = new Date(response)
-           
+            
             setInterval(() => {
                 const CurrentDate = new Date();
                 const elapsed = CurrentDate - dateCreated;
