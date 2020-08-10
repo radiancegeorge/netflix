@@ -6,68 +6,71 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/admin/find_user" method="POST" enctype="application/x-www-form-urlencoded">
-        <input type="search" name="search" id="search">
-        <button type="submit">search</button>
-    </form>
-    <% if(data.user){%>
-        <form action="/admin/status" method="POST" enctype="application/x-www-form-urlencoded">
-        <input type="text" readonly value="<%= data.user %>  " name="name">
-        <label for="checkboxes">
-            deactivated
-            <input type="radio" disabled readonly name="status" <% if(!data.activated){%>
-                checked
-           <% } %>  >
-        </label>
-        <label for="checkboxes">
-            activated
-            <input type="radio" disabled readonly name="status" <% if(data.activated){%>
-                checked
-            <%} %>  >
-        </label>
-        <button type = 'submit'>change</button>
-    </form>
-   <% } %> 
-
-
- 
-
-   <section class="transactions" style="margin-top: 20px;">
-       <form action="/admin/transactions" method="POST" enctype="application/x-www-form-urlencoded">
-            <input type="search" value="" name="search">
-            <button type="submit">search</button>
-       </form>
-
-       <% if(data.payee){%>
-            <form action="/admin/validate_payment" method="GET" enctype="application/x-www-form-urlencoded"> 
-                <input type="text" value="<%= data.payeeName %> " name="name">
-                <label for="payment status">
-                    paid <input type="radio" disabled <% if(data.paid){%>
-                        checked
-                    <%} %> > not paid <input type="radio" disabled <% if(!data.paid){%>
-                        checked
-                    <%} %>>
-                </label>
-                <button type="submit">activate</button>
-            </form>
-      <% } %> 
-
-
-        <% if(data.transactions){%>
-            <% data.transactions.forEach(data=>{%>
-                <form action="/validate_payment" method="POST" enctype="application/x-www-form-urlencoded" style="display: flex; flex-flow: column;justify-content: space-between;  align-items: flex-start;">
-                    transaction id
-                    <input type="text" value="<%= data.investor.id %> ">
-                    username
-                    <input type="text" value="<%= data.investor.username %>" name="username">
-                    amount
-                    <input type="number" value= <%= data.investor.amount %> >
-                    reciever
-                    <input type="text" value= '<%= data.reciever %>' name="reciever">
-                    <button type="submit">paid</button>
+    <div class="" style="margin: auto; max-width: 600px;">
+        <h3>Activate User</h3>
+                <form action="/admin/find_user" method="POST" enctype="application/x-www-form-urlencoded">
+                    <input type="search" name="search" id="search">
+                    <button type="submit">search</button>
                 </form>
-            <%}) %> 
-        <% } %>
-   </section>
+                <% if(data.user){%>
+                    <form action="/admin/status" method="POST" enctype="application/x-www-form-urlencoded">
+                    <input type="text" readonly value="<%= data.user %>  " name="name">
+                    <label for="checkboxes">
+                        deactivated
+                        <input type="radio" disabled readonly name="status" <% if(!data.activated){%>
+                            checked
+                    <% } %>  >
+                    </label>
+                    <label for="checkboxes">
+                        activated
+                        <input type="radio" disabled readonly name="status" <% if(data.activated){%>
+                            checked
+                        <%} %>  >
+                    </label>
+                    <button type = 'submit'>change</button>
+                </form>
+            <% } %> 
+
+
+            
+                <h3>Approve payment</h3>
+            <section class="transactions" style="margin-top: 20px;">
+                <form action="/admin/transactions" method="POST" enctype="application/x-www-form-urlencoded">
+                        <input type="search" value="" name="search">
+                        <button type="submit">search</button>
+                </form>
+
+                <% if(data.payee){%>
+                        <form action="/admin/validate_payment" method="GET" enctype="application/x-www-form-urlencoded"> 
+                            <input type="text" value="<%= data.payeeName %> " name="name">
+                            <label for="payment status">
+                                paid <input type="radio" disabled <% if(data.paid){%>
+                                    checked
+                                <%} %> > not paid <input type="radio" disabled <% if(!data.paid){%>
+                                    checked
+                                <%} %>>
+                            </label>
+                            <button type="submit">activate</button>
+                        </form>
+                <% } %> 
+
+
+                    <% if(data.transactions){%>
+                        <% data.transactions.forEach(data=>{%>
+                            <form action="/validate_payment" method="POST" enctype="application/x-www-form-urlencoded" style="display: flex; flex-flow: column;justify-content: space-between;  align-items: flex-start;">
+                                transaction id
+                                <input type="text" value="<%= data.investor.id %> ">
+                                username
+                                <input type="text" value="<%= data.investor.username %>" name="username">
+                                amount
+                                <input type="number" value= <%= data.investor.amount %> >
+                                reciever
+                                <input type="text" value= '<%= data.reciever %>' name="reciever">
+                                <button type="submit">paid</button>
+                            </form>
+                        <%}) %> 
+                    <% } %>
+            </section>
+    </div>
 </body>
 </html>

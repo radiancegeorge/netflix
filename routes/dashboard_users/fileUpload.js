@@ -14,7 +14,8 @@ fileUpload.use(upload({
 }));
 
 fileUpload.post('/fileupload', (req, res)=>{
-    const user = req.app.locals.user;
+    // console.log(req.session.username, 'want to find out something')
+    const user = req.session.username;
     const reciever = req.body.reciever
     if(req.files){
         const image = req.files.image;
@@ -34,8 +35,8 @@ fileUpload.post('/fileupload', (req, res)=>{
                         notifDb.query(sql, [user, name, previousCount ], (err, result)=>{
                             if(err)throw err;
                             console.log('uploaded');
-                            req.app.locals.msg = 'Your image has been uploaded and sent, please wait for confirmation';
-                            console.log('uploaded');
+                            req.session.msg = 'Your image has been uploaded and sent, please wait for confirmation';
+                            console.log(req.session.msg);
                             res.redirect('/user/home');
                         } )
                         
@@ -44,7 +45,7 @@ fileUpload.post('/fileupload', (req, res)=>{
                 })
             }
         }else{
-            req.app.locals.msg = 'file too large, please make sure it is less than 2mb';
+            req.session.msg = 'file too large, please make sure it is less than 2mb';
             res.redirect('/user/home')
         }
     }

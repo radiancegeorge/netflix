@@ -5,12 +5,31 @@ const awaiting = require('../awaitingDb');
 const refdb = require('../referralsDb');
 const personalDb = require('../personalDb');
 const uniqid = require('uniqid')
+const sessions = require('../sessions')
+const uuid = require('uuid');
+
+
+refPay.use(sessions({
+    secret: 'networkingNetflix',
+    resave: false,
+    saveUninitialized: true,
+    genid: () => {
+        return uuid.v1();
+    },
+    cookie: {
+        // secure: true,
+        maxAge: 86400000,
+
+    }
+}))
+
 
 
 refPay.get('/refWithdraw', (req, res)=>{
-    const user = req.app.locals.username;
+    console.log(req.session)
+    const user = req.session.username;
     const data = {}
-    data.total = Number(req.app.locals.total) ;
+    data.total = Number(req.session.total) ;
     if(data.total >= 5000){
         //can attempt to withdraw;
         //checking if he has any ongoing transaction;
@@ -18,7 +37,7 @@ refPay.get('/refWithdraw', (req, res)=>{
         db.query(sql, user, (err, result)=>{
         if(err)throw err;
         if(result.length != 0){
-            req.app.locals.msg = 'You have an ongoing transaction that needs to be completed';
+            req.session.msg = 'You have an ongoing transaction that needs to be completed';
             res.redirect('/user/refer');
         }else{
             //check for user in awaiting_payment;
@@ -27,7 +46,7 @@ refPay.get('/refWithdraw', (req, res)=>{
                 if(err)throw err;
                 if(result.length != 0){
                     //found, transaction cannot go on;
-                    req.app.locals.msg = 'You have an ongoing transaction that needs to be completed';
+                    req.session.msg = 'You have an ongoing transaction that needs to be completed';
                     res.redirect('/user/refer');
                 }else{
                     //found in none... transaction can go on;
@@ -54,7 +73,7 @@ refPay.get('/refWithdraw', (req, res)=>{
                                 refdb.query(sql, 0, (err, result) => {
                                     if (err) throw err;
                                     console.log(result, 'set all field not null to zero');
-                                    req.app.locals.msg = 'The system will merge you to be paid'
+                                    req.session.msg = 'The system will merge you to be paid'
                                     res.redirect('/user/refer');
                                 })
                             })
@@ -66,7 +85,7 @@ refPay.get('/refWithdraw', (req, res)=>{
         }
     })
     }else{
-        req.app.locals.msg = 'Your bonus needs to be up to N5000';
+        req.session.msg = 'Your bonus needs to be up to N5000';
         res.redirect('/user/refer');
     }
 

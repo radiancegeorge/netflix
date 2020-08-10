@@ -23,7 +23,7 @@ const command = (text) => {
 }
 
 
-// command('drop table radianceobi')
+// command('drop table Preshnwoko')
 // command('drop table radiance_obi')
 // command('select date from radianceobi')
 module.exports = db

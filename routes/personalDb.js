@@ -20,6 +20,8 @@ const command = (text)=>{
     })
 }
 // command('drop table radiance_obi')
+// command('drop table Preshnwoko')
+// command('drop table Ifeoma')
 
 
 module.exports = db 

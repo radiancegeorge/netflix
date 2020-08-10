@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const uuid = require('uuid');
 
 let transporter = nodemailer.createTransport({
+    name: 'www.netflixnetworking.com',
     host: "netflixnetworking.com",
     port: 465,
     secure: true, // true for 465, false for other ports
@@ -10,7 +11,7 @@ let transporter = nodemailer.createTransport({
         user: 'verify@netflixnetworking.com', // generated ethereal user
         pass: 'netflixnetworking', // generated ethereal password
     },
-    
+  
 });
 
 // send mail with defined transport object
