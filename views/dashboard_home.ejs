@@ -24,10 +24,21 @@
         <div class="container">
            <% if(data.initialization){%>
                     <form action="/user/invest" class="initialization" method="POST" enctype="application/x-www-form-urlencoded">
+                        <% if(data.message){ %>
+                        <p style="padding: 10px; color: white; background: red; text-align: center;"><%= data.message %> </p>
+
+                       <% } %> 
                         <h1 style="text-align: center;">Invest starting from N2,000 and a maximum of 200,000</h1>
+                        <% if(data.recommit){ %>
+                            <p style="padding: 10px ;text-align: center; background-color: orange; color: white;">Please note that you have to recommit to start recieving</p>
+                      <%  } %> 
                         <input type="number" placeholder="2000" required minlength="4" min="2000" name="amount">
                         <p>Please note that you have just 12hrs to make this payment once merged</p>
-                        <button type="submit">Pay</button>
+                        <button type="submit"><% if(data.recommit){%>
+                            Re commit
+                        <%}else{%>
+                                Pay
+                        <%} %> </button>
                     </form>
             <%} %> 
             <% if(data.transactions){%>
@@ -116,7 +127,7 @@
        <% } %> 
         <ul>
             <li>Transaction ID: <span><%= transaction.transaction_id %> </span></li>
-            <li> <% if(data.wait){%>
+            <li> <% if(data.wait || data.transactions){%>
                         <% if(data.transaction.indexOf(transaction) === 0){%>
                             Amount Epected To Be Paid:
                         <% } %>

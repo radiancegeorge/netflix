@@ -73,8 +73,9 @@ dashboard.get('/profile', (req, res)=>{
 dashboard.get('/home', (req, res)=>{
     const data = {};
     data.message = req.session.msg;
+
     setTimeout(() => {
-                req.session.msg = ''
+                req.session.msg = '';
             }, 3000);
     req.session.user = req.session.username;
     const user = req.session.username;
@@ -96,7 +97,15 @@ dashboard.get('/home', (req, res)=>{
                 if(result.length < 1){
                     //found nothing in awaiting payment also; so render home with ability to commence transaction;
                     data.initialization = true;
-                    res.render('dashboard_home', {data})
+                    //check if user is to re commit this time
+                    const sql = `select * from ${user}`;
+                    personalDb.query(sql, (err, result)=>{
+                        if(err)throw err;
+                        result.length === 1 ? data.recommit = true : data.recommit = false;
+                        res.render('dashboard_home', { data });
+
+                    })
+
                 }else if(result.length === 1){
                     data.initialization = false;
                     //found in awaiting so, check his table to see if any user has been placed under him;

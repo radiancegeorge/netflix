@@ -21,7 +21,7 @@ const command = (text)=>{
 }
 // command('drop table radiance_obi')
 // command('drop table Preshnwoko')
-// command('drop table Ifeoma')
+// command('truncate table Ossy')
 
 
 module.exports = db 
