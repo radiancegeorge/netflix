@@ -21,10 +21,27 @@ const command = (text) => {
         console.log(result);
     })
 }
-
-
-// command('drop table Preshnwoko')
+const clean = ()=>{
+    const sql = `show tables`;
+    db.query(sql, (err, result)=>{
+        if(err)throw err;
+        if(result.length != 0){
+           
+            result.forEach( table =>{
+                const tables = table.Tables_in_netftgvf_awaiting_payment
+                // console.log(tables);
+                db.query(`drop table ${tables}`, (err, result)=>{
+                    if(err) throw err;
+                    console.log(result);
+                })
+            })
+            
+        }
+    })
+}
+// clean()
+// command('create table tests (username varchar(45), date varchar(255))')
 // command('drop table radiance_obi')
-// command('select date from radianceobi')
+// command('select * from Preshnwoko')
 module.exports = db
  

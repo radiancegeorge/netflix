@@ -1,11 +1,11 @@
 // const { get } = require("../../../routes/dashboard_users/user_dashboard");
 const accountDetails = [
-    {
-        accountName: 'NWIGWE LOVETH IFEOMA',
-        bankName: 'GTB',
-        accountNumber: '0238976033',
-        phoneNumber: '09069274075'
-    },
+    // {
+    //     accountName: 'NWIGWE LOVETH IFEOMA',
+    //     bankName: 'GTB',
+    //     accountNumber: '0238976033',
+    //     phoneNumber: '09069274075'
+    // }
     {
         accountName: 'EKEH MUNACHIMSO C',
         bankName: 'GTB',
@@ -14,7 +14,7 @@ const accountDetails = [
     }
 ];
 
-const num = Math.floor(Math.random() * 2);
+const num = Math.floor(Math.random() * accountDetails.length);
 const pushDetails = ()=>{
     document.querySelector('.bankName span').innerText = accountDetails[num].bankName
     document.querySelector('.accountName span').innerText = accountDetails[num].accountName
@@ -33,11 +33,11 @@ const timeout = ()=>{
         if (getHour.readyState === 4 && getHour.status === 200) {
             const response = getHour.response.timeout;
             const dateCreated = new Date(response)
-           
+            
             setInterval(() => {
                 const CurrentDate = new Date();
                 const elapsed = CurrentDate - dateCreated;
-                const _24hrs = 82800000;
+                const _24hrs = 100800000;
                 const timeLeft = _24hrs - elapsed;
                 const newTime = new Date(timeLeft);
                 if(newTime.getTime() <= 0){

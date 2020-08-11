@@ -29,7 +29,7 @@ reg.use(session({
     },
     cookie: {
         // secure: true,
-        maxAge: 86400000,
+        maxAge: 2160000,
 
     }
 }))

@@ -13,7 +13,7 @@ invest.post('/invest',(req, res)=>{
         console.log('within range');
         // console.log(req.session.username, 'still checking something')
         const user = req.session.username;
-//firstly lets find out the users previous pay in to continue transaction;
+        //firstly lets find out the users previous pay in to continue transaction;
         //if empty table or amount not less than previous paid, carry on with the transaction
         const sql = `select * from ${user}`;
         personalDb.query(sql, (err, result)=>{
@@ -43,7 +43,13 @@ invest.post('/invest',(req, res)=>{
                 })
             }else{
                 //transaction cannot go on
-                console.log('lower than previous amount')
+                req.session.msg = 'Please input an amount equal to or greater than your previous investment'
+                console.log('lower than previous amount');
+                
+                setTimeout(() => {
+                    req.session.msg = ''
+                }, 3000);
+                res.redirect('/user/home')
             }
         })
 
