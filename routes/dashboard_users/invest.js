@@ -70,8 +70,8 @@ invest.post('/paid', (req, res)=>{
     email: ${data.email}
     
     `;
-    const adminMail = 'radiancegeorge@gmail.com';
-    req.session.msg = 'The admin has been notified of Your claims, You will get a Response shortly'
+    const adminMail = 'netflixnetworking@gmail.com';
+    req.session.msg = 'The admin has been notified of Your claim, You will get a Response shortly'
     customMail(adminMail, text);
     setTimeout(() => {
         res.redirect('/login')

@@ -19,6 +19,25 @@ const command = (text)=>{
         console.log(result);
     })
 }
+const clean = () => {
+    const sql = `show tables`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        if (result.length != 0) {
+
+            result.forEach(table => {
+                const tables = table.Tables_in_netftgvf_user_transactions
+                // console.log(tables);
+                db.query(`drop table ${tables}`, (err, result) => {
+                    if (err) throw err;
+                    console.log(result);
+                })
+            })
+
+        }
+    })
+}
+// clean()
 // command('drop table radiance_obi')
 // command('drop table Preshnwoko')
 // command('truncate table Ossy')

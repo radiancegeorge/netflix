@@ -17,9 +17,13 @@ const store = {
 }
 
 dashboard.use((req, res, next) => {
-    res.locals.person = store.user;
-    next()
-});
+    // req.session.msg = null;
+    setTimeout(() => {
+        req.session.message = null;
+
+    }, 3000);
+    next();
+})
 
 
 
@@ -51,9 +55,9 @@ dashboard.get('/dashboard', (req, res)=>{
 
             })
             
-            // setTimeout(() => {
-            //     req.session.msg = ''
-            // }, 3000);
+            setTimeout(() => {
+                req.session.msg = null
+            }, 3000);
         })
     }else{
         res.redirect('/login')
@@ -78,6 +82,7 @@ dashboard.get('/profile', (req, res)=>{
 });
 dashboard.get('/home', (req, res)=>{
     const data = {};
+
     data.message = req.session.msg;
 
     setTimeout(() => {
@@ -310,7 +315,7 @@ dashboard.get('/change_password', (req, res)=>{
     const data = {};
     data.msg = req.session.msg;
     setTimeout(() => {
-        req.session.msg = ''
+        req.session.msg = null;
     }, 3000);
     res.render('changepassword', {data})
 });
@@ -378,7 +383,9 @@ dashboard.post('/change_password', (req, res)=>{
         })
     }
 });
-
+// dashboard.get('/forgot_enterMail', (req, res)=>{
+//     res.render('changepassword')
+// })
 dashboard.post('/forgot_enterMail', (req, res)=>{
     const email = req.body.email;
     const sql = `select * from registered_users where email = ?`;

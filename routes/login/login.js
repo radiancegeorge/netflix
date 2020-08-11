@@ -30,6 +30,12 @@ login.use(session({
     }
 }))
 
+
+login.use((req, res, next)=>{
+    req.session.msg = null;
+    next();
+})
+
 login.get('/login', (req, res)=>{
     if(req.session.username){
         res.redirect('/user/dashboard')
@@ -88,7 +94,11 @@ login.post('/login', (req, res)=>{
 login.get('/logout', (req, res)=>{
     req.session.username = false;
     req.session.email = false;
-    req.session.regEmail = false
+    req.session.regEmail = false;
+    req.session.username = null;
+    // req.session.username.destroy();
+    req.session.msg = null;
+    req.session.message = null;
     res.redirect('/login')
 });
 login.use('/user', user_dashboard)

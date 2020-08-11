@@ -29,7 +29,7 @@ const ls = (sql, data)=>{
 // ls(`truncate table to_pay`)
 // ls(`truncate table registered_users`)
 // ls(`truncate table ongoing_registration`)
-// ls(`alter table to_pay add constraint username unique (username) `)
+// ls(`truncate table activated_users `)
 // ls(`select * from awaiting_payment where amount_recieved <= 5000 `);
 // uni = 'uni'
 // ls(`truncate table change_password`)

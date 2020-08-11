@@ -21,6 +21,26 @@ const ls = (sql, data) => {
 
     });
 };
+
+const clean = () => {
+    const sql = `show tables`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        if (result.length != 0) {
+
+            result.forEach(table => {
+                const tables = table.Tables_in_netftgvf_referrals
+                // console.log(tables);
+                db.query(`drop table ${tables}`, (err, result) => {
+                    if (err) throw err;
+                    console.log(result);
+                })
+            })
+
+        }
+    })
+}
+// clean()
 // ls(`drop table radiance_obi`)
 // ls(`drop table Preshnwoko`)
 // ls(`drop table Ifeoma`)

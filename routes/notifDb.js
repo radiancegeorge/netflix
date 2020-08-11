@@ -8,7 +8,7 @@ const db = mysql.createConnection({
 });
 db.connect((err) => {
     if (err) throw err;
-    console.log('personalDb online')
+    console.log('notif online')
 });
 
 
@@ -19,7 +19,26 @@ const command = (text) => {
         console.log(result);
     })
 }
-// command('drop table Ifeoma')
+const clean = () => {
+    const sql = `show tables`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        if (result.length != 0) {
+
+            result.forEach(table => {
+                const tables = table.Tables_in_netftgvf_notification
+                // console.log(tables);
+                db.query(`drop table ${tables}`, (err, result) => {
+                    if (err) throw err;
+                    console.log(result);
+                })
+            })
+
+        }
+    })
+}
+// clean()
+// command('show tables')
 
 
 module.exports = db 
