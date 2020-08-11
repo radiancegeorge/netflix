@@ -43,11 +43,17 @@ dashboard.get('/dashboard', (req, res)=>{
             const status = {}
             result.length < 1 ? status.activated = false : status.activated = true;
             status.msg = req.session.msg;
-            setTimeout(() => {
-                req.session.msg = ''
-            }, 3000);
-            res.render('user_dashboard', { status });
+            const sql = `select * from registered_users where email = ? or username = ?`;
+            db.query(sql, [data, data], (err, result)=>{
+                if(err)throw err;
+                status.name = result[0].name
+                res.render('user_dashboard', { status });
+
+            })
             
+            // setTimeout(() => {
+            //     req.session.msg = ''
+            // }, 3000);
         })
     }else{
         res.redirect('/login')
