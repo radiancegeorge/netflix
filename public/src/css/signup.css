@@ -16,6 +16,8 @@ body{
 }
 .signup{
     display: block;
+    background: black;
+    color: white;
     margin-top: 70px;
     padding: 10px 10px;
 }
@@ -39,7 +41,7 @@ body{
     min-width: 95%;
     background: none;
     height: 30px;
-    color: black;
+    color: white;
     outline: none;
     border: none;
     border-radius: 10px;
