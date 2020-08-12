@@ -41,7 +41,7 @@ const clean = ()=>{
 }
 // clean()
 // command('create table tests (username varchar(45), date varchar(255))')
-// command('delete from Uchenna where id = "kdqy1bj8"')
+// command('drop table radiance_obi')
 // command('select * from Uchenna');
 
 

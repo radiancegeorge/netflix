@@ -59,10 +59,12 @@ dashboard.use((req, res, next)=>{
                                     const elapsed = Date.now() - lastDate;
                                     const elapsedToHours = elapsed / 3600000;
                                     // console.log(elapsedToHours)
-                                    if(elapsedToHours >= 77){
+                                    if(elapsedToHours <= 77){
                                         // req.session.elapsedToHours = true;
-                                        store.elapsed = true
+                                        store.elapsed = true;
+                                        console.log('in here')
                                         // console.log(store.elapsed, ' elapsed time')
+                                        console.log(elapsedToHours);
                                     }else{
                                         // req.session.elapsedToHours = false;
                                         store.elapsed = false
@@ -71,7 +73,7 @@ dashboard.use((req, res, next)=>{
                                 }else{
                                     store.canInitialize = true;
                                 }
-                            }store.elapsed = false;
+                            }
                         })
                     }
                 })
@@ -175,7 +177,11 @@ dashboard.get('/home', (req, res)=>{
                 if(result.length < 1){
                     //found nothing in awaiting payment also; so render home with ability to commence transaction;
                     //##patch include test for transaction time; if elapsed
-                    store.elapsed === true ? data.elapsed = true : data.elapsed = false;
+                    if(store.elapsed === true){
+                        data.elapsed = true;
+                    }else{
+                        data.elapsed = false
+                    }
                     data.initialization = store.canInitialize;
                     data.toBeRecieved = store.amount
                     // console.log()
@@ -202,7 +208,7 @@ dashboard.get('/home', (req, res)=>{
                             // no investor merged yet;
                             data.waitingForPayment = true;
                             // store.elapsed === true ? data.elapsed = true : data.elapsed = false;
-                            console.log(data.elapsed, 'checking data, elapsed value')
+                            // console.log(data.elapsed, 'checking data, elapsed value')
                             res.render('dashboard_home',{data});
                         }else{
                             //found investors merged
