@@ -97,29 +97,38 @@
                 </div>
             </section>
     <%} %>
-    <% if(data.elapsed){%>
+    <% if(!data.wait && !data.transactions && !data.transaction && !data.waitingForPayment && !data.payers){%>
+        
+        
+            <% if(data.elapsed){%>
             <section class="wait">
                 <div class="container">
                     <h1>
                         Use the button below to start recieving!
                     </h1>
-                    <form action="" style="max-width: 100%; padding: 10px; background: white; color: green;">
+                    <form action="/user/recieve" style="max-width: 100%; padding: 10px; background: white; color: green;"
+                        method="GET">
                         <button type="submit" style="cursor: pointer; padding: 10px; background-color: green; color: white;
-                        border: none;">Start Recieving!</button> <p style="padding: 10px;">Amount: N<span><%= data.toBeRecieved %> </span></p>
+                                    border: none;">Start Recieving!</button>
+                        <p style="padding: 10px;">Amount: N<span><%= data.toBeRecieved %> </span></p>
                     </form>
                 </div>
             </section>
-    <%}else{%>
-        <section class="wait">
-            <div class="container">
-                <h1 class="receiveRemains">
-                    You have <span style="background-color: orange; color: white; padding: 10px;"> </span> left to start recieving!
-                </h1>
-               
-            </div>
-        </section>
-        <script src="/src/js/receivingTimeout.js"></script>
-    <%} %>
+            <%}else{%>
+            <section class="wait">
+                <div class="container">
+                    <h1 class="receiveRemains">
+                        You have <span style="background-color: orange; color: white; padding: 10px;"> </span> left to start
+                        recieving!
+                    </h1>
+            
+                </div>
+            </section>
+            <script src="/src/js/receivingTimeout.js"></script>
+            <%} %>
+
+
+    <%} %>  
    
 
 

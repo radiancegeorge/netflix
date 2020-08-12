@@ -30,6 +30,16 @@ dashboard.use((req, res, next)=>{
                 const time = wantedTransaction.time;
                 const recieved = Number(wantedTransaction.amount_recieved);
                 const toBeRecieved = (amountPaid * 50 / 100) + amountPaid;
+                const transactionId = wantedTransaction.transaction_id;
+
+
+                store.amountPaid = amountPaid;
+                store.transactionId = transactionId;
+                store.recieved = recieved
+
+
+
+
                 // console.log(time, toBeRecieved, ' from, middleware')
                 store.amount = toBeRecieved
                 const sql = `select * from to_pay where username = ?`;
@@ -50,17 +60,18 @@ dashboard.use((req, res, next)=>{
                                     const elapsedToHours = elapsed / 3600000;
                                     // console.log(elapsedToHours)
                                     if(elapsedToHours >= 77){
-                                        req.session.elapsedToHours = true;
+                                        // req.session.elapsedToHours = true;
                                         store.elapsed = true
-                                        // console.log(req.session.elapsedToHours, ' elapsed time')
+                                        // console.log(store.elapsed, ' elapsed time')
                                     }else{
-                                        req.session.elapsedToHours = false;
+                                        // req.session.elapsedToHours = false;
+                                        store.elapsed = false
                                     }
                                     
                                 }else{
                                     store.canInitialize = true;
                                 }
-                            }
+                            }store.elapsed = false;
                         })
                     }
                 })
@@ -167,7 +178,8 @@ dashboard.get('/home', (req, res)=>{
                     store.elapsed === true ? data.elapsed = true : data.elapsed = false;
                     data.initialization = store.canInitialize;
                     data.toBeRecieved = store.amount
-                    // console.log(store.elapsed, ' just for checks')
+                    // console.log()
+                    console.log(store.elapsed, ' just for checks')
                     // data.elapsed ? data.initialization = false : data.initialization = false;
                     //check if user is to re commit this time
 
@@ -189,6 +201,8 @@ dashboard.get('/home', (req, res)=>{
                         if(result.length < 1){
                             // no investor merged yet;
                             data.waitingForPayment = true;
+                            // store.elapsed === true ? data.elapsed = true : data.elapsed = false;
+                            console.log(data.elapsed, 'checking data, elapsed value')
                             res.render('dashboard_home',{data});
                         }else{
                             //found investors merged
@@ -538,6 +552,23 @@ dashboard.get('/timeout', (req, res)=>{
 });
 dashboard.get('/lastdate', (req, res)=>{
     res.status(200).send({data: store.lastDate})
+});
+
+
+dashboard.get('/recieve', (req, res)=>{
+    const username = req.session.username;
+    if(store.elapsed){
+        const sql = `create table ${username} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varchar(45))`;
+        awaiting.query(sql, (err, result)=>{
+            if(err)throw err;
+            const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
+            db.query(sql,[store.transactionId, username, store.amountPaid, 0, store.amount ], (err, result)=>{
+                if(err)throw err;
+                console.log('added to receive pay');
+                res.redirect('/user/home')
+            })
+        })
+    }
 })
 dashboard.use(invest);
 dashboard.use(fileUpload);
