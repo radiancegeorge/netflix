@@ -71,7 +71,7 @@ invest.post('/paid', (req, res)=>{
     
     `;
     const adminMail = 'netflixnetworking@gmail.com';
-    req.session.msg = 'The admin has been notified of Your claim, You will get a Response shortly'
+    req.session.msg = 'The admin has been notified, You will get a Response shortly'
     customMail(adminMail, text);
     setTimeout(() => {
         res.redirect('/login')

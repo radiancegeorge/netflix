@@ -81,8 +81,11 @@ select:-webkit-autofill:focus {
     background: green;
     border: none;
     border-radius: 5px;
-    transition: background .8s;
-
+    transition: background 0.8s;
+}
+.input button:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 .input button:focus{
     background: orange;

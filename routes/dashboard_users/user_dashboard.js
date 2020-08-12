@@ -16,12 +16,68 @@ const store = {
     user: ''
 }
 
+dashboard.use((req, res, next)=>{
+    const username = req.session.username;
+    const sql = `select * from ${username}`;
+    personalDb.query(sql, (err, result)=>{
+        if(err)throw err;
+        if(result.length > 2){
+            //pick the last transaction;
+            const wantedTransaction = result[result.length - 1];
+            if(Number(wantedTransaction.amount_paid) != 0){
+                //means it is not a referral bonus
+                const amountPaid = Number(wantedTransaction.amount_paid);
+                const time = wantedTransaction.time;
+                const recieved = Number(wantedTransaction.amount_recieved);
+                const toBeRecieved = (amountPaid * 50 / 100) + amountPaid;
+                // console.log(time, toBeRecieved, ' from, middleware')
+                store.amount = toBeRecieved
+                const sql = `select * from to_pay where username = ?`;
+                db.query(sql, username, (err, result)=>{
+                    if(err)throw err;
+                    if(result.length === 0){
+                        //not found in to pay, checking for awaiting next;
+                        const sql = `select * from awaiting_payment where username = ?`;
+                        db.query(sql, username, (err, result)=>{
+                            if(err)throw err;
+                            if(result.length === 0){
+                                //not found in awaiting, next is to evaluate the time and know if user should recieve or not;
+                                //check if amount recieved is = 0;
+                                if(recieved === 0){
+                                    store.lastDate = time;
+                                    const lastDate = new Date(time).getTime();
+                                    const elapsed = Date.now() - lastDate;
+                                    const elapsedToHours = elapsed / 3600000;
+                                    // console.log(elapsedToHours)
+                                    if(elapsedToHours >= 77){
+                                        req.session.elapsedToHours = true;
+                                        store.elapsed = true
+                                        // console.log(req.session.elapsedToHours, ' elapsed time')
+                                    }else{
+                                        req.session.elapsedToHours = false;
+                                    }
+                                    
+                                }else{
+                                    store.canInitialize = true;
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    })
+    next()
+})
+
+
+
 dashboard.use((req, res, next) => {
     // req.session.msg = null;
     setTimeout(() => {
         req.session.message = null;
 
-    }, 3000);
+    }, 10000);
     next();
 })
 
@@ -107,12 +163,19 @@ dashboard.get('/home', (req, res)=>{
                 if(err)throw err;
                 if(result.length < 1){
                     //found nothing in awaiting payment also; so render home with ability to commence transaction;
-                    data.initialization = true;
+                    //##patch include test for transaction time; if elapsed
+                    store.elapsed === true ? data.elapsed = true : data.elapsed = false;
+                    data.initialization = store.canInitialize;
+                    data.toBeRecieved = store.amount
+                    // console.log(store.elapsed, ' just for checks')
+                    // data.elapsed ? data.initialization = false : data.initialization = false;
                     //check if user is to re commit this time
+
                     const sql = `select * from ${user}`;
                     personalDb.query(sql, (err, result)=>{
                         if(err)throw err;
                         result.length === 1 ? data.recommit = true : data.recommit = false;
+                        data.recommit ? data.initialization = true : data.initialization = false;
                         res.render('dashboard_home', { data });
 
                     })
@@ -472,6 +535,9 @@ dashboard.get('/timeout', (req, res)=>{
     const data = req.session.transactionForFrontend;
     console.log( 'time for front end');
     res.status(200).send(data);
+});
+dashboard.get('/lastdate', (req, res)=>{
+    res.status(200).send({data: store.lastDate})
 })
 dashboard.use(invest);
 dashboard.use(fileUpload);

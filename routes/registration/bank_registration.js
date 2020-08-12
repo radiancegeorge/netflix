@@ -104,7 +104,7 @@ bankReg.get('/update_bank_details', (req, res)=>{
             data.transaction_id = 'transaction_id varchar(255) not null unique primary key';
             data.amount_paid = 'amount_paid varchar(255) not null'
             data.amount_recieved = 'amount_recieved varchar(255) not null'
-            const sql = `create table ${data.username} (${data.transaction_id}, ${data.amount_paid}, ${data.amount_recieved})`;
+            const sql = `create table ${data.username} (${data.transaction_id}, ${data.amount_paid}, ${data.amount_recieved}, time varchar(255))`;
             personalDb.query(sql, (err, result)=>{
                 if(err)throw err;
                 console.log(result);

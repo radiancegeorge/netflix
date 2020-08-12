@@ -4,7 +4,11 @@ const formD = document.querySelector('form')
 // console.log(form)
 // console.log(inputs[0].name)
 const submit = () => {
-        formD.submit()  
+        formD.submit();
+        setTimeout(() => {
+            submitBtn.disbled = true;
+            submitBtn.setAttribute('disabled', 'disabled');
+        }, 500);  
 }
 const errorMessage = (input, custom)=>{
     const p = document.createElement('p');
@@ -12,7 +16,7 @@ const errorMessage = (input, custom)=>{
     It is already in use.
     `;
     p.style.position = 'fixed';
-    p.style.top = 0;
+    p.style.top = '50px';
     p.style.opacity = 1;
     p.style.left = '50%'
     p.style.transform = 'translateX(-50%)';
@@ -87,7 +91,7 @@ submitBtn.addEventListener('click', (e)=>{
             verify.send()
         }
 
-    }
+    } 
         
 
     inputs.forEach( input =>{

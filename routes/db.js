@@ -30,7 +30,8 @@ const ls = (sql, data)=>{
 // ls(`truncate table registered_users`)
 // ls(`truncate table ongoing_registration`)
 // ls(`truncate table activated_users `)
-// ls(`select * from awaiting_payment where amount_recieved <= 5000 `);
+// ls(`select * from awaiting_payment where username = 'radiance_obi' `);
 // uni = 'uni'
-// ls(`truncate table change_password`)
-module.exports = db 
+// ls(`delete from to_pay where username = "radiance_obi"`);
+// ls('select * from to_pay ');
+module.exports = db ;

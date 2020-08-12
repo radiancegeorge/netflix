@@ -32,7 +32,10 @@ login.use(session({
 
 
 login.use((req, res, next)=>{
-    req.session.msg = null;
+    setTimeout(() => {
+        req.session.msg = null;
+
+    }, 10000);
     next();
 })
 

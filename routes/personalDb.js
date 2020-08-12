@@ -37,10 +37,32 @@ const clean = () => {
         }
     })
 }
+const createTime = () => {
+    const sql = `show tables`;
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        if (result.length != 0) {
+
+            result.forEach(table => {
+                const tables = table.Tables_in_netftgvf_user_transactions
+                // console.log(tables);
+                const sql = `alter table ${tables} add time varchar(255)`
+                db.query(sql, (err, result) => {
+                    if (err) throw err;
+                    console.log(result);
+                })
+            })
+
+        }
+    })
+};
+
+// createTime()
 // clean()
-// command('drop table radiance_obi')
-// command('drop table Preshnwoko')
-// command('truncate table Ossy')
+// command('select * from radiance_obi')
+// command('truncate table radiance_obi')
+// command('show tables')
+// command('update Uchenna set amount_recieved = 38000 where transaction_id = "kdqcaxf5"')
 
 
 module.exports = db 

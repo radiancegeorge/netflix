@@ -91,44 +91,58 @@ validate.post('/validate_payment/', (req, res) => {
                                             // }
                                             //check if personal table has morethan 2 transactions;
                                             //first check if amount in to_pay is = 0;
-                                            const sql = `select amount from to_pay where username = ?`;
+                                            const sql = `select * from to_pay where username = ?`;
                                             db.query(sql, username, (err, result)=>{
                                                 if(err)throw err;
                                                 if(result.length === 1){
                                                     const remainingAmount = Number(result[0].amount);
+                                                    const transaction_id = result[0].id;
                                                     if(remainingAmount === 0){
                                                         //delete user from to_pay table
-                                                        const sql = `delete from to_pay where username = ?`;
-                                                        db.query(sql, username, (err, result) => {
-                                                            if (err) throw err;
-                                                            console.log('finished transaction for investor, now deleting from to_pay')
-                                                            //######
-                                                            //deleted from to pay and getting ready to be added to awaiting;
-                                                            const sql = `select * from ${username}`;
-                                                            personalDb.query(sql, (err, result) => {
+                                                        //### patch...insert time into personal db;
+                                                        const query = `update ${username} set time = ? where transaction_id = ?`;
+                                                        const time = new Date();
+                                                        personalDb.query(query, [time, transaction_id ], (err, result)=>{
+                                                            if(err)throw err;
+                                                            console.log(result, time,transaction_id, 'time stamp added');
+
+                                                            const sql = `delete from to_pay where username = ?`;
+
+                                                            db.query(sql, username, (err, result) => {
                                                                 if (err) throw err;
-                                                                if (result.length >= 2) {
-                                                                    const amount = Number(result[result.length - 1].amount_paid)
-                                                                    const transactio_id = result[result.length - 1].transaction_id
-                                                                    const amount_recieved = result[result.length - 1].amount_recieved
-                                                                    //add to awaiting_payment and create a table in awaiting database;
-                                                                    const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
-                                                                    const toBeRecieved = Number(amount) + (amount * 50 / 100)
+                                                                console.log('finished transaction for investor, now deleting from to_pay')
+                                                                //######
+                                                                //deleted from to pay and getting ready to be added to awaiting;
+                                                                const sql = `select * from ${username}`;
+                                                                personalDb.query(sql, (err, result) => {
+                                                                    if (err) throw err;
+                                                                    //## patch.. added only if transaction is a second the rest the system should handle
+                                                                    if (result.length === 2) {
+                                                                        const amount = Number(result[result.length - 1].amount_paid)
+                                                                        const transactio_id = result[result.length - 1].transaction_id
+                                                                        const amount_recieved = result[result.length - 1].amount_recieved
+                                                                        //add to awaiting_payment and create a table in awaiting database;
+                                                                        const sql = `insert into awaiting_payment (transaction_id, username, amount_paid, amount_recieved, amount_to_be_recieved) values (?,?,?,?,?)`;
+                                                                        const toBeRecieved = Number(amount) + (amount * 50 / 100)
 
-                                                                    db.query(sql, [transactio_id, username, amount, amount_recieved, toBeRecieved], (err, result) => {
-                                                                        if (err) throw err;
-                                                                        //inserted into awaiting table, next create table for user in awaiting database;
-                                                                        const sql = `create table ${username} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varchar(45))`;
-                                                                        awaiting.query(sql, (err, result) => {
+                                                                        db.query(sql, [transactio_id, username, amount, amount_recieved, toBeRecieved], (err, result) => {
                                                                             if (err) throw err;
-                                                                            console.log('has been added to the awaitinng databas for recieving');
-                                                                            res.redirect(file.data)
+                                                                            //inserted into awaiting table, next create table for user in awaiting database;
+                                                                            const sql = `create table ${username} (id varchar(45) primary key, username varchar(45) unique, amount varchar(255), date varchar(255), status varchar(45))`;
+                                                                            awaiting.query(sql, (err, result) => {
+                                                                                if (err) throw err;
+                                                                                console.log('has been added to the awaitinng databas for recieving');
+                                                                                res.redirect(file.data)
+                                                                            })
                                                                         })
-                                                                    })
 
-                                                                }
+                                                                    } else {
+                                                                        res.redirect(file.data);
+                                                                    }
+                                                                })
                                                             })
                                                         })
+                                                        
                                                     }else{
                                                         res.redirect(file.data)
                                                     }

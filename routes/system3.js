@@ -13,7 +13,7 @@ const referrals = ()=>{
             allReferred.forEach(person =>{
                 const referred = person.username;
                 const user = person.referred;
-                console.log({referred, user}, 'referred detail');
+                // console.log({referred, user}, 'referred detail');
                 const sql = `select username from ${user} where username = ?`;
                 refDb.query(sql, referred, (err, result)=>{
                     if(err){
@@ -63,7 +63,7 @@ const referrals = ()=>{
                                 const sql = `select * from ${referred}`;
                                 personalDb.query(sql, (err, result) => {
                                     if (err){
-                                        console.log(err)
+                                        // console.log(err)
                                     }else{
                                         if (result.length === 1) {
                                             const transaction_id = result[0].transaction_id,

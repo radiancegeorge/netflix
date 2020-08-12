@@ -1,7 +1,9 @@
 const db = require('./db'),
 awaiting = require('./awaitingDb'),
+personalDb = require('./personalDb'),
 // personalDb = require('./personalDb'),
 customMail = require('./customMail');
+const { query } = require('express');
 // const invest = require('./dashboard_users/invest');
 
 
@@ -121,7 +123,15 @@ const checkDate = ()=>{
         }
     })
     
-
+//## patch timeout for investors before they can recieve;
+personalDb.query(`show tables`, (err, result)=>{
+    if(err)throw err;
+    result.forEach(table=>{
+        if(table.length > 1){
+            console.log('table selected');
+        }
+    })
+})
 };
 setInterval(() => {
 checkDate()

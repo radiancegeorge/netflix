@@ -53,10 +53,10 @@
                 </span> YOUR ACCOUNT
             </h1>
             <div class="input referral">
-                <p>
+                <!-- <p>
                     Referral's ID
-                </p>
-                <input name="referred" type="text" placeholder="" value="<% if(data.ref){%>
+                </p> -->
+                <input style="display: none;" readonly name="referred" type="text" placeholder="" value="<% if(data.ref){%>
                     <%= data.ref %> 
                <% } %> ">
             </div>

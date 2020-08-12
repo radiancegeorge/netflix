@@ -16,7 +16,7 @@ xhttp.onreadystatechange = ()=>{
                 const hourToUse = 61200000;
                 const remaining = hourToUse - elapsed;
                 const newTime = new Date(remaining);
-                const timeToString = `${newTime.getHours()} : ${newTime.getMinutes()} : ${newTime.getSeconds()}`;
+                const timeToString = `${newTime.getHours() - 1} : ${newTime.getMinutes()} : ${newTime.getSeconds()}`;
                 timeHolder[data.indexOf(element)].innerText = timeToString;
                 // console.log(new Date(remaining).getHours())
             }, 1000);

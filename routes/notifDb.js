@@ -38,7 +38,7 @@ const clean = () => {
     })
 }
 // clean()
-// command('show tables')
+// command('drop table ifeoma')
 
 
 module.exports = db 

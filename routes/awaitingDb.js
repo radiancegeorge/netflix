@@ -41,7 +41,10 @@ const clean = ()=>{
 }
 // clean()
 // command('create table tests (username varchar(45), date varchar(255))')
-// command('drop table radiance_obi')
-// command('select * from Preshnwoko')
+// command('delete from Promise where username = "Nkprincek"')
+// command('select * from Uchenna');
+
+
+
 module.exports = db
  

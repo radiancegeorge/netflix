@@ -7,6 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+
+
+ 
+
+
+
+
+
+
     <!-- <section class="transactions">
         <div class="container">
             <div class="individualTransaction">
@@ -88,6 +97,33 @@
                 </div>
             </section>
     <%} %>
+    <% if(data.elapsed){%>
+            <section class="wait">
+                <div class="container">
+                    <h1>
+                        Use the button below to start recieving!
+                    </h1>
+                    <form action="" style="max-width: 100%; padding: 10px; background: white; color: green;">
+                        <button type="submit" style="cursor: pointer; padding: 10px; background-color: green; color: white;
+                        border: none;">Start Recieving!</button> <p style="padding: 10px;">Amount: N<span><%= data.toBeRecieved %> </span></p>
+                    </form>
+                </div>
+            </section>
+    <%}else{%>
+        <section class="wait">
+            <div class="container">
+                <h1 class="receiveRemains">
+                    You have <span style="background-color: orange; color: white; padding: 10px;"> </span> left to start recieving!
+                </h1>
+               
+            </div>
+        </section>
+        <script src="/src/js/receivingTimeout.js"></script>
+    <%} %>
+   
+
+
+    
     <% if(data.waitingForPayment){%>
             <section class="waiting-for-payment">
                 <div class="container">
