@@ -59,7 +59,7 @@ dashboard.use((req, res, next)=>{
                                     const elapsed = Date.now() - lastDate;
                                     const elapsedToHours = elapsed / 3600000;
                                     // console.log(elapsedToHours)
-                                    if(elapsedToHours <= 77){
+                                    if(elapsedToHours >= 77){
                                         // req.session.elapsedToHours = true;
                                         store.elapsed = true;
                                         console.log('in here')
