@@ -59,10 +59,10 @@ const createTime = () => {
 
 
 
-// command('alter table Nkprincek add column time varchar(255)')
+// command('select * from Lesly20')
 // command('truncate table radiance_obi')
 // command('show tables')
-// command('update Uchenna set amount_recieved = 38000 where transaction_id = "kdqcaxf5"')
+// command('update Uchenna set amount_recieved = 370000 where transaction_id = "kdqcaxf5"')
 
 
 module.exports = db 
